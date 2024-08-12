@@ -1,5 +1,7 @@
-import { createContext, useState,useContext } from "react";
 import mockedUser from "../mock/user";
+import { createContext, useState,useContext } from "react";
+import app from '../config/firebase'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
 interface UserType {
     username: string;
@@ -8,15 +10,11 @@ interface UserType {
 }
 
 interface IAuthContext {
-    logged: boolean,
     user: UserType
+    logged: boolean,
     signIn(email: string, password: string): void,
     signOut(): void
 }
-
-// console.log(user.username)
-// console.log(user.email)
-// console.log(user.password)
 
 /* CRIA O CONTEXTO PARA SER USADO NA APLICAÇÃO */
 const AuthContext = createContext<IAuthContext>({} as IAuthContext)
@@ -36,6 +34,9 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 
     const user = mockedUser
 
+    const auth = getAuth(app)
+
+
     /*
     * --> LOGIN
     *      Recebe um email e senha do usuário e verifica se é igual ao email e senha
@@ -43,12 +44,17 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     *      navegador para ser usado posteriormente e libera o acesso para a aplicação.
     */
     const signIn = (email: string, password: string) => {
-        if (email === user.email && password === user.password) {
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const currentUser = (userCredential.user)
             localStorage.setItem('@dc5bf16b1811-Dashboard:logged', 'true')
             setLogged(true)
-        } else {
-            alert('Senha ou usuário inválidos!')
-        }
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log("errorMessage:", errorMessage, "errorCode:", errorCode)
+        })
     }
 
 
@@ -62,7 +68,6 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
         setLogged(false)
     }
     
-
     return (
         <AuthContext.Provider value={{ user, logged, signIn, signOut }}>
             { children }
