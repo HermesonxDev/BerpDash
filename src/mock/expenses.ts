@@ -1,5 +1,6 @@
 export default [
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf01",
     description: "Energia elétrica",
     amount: "150.55",
     type: "saída",
@@ -8,6 +9,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf02",
     description: "Energia elétrica",
     amount: "150.55",
     type: "saída",
@@ -16,6 +18,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf03",
     description: "Energia elétrica",
     amount: "150.55",
     type: "saída",
@@ -24,6 +27,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf04",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -32,6 +36,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf05",
     description: "Água",
     amount: "75.55",
     type: "saída",
@@ -40,6 +45,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf06",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -48,6 +54,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf07",
     description: "Compras do mês",
     amount: "625.78",
     type: "saída",
@@ -56,6 +63,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf08",
     description: "Lanche",
     amount: "45.70",
     type: "saída",
@@ -64,6 +72,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf09",
     description: "Blusa",
     amount: "95.70",
     type: "saída",
@@ -72,6 +81,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf10",
     description: "Blusa Iron Man",
     amount: "150.00",
     type: "saída",
@@ -80,6 +90,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf11",
     description: "Energia elétrica",
     amount: "125.55",
     type: "saída",
@@ -88,6 +99,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf12",
     description: "Água",
     amount: "90.15",
     type: "saída",
@@ -96,6 +108,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf13",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -104,6 +117,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf14",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -112,6 +126,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf15",
     description: "Compras do mês",
     amount: "540.00",
     type: "saída",
@@ -120,6 +135,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf16",
     description: "Parcela do Celular 1/5",
     amount: "150.99",
     type: "saída",
@@ -128,6 +144,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf17",
     description: "Cinema",
     amount: "45.00",
     type: "saída",
@@ -136,6 +153,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf18",
     description: "Energia elétrica",
     amount: "97.00",
     type: "saída",
@@ -144,6 +162,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf19",
     description: "Água",
     amount: "100.10",
     type: "saída",
@@ -152,6 +171,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf20",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -160,6 +180,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf21",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -168,6 +189,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf22",
     description: "Compras do mês",
     amount: "800.50",
     type: "saída",
@@ -176,6 +198,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf23",
     description: "Parcela do Celular 2/5",
     amount: "150.99",
     type: "saída",
@@ -184,6 +207,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf24",
     description: "Troca de Oléo do carro",
     amount: "90.00",
     type: "saída",
@@ -192,6 +216,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf25",
     description: "Energia elétrica",
     amount: "75.99",
     type: "saída",
@@ -200,6 +225,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf26",
     description: "Água",
     amount: "80.33",
     type: "saída",
@@ -208,6 +234,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf27",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -216,6 +243,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf28",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -224,6 +252,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf29",
     description: "Compras do mês",
     amount: "600.00",
     type: "saída",
@@ -232,6 +261,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf30",
     description: "Parcela do Celular 3/5",
     amount: "150.99",
     type: "saída",
@@ -240,6 +270,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf31",
     description: "Ebook de React Js",
     amount: "85.95",
     type: "saída",
@@ -248,6 +279,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf32",
     description: "Energia elétrica",
     amount: "125.55",
     type: "saída",
@@ -256,6 +288,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf33",
     description: "Água",
     amount: "90.15",
     type: "saída",
@@ -264,6 +297,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf34",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -272,6 +306,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf35",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -280,6 +315,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf36",
     description: "Compras do mês",
     amount: "540.00",
     type: "saída",
@@ -288,6 +324,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf37",
     description: "Parcela do Celular 4/5",
     amount: "150.99",
     type: "saída",
@@ -296,6 +333,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf38",
     description: "Energia elétrica",
     amount: "200.00",
     type: "saída",
@@ -304,6 +342,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf39",
     description: "Água",
     amount: "150.00",
     type: "saída",
@@ -312,6 +351,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf40",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -320,6 +360,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf41",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -328,6 +369,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf42",
     description: "Compras do mês",
     amount: "559.15",
     type: "saída",
@@ -336,6 +378,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf43",
     description: "Parcela do Celular 5/5",
     amount: "150.99",
     type: "saída",
@@ -344,6 +387,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf44",
     description: "Perfume",
     amount: "250.00",
     type: "saída",
@@ -352,6 +396,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf45",
     description: "Energia elétrica",
     amount: "250.00",
     type: "saída",
@@ -360,6 +405,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf46",
     description: "Água",
     amount: "90.00",
     type: "saída",
@@ -368,6 +414,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf47",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -376,6 +423,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf48",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -384,6 +432,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf49",
     description: "Compras do mês",
     amount: "700.00",
     type: "saída",
@@ -392,6 +441,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf50",
     description: "Cafeteira",
     amount: "250.00",
     type: "saída",
@@ -400,6 +450,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf51",
     description: "Pizza",
     amount: "60.00",
     type: "saída",
@@ -408,6 +459,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf52",
     description: "Energia elétrica",
     amount: "150.55",
     type: "saída",
@@ -416,6 +468,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf53",
     description: "Água",
     amount: "90.15",
     type: "saída",
@@ -424,6 +477,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf54",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -432,6 +486,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf55",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -440,6 +495,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf56",
     description: "Compras do mês",
     amount: "540.00",
     type: "saída",
@@ -448,6 +504,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf57",
     description: "Energia elétrica",
     amount: "97.00",
     type: "saída",
@@ -456,6 +513,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf58",
     description: "Água",
     amount: "100.10",
     type: "saída",
@@ -464,6 +522,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf59",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -472,6 +531,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf60",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -480,6 +540,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf61",
     description: "Compras do mês",
     amount: "800.50",
     type: "saída",
@@ -488,6 +549,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf62",
     description: "Energia elétrica",
     amount: "75.99",
     type: "saída",
@@ -496,6 +558,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf63",
     description: "Água",
     amount: "80.33",
     type: "saída",
@@ -504,6 +567,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf64",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -512,6 +576,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf65",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -520,6 +585,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf66",
     description: "Compras do mês",
     amount: "600.00",
     type: "saída",
@@ -528,6 +594,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf67",
     description: "Energia elétrica",
     amount: "125.55",
     type: "saída",
@@ -536,6 +603,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf68",
     description: "Água",
     amount: "90.15",
     type: "saída",
@@ -544,6 +612,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf69",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -552,6 +621,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf70",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -560,6 +630,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf71",
     description: "Compras do mês",
     amount: "540.00",
     type: "saída",
@@ -568,6 +639,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf72",
     description: "Energia elétrica",
     amount: "200.00",
     type: "saída",
@@ -576,6 +648,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf73",
     description: "Água",
     amount: "150.00",
     type: "saída",
@@ -584,6 +657,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf74",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -592,6 +666,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf75",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -600,6 +675,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf76",
     description: "Compras do mês",
     amount: "559.15",
     type: "saída",
@@ -608,6 +684,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf77",
     description: "Energia elétrica",
     amount: "250.00",
     type: "saída",
@@ -616,6 +693,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf78",
     description: "Água",
     amount: "90.00",
     type: "saída",
@@ -624,6 +702,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf79",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -632,6 +711,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf80",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -640,6 +720,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf81",
     description: "Compras do mês",
     amount: "700.00",
     type: "saída",
@@ -648,6 +729,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf82",
     description: "Energia elétrica",
     amount: "97.00",
     type: "saída",
@@ -656,6 +738,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf83",
     description: "Água",
     amount: "100.10",
     type: "saída",
@@ -664,6 +747,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf84",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -672,6 +756,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf85",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -680,6 +765,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf86",
     description: "Compras do mês",
     amount: "800.50",
     type: "saída",
@@ -688,6 +774,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf87",
     description: "Energia elétrica",
     amount: "75.99",
     type: "saída",
@@ -696,6 +783,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf88",
     description: "Água",
     amount: "80.33",
     type: "saída",
@@ -704,6 +792,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf89",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -712,6 +801,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf90",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -720,6 +810,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf91",
     description: "Compras do mês",
     amount: "600.00",
     type: "saída",
@@ -728,6 +819,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf92",
     description: "Energia elétrica",
     amount: "125.55",
     type: "saída",
@@ -736,6 +828,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf93",
     description: "Água",
     amount: "90.15",
     type: "saída",
@@ -744,6 +837,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf94",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -752,6 +846,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf95",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -760,6 +855,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf96",
     description: "Compras do mês",
     amount: "540.00",
     type: "saída",
@@ -768,6 +864,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf97",
     description: "Energia elétrica",
     amount: "97.00",
     type: "saída",
@@ -776,6 +873,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf98",
     description: "Água",
     amount: "100.10",
     type: "saída",
@@ -784,6 +882,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf99",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -792,6 +891,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf100",
     description: "Plano de Saúde",
     amount: "300.00",
     type: "saída",
@@ -800,6 +900,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf101",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -808,6 +909,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf102",
     description: "Plano de Saúde",
     amount: "700.00",
     type: "saída",
@@ -816,6 +918,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf103",
     description: "Telefone",
     amount: "99.99",
     type: "saída",
@@ -824,6 +927,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf104",
     description: "Lanches",
     amount: "300.00",
     type: "saída",
@@ -832,6 +936,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf105",
     description: "Compras do mês",
     amount: "800.50",
     type: "saída",
@@ -840,6 +945,7 @@ export default [
     unit: "02",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf106",
     description: "Água",
     amount: "1000.75",
     type: "saída",
@@ -848,6 +954,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf107",
     description: "Internet",
     amount: "120.00",
     type: "saída",
@@ -856,6 +963,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf108",
     description: "Energia elétrica",
     amount: "1500.55",
     type: "saída",
@@ -864,6 +972,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf109",
     description: "Água",
     amount: "105.80",
     type: "saída",
@@ -872,6 +981,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf110",
     description: "Internet",
     amount: "1205.00",
     type: "saída",
@@ -880,6 +990,7 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf111",
     description: "Energia elétrica",
     amount: "1505.60",
     type: "saída",
@@ -888,75 +999,12 @@ export default [
     unit: "01",
   },
   {
+    id: "e54ac57e-d19e-45f8-8bc2-2fad3e77cf112",
     description: "Água",
     amount: "110.85",
     type: "saída",
     frequency: "recorrente",
     date: "2020-10-05T00:00:00-03:00",
     unit: "01",
-  },
-  {
-    description: "Internet",
-    amount: "1300.00",
-    type: "saída",
-    frequency: "eventual",
-    date: "2020-10-15T00:00:00-03:00",
-    unit: "01",
-  },
-  {
-    description: "Energia elétrica",
-    amount: "1600.65",
-    type: "saída",
-    frequency: "recorrente",
-    date: "2020-10-25T00:00:00-03:00",
-    unit: "01",
-  },
-  {
-    description: "Água",
-    amount: "115.90",
-    type: "saída",
-    frequency: "eventual",
-    date: "2020-11-05T00:00:00-03:00",
-    unit: "01",
-  },
-  {
-    description: "Internet",
-    amount: "135.00",
-    type: "saída",
-    frequency: "eventual",
-    date: "2020-11-15T00:00:00-03:00",
-    unit: "01",
-  },
-  {
-    description: "Energia elétrica",
-    amount: "1605.70",
-    type: "saída",
-    frequency: "recorrente",
-    date: "2020-11-25T00:00:00-03:00",
-    unit: "01",
-  },
-  {
-    description: "Água",
-    amount: "120.95",
-    type: "saída",
-    frequency: "eventual",
-    date: "2020-12-05T00:00:00-03:00",
-    unit: "01",
-  },
-  {
-    description: "Internet",
-    amount: "140.00",
-    type: "saída",
-    frequency: "recorrente",
-    date: "2020-12-15T00:00:00-03:00",
-    unit: "01",
-  },
-  {
-    description: "Energia elétrica",
-    amount: "1700.75",
-    type: "saída",
-    frequency: "eventual",
-    date: "2020-12-25T00:00:00-03:00",
-    unit: "01",
-  },
-];
+  }
+]

@@ -1,7 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { Container, Content, Filters } from "./styles";
 import { useParams } from "react-router-dom";
-import { v4 as uuid } from "uuid";
 
 import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
@@ -211,7 +210,7 @@ const List: React.FC = () => {
         */
         const formattedData = filteredData.map(item => {
             return {
-                id: uuid(),
+                id: item.id,
                 description: item.description,
                 amountFormatted: formatCurrency(Number(item.amount)),
                 frequency: item.frequency,
