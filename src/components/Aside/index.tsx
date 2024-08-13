@@ -1,16 +1,20 @@
 import { MdDashboard, MdArrowDownward, MdArrowUpward, MdExitToApp, MdClose, MdMenu } from 'react-icons/md';
+import { RiLockPasswordFill } from "react-icons/ri";
+
 import { Container, LogoIMG, Title, HeaderContainer, MenuContainer, MenuItemLink, MenuItemButton, ToggleMenu, ThemeToggleFooter } from "./styles";
 import Toggle from "../Toggle";
 import logo from '../../assets/logo.svg';
 import { useAuth } from '../../hooks/auth';
 import { useTheme } from '../../hooks/theme';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Aside: React.FC = () => {
 
     const { signOut } = useAuth()
     const { toggleTheme, theme } = useTheme()
-    
+    const navigate = useNavigate();
+
     const [toggleMenuIsOpened, setToggleMenuIsOpened] = useState(false)
     const [darkTheme, setDarkTheme] = useState(() => theme.title === 'dark' ? true : false)
 
@@ -21,6 +25,11 @@ const Aside: React.FC = () => {
     const handleChangeTheme = () => {
         setDarkTheme(!darkTheme)
         toggleTheme();
+    }
+
+    const HandleQuit = () => {
+        signOut()
+        navigate('/')
     }
 
     return (
@@ -49,7 +58,12 @@ const Aside: React.FC = () => {
                     Saidas
                 </MenuItemLink>
 
-                <MenuItemButton onClick={signOut}>
+                <MenuItemLink href="/recovery-password">
+                    <RiLockPasswordFill />
+                    Redefinir senha
+                </MenuItemLink>
+
+                <MenuItemButton onClick={HandleQuit}>
                     <MdExitToApp />
                     Sair
                 </MenuItemButton>

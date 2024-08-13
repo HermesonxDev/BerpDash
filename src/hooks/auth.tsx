@@ -1,18 +1,12 @@
-import mockedUser from "../mock/user";
 import { createContext, useState,useContext } from "react";
 import app from '../config/firebase'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail  } from 'firebase/auth'
 
-interface UserType {
-    username: string;
-    email: string;
-    password: string;
-}
 
 interface IAuthContext {
-    user: UserType
     logged: boolean,
-    signIn(email: string, password: string): void,
+    signIn(event: React.FormEvent<HTMLFormElement>, email: string, password: string): void,
+    recoveryPassword(event: React.FormEvent<HTMLFormElement>, email: string): void,
     signOut(): void
 }
 
@@ -32,10 +26,7 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
         return !!isLogged
     })
 
-    const user = mockedUser
-
     const auth = getAuth(app)
-
 
     /*
     * --> LOGIN
@@ -43,12 +34,33 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     *      guardado na base de dados, caso seja guarda essas informações na memória do
     *      navegador para ser usado posteriormente e libera o acesso para a aplicação.
     */
-    const signIn = (email: string, password: string) => {
+    const signIn = (event: React.FormEvent<HTMLFormElement>, email: string, password: string) => {
+        event.preventDefault()
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const currentUser = (userCredential.user)
             localStorage.setItem('@dc5bf16b1811-Dashboard:logged', 'true')
             setLogged(true)
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log("errorMessage:", errorMessage, "errorCode:", errorCode)
+        })
+    }
+
+
+    /*
+    * --> RECOVERY PASSWORD
+    *      Recebe um email e após verificar se esse email esta relacionado a algum
+    *      usuário devolve um outro email para redefinir a senha de acesso ao sistema.
+    */
+    const recoveryPassword = (event: React.FormEvent<HTMLFormElement>, email: string) => {
+        event.preventDefault()
+        sendPasswordResetEmail(auth, email)
+        .then(() => {
+            
+
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -69,7 +81,7 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     }
     
     return (
-        <AuthContext.Provider value={{ user, logged, signIn, signOut }}>
+        <AuthContext.Provider value={{ logged, signIn, recoveryPassword, signOut }}>
             { children }
         </AuthContext.Provider>
     )

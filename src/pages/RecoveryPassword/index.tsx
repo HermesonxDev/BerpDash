@@ -6,41 +6,33 @@ import Button from "../../components/Button";
 
 import { useAuth } from "../../hooks/auth";
 
-const SignIn: React.FC = () => {
+const RecoveryPassword: React.FC = () => {
 
     const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
 
-    const { signIn } = useAuth()
+    const { recoveryPassword } = useAuth()
 
     return (
         <Container>
             <Logo>
                 <img src={LogoIMG} alt="Dashboard" />
-                <h2>Dashboard</h2>
+                <h2>Berp Dashboard</h2>
             </Logo>
 
-            <Form onSubmit={(event) => signIn(event, email, password)}>
-                <FormTitle>Entrar</FormTitle>
+            <Form onSubmit={(event) => recoveryPassword(event, email)}>
+                <FormTitle>Redefinir senha</FormTitle>
 
                 <Input
                     type="email"
-                    placeholder="Email"
+                    placeholder="Digite seu email"
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
 
-                <Input
-                    type="password"
-                    placeholder="Senha"
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-
-                <Button type="submit">Acessar</Button>
+                <Button type="submit">Confirmar</Button>
             </Form>
         </Container>
     )
 }
 
-export default SignIn;
+export default RecoveryPassword;
