@@ -15,6 +15,7 @@ const animate = keyframes`
         opacity: 1;
     }
 `;
+
 interface ILegendProps {
     color: string
 }

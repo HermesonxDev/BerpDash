@@ -8,22 +8,22 @@ import MessageBox from "../../components/MessageBox";
 import PieChartBox from "../../components/PieChartBox";
 import HistoryBox from "../../components/HistoryBox";
 
-import gains from '../../mock/gains';
-import expenses from '../../mock/expenses';
-
 import listOfMonths from "../../utils/months";
 
 import happyIMG from '../../assets/happy.svg';
 import sadIMG from '../../assets/sad.svg';
 import grinningIMG from '../../assets/grinning.svg';
 import BarChartBox from "../../components/BarChartBox";
+import useFirestore from "../../hooks/firestore";
+import Loading from "../../components/Loading";
 
 const Dashboard: React.FC = () => {
 
     const [unitSelected, setUnitSelected] = useState<string>('01');
     const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
     const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
-
+    const { documents: gains, loading: loadingGains } = useFirestore('gains');
+    const { documents: expenses, loading: loadingExpenses } = useFirestore('expenses');
 
     /*
     * --> GUARDA OS DADOS QUE VÃO SER USADOS NA PÁGINA
@@ -536,6 +536,10 @@ const Dashboard: React.FC = () => {
             throw new Error('Invalid year value. Is accept integer numbers.')
         }
     }, [])
+
+    if (loadingGains && loadingExpenses) {
+        return <Loading />
+    }
 
     return (
         <Container>

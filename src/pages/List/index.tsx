@@ -6,12 +6,12 @@ import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import HistoryFinanceCard from "../../components/HistoryFinanceCard";
 
-import gains from '../../mock/gains';
-import expenses from '../../mock/expenses';
+import useFirestore from "../../hooks/firestore";
 
 import formatCurrency from "../../utils/formatCurrency";
 import formatDate from "../../utils/formatDate";
 import listOfMonths from "../../utils/months";
+import Loading from "../../components/Loading";
 
 
 /* TIPANDO A FORMA COMO OS DADOS DEVEM SER FORNECIDOS AO COMPONENTE */
@@ -35,7 +35,6 @@ const List: React.FC = () => {
     const [data, setData] = useState<IData[]>([]);
     const { type } = useParams();
 
-    
     const urlParams = useMemo(() => {
         return type === 'entry-balance'
         ?
@@ -46,14 +45,21 @@ const List: React.FC = () => {
 
 
     /*
-    * --> GUARDA OS DADOS QUE VÃO SER USADOS NA PÁGINA
+    * --> GUARDA A COLEÇÃO USADA NA PÁGINA
     *      Verifica pela URL qual tipo de dado o usuário está querendo visualizar,
     *      devolvendo esses dados para serem utilizados.
     */
-    const listData = useMemo(() => {
-        return type === 'entry-balance' ? gains : expenses
+    const collection = useMemo(() => {
+        return type === 'entry-balance' ? 'gains' : 'expenses'
     }, [type]);
 
+
+    /*
+    * --> GUARDA OS DOCUMENTOS DA COLEÇÃO
+    *      Trás do firebase os documentos da coleção a serem usados na página,
+    *      assim como variáveis auxiliares (documents, loading, error)
+    */
+    const { documents, loading } = useFirestore(collection)
 
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE UNIDADES
@@ -64,7 +70,7 @@ const List: React.FC = () => {
     const units = useMemo(() => {
         let uniqueUnits: string[] = [];
 
-        listData.forEach(item => {
+        documents.forEach(item => {
             const unit = item.unit;
 
             if(!uniqueUnits.includes(unit)) {
@@ -79,7 +85,7 @@ const List: React.FC = () => {
             }
         });
 
-    }, [listData]);
+    }, [documents]);
     
 
     /*
@@ -107,7 +113,7 @@ const List: React.FC = () => {
     const years = useMemo(() => {
         let uniqueYears: number[] = [];
 
-        listData.forEach(item => {
+        documents.forEach(item => {
             const date = new Date(item.date);
             const year = date.getFullYear();
 
@@ -123,7 +129,7 @@ const List: React.FC = () => {
             }
         });
 
-    }, [listData]);
+    }, [documents]);
 
 
     /*
@@ -180,7 +186,7 @@ const List: React.FC = () => {
         * --> FILTRA OS DADOS POR UNIDADE
         *      Carrega somente os dados da unidade selecionada pelo usuário.  
         */
-        const filteredDataByUnit = listData.filter(item => {
+        const filteredDataByUnit = documents.filter(item => {
             const unit = item.unit;
             return unit === unitSelected;
         });
@@ -221,7 +227,11 @@ const List: React.FC = () => {
         });
 
         setData(formattedData)
-    }, [listData, monthSelected, yearSelected, unitSelected, frequencySelected]);
+    }, [documents, monthSelected, yearSelected, unitSelected, frequencySelected]);
+
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <Container>
