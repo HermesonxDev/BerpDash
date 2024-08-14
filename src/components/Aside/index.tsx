@@ -1,4 +1,4 @@
-import { MdDashboard, MdArrowDownward, MdArrowUpward, MdExitToApp, MdClose, MdMenu } from 'react-icons/md';
+import { MdDashboard, MdArrowDownward, MdArrowUpward, MdExitToApp, MdClose, MdMenu, MdAdminPanelSettings } from 'react-icons/md';
 import { RiLockPasswordFill } from "react-icons/ri";
 
 import { Container, LogoIMG, Title, HeaderContainer, MenuContainer, MenuItemLink, MenuItemButton, ToggleMenu, ThemeToggleFooter } from "./styles";
@@ -56,6 +56,11 @@ const Aside: React.FC = () => {
                 <MenuItemLink href="/list/exit-balance">
                     <MdArrowDownward />
                     Saidas
+                </MenuItemLink>
+
+                <MenuItemLink href="/administration">
+                    <MdAdminPanelSettings  />
+                    Administração
                 </MenuItemLink>
 
                 <MenuItemLink href="/recovery-password">

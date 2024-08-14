@@ -4,6 +4,7 @@ export default {
         primary: '#dcdcdc',
         secondary: '#ffffff',
         tertiary: '#f5f5f5',
+        admin: '#007BFF',
         white: '#000000',
         black: '#ffffff',
         gray: '#bfbfbf',
