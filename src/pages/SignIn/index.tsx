@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Logo, Form, FormTitle } from "./styles";
+import { Container, Logo, Form, FormTitle, Message } from "./styles";
 import LogoIMG from "../../assets/logo.svg"
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -11,7 +11,7 @@ const SignIn: React.FC = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
-    const { signIn } = useAuth()
+    const { signIn, message } = useAuth()
 
     return (
         <Container>
@@ -39,6 +39,10 @@ const SignIn: React.FC = () => {
 
                 <Button type="submit">Acessar</Button>
             </Form>
+
+            {
+                message && <Message>{message}</Message>
+            }
         </Container>
     )
 }

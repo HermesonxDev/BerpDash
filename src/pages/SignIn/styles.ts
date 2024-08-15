@@ -46,3 +46,7 @@ export const FormTitle = styled.h1 `
     }
 `;
 
+export const Message = styled.h3 `
+    margin-top: 30px;
+    color: ${props => props.theme.colors.white};
+`;

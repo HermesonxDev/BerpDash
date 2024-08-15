@@ -5,6 +5,7 @@ import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail  } from 'fi
 
 interface IAuthContext {
     logged: boolean,
+    message: string,
     signIn(event: React.FormEvent<HTMLFormElement>, email: string, password: string): void,
     recoveryPassword(event: React.FormEvent<HTMLFormElement>, email: string): void,
     signOut(): void
@@ -26,6 +27,8 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
         return !!isLogged
     })
 
+    const [message, setMessage] = useState('')
+
     const auth = getAuth(app)
 
     /*
@@ -41,11 +44,13 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
             const currentUser = (userCredential.user)
             localStorage.setItem('@dc5bf16b1811-Dashboard:logged', 'true')
             setLogged(true)
+            setMessage('')
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log("errorMessage:", errorMessage, "errorCode:", errorCode)
+            setMessage('Usuário ou senha inválidos!')
         })
     }
 
@@ -81,7 +86,7 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     }
     
     return (
-        <AuthContext.Provider value={{ logged, signIn, recoveryPassword, signOut }}>
+        <AuthContext.Provider value={{ logged, message, signIn, recoveryPassword, signOut }}>
             { children }
         </AuthContext.Provider>
     )
