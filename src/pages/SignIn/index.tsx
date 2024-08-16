@@ -5,13 +5,14 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 
 import { useAuth } from "../../hooks/auth";
+import NotificationBox from "../../components/NotificationBox";
 
 const SignIn: React.FC = () => {
 
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
-    const { signIn, message } = useAuth()
+    const { signIn, showNotification, message } = useAuth()
 
     return (
         <Container>
@@ -39,6 +40,10 @@ const SignIn: React.FC = () => {
 
                 <Button type="submit">Acessar</Button>
             </Form>
+
+            {
+                showNotification && <NotificationBox />
+            }
 
             {
                 message && <Message>{message}</Message>

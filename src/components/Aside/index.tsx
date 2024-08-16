@@ -27,6 +27,11 @@ const Aside: React.FC = () => {
         toggleTheme();
     }
 
+    const HandleRecoveryPassword = () => {
+        signOut()
+        navigate('/recovery-password')
+    }
+
     const HandleQuit = () => {
         signOut()
         navigate('/')
@@ -63,10 +68,10 @@ const Aside: React.FC = () => {
                     Administração
                 </MenuItemLink>
 
-                <MenuItemLink href="/recovery-password">
+                <MenuItemButton onClick={HandleRecoveryPassword}>
                     <RiLockPasswordFill />
                     Redefinir senha
-                </MenuItemLink>
+                </MenuItemButton>
 
                 <MenuItemButton onClick={HandleQuit}>
                     <MdExitToApp />

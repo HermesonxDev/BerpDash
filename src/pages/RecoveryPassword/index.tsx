@@ -5,12 +5,14 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 
 import { useAuth } from "../../hooks/auth";
+import { useNavigate } from "react-router-dom";
 
 const RecoveryPassword: React.FC = () => {
 
-    const [email, setEmail] = useState<string>('')
-
     const { recoveryPassword } = useAuth()
+    const navigate = useNavigate()
+    
+    const [email, setEmail] = useState<string>('')
 
     return (
         <Container>
@@ -19,7 +21,7 @@ const RecoveryPassword: React.FC = () => {
                 <h2>Berp Dashboard</h2>
             </Logo>
 
-            <Form onSubmit={(event) => recoveryPassword(event, email)}>
+            <Form onSubmit={(event) => recoveryPassword(event, email, navigate)}>
                 <FormTitle>Redefinir senha</FormTitle>
 
                 <Input

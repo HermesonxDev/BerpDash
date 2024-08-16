@@ -2,13 +2,22 @@ import { createContext, useState,useContext } from "react";
 import app from '../config/firebase'
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail  } from 'firebase/auth'
 
-
 interface IAuthContext {
     logged: boolean,
+    showNotification: boolean,
     message: string,
-    signIn(event: React.FormEvent<HTMLFormElement>, email: string, password: string): void,
-    recoveryPassword(event: React.FormEvent<HTMLFormElement>, email: string): void,
-    signOut(): void
+    signIn(
+        event: React.FormEvent<HTMLFormElement>,
+        email: string,
+        password: string
+    ): void,
+    recoveryPassword(
+        event: React.FormEvent<HTMLFormElement>,
+        email: string,
+        navigate: (path: string) => void
+    ): void,
+    signOut(): void,
+    removeEmailNotification(): void,
 }
 
 /* CRIA O CONTEXTO PARA SER USADO NA APLICAÇÃO */
@@ -28,6 +37,7 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     })
 
     const [message, setMessage] = useState('')
+    const [showNotification, setShowNotification] = useState(false)
 
     const auth = getAuth(app)
 
@@ -60,12 +70,13 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     *      Recebe um email e após verificar se esse email esta relacionado a algum
     *      usuário devolve um outro email para redefinir a senha de acesso ao sistema.
     */
-    const recoveryPassword = (event: React.FormEvent<HTMLFormElement>, email: string) => {
+    const recoveryPassword = (event: React.FormEvent<HTMLFormElement>, email: string, navigate: (path: string) => void) => {
         event.preventDefault()
         sendPasswordResetEmail(auth, email)
         .then(() => {
-            
-
+            localStorage.removeItem('@dc5bf16b1811-Dashboard:logged')
+            setShowNotification(true)
+            navigate('/')
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -84,9 +95,14 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
         localStorage.removeItem('@dc5bf16b1811-Dashboard:logged')
         setLogged(false)
     }
+
+    
+    const removeEmailNotification = () => {
+        setShowNotification(false)
+    }
     
     return (
-        <AuthContext.Provider value={{ logged, message, signIn, recoveryPassword, signOut }}>
+        <AuthContext.Provider value={{ logged, showNotification, message, signIn, recoveryPassword, signOut, removeEmailNotification }}>
             { children }
         </AuthContext.Provider>
     )
