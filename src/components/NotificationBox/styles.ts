@@ -30,6 +30,12 @@ export const Container = styled.div `
     position: absolute;
     right: 20px;
     bottom: 30px;
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 400px) {
+        max-width: 20rem;
+        bottom: 500px;
+    }
 `;
 
 export const NotificationHeader = styled.div `
@@ -40,6 +46,11 @@ export const EmailIcon = styled(MdOutlineMarkEmailRead) `
     width: 3.5rem;
     height: 3.5rem;
     margin-top: 12px;
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 400px) {
+        margin-top: 10px;
+    }
 `;
 
 export const CloseIcon = styled(IoClose) `
@@ -66,5 +77,19 @@ export const Content = styled.div `
         color: #718096;
         font-size: 1rem;
         line-height: 1.5; 
+    }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 400px) {
+        > h4 {
+            font-size: 1rem;
+            line-height: 1; 
+            margin-bottom: 5px;
+        }
+
+        > p {
+            font-size: 1rem;
+            line-height: 1; 
+        }
     }
 `;
