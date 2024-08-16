@@ -25,4 +25,9 @@ export const Container = styled.div `
     &::-webkit-scrollbar-corner {
         background-color: none;
     }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 400px) {
+        padding-top: 0;
+    }
 `;

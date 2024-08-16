@@ -13,6 +13,12 @@ export const Container = styled.div `
     /* --> MEDIA QUERY DO MOBILE <-- */
     @media(max-width: 400px) {
         flex-direction: column;
+        background-color: ${props => props.theme.colors.primary};
+        padding: 15px 0;
+        margin-bottom: 10px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
     }
 `;
 

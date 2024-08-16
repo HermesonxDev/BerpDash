@@ -20,7 +20,7 @@ export const Container = styled.div<IContainerProps> `
         width: 170px;
         padding-left: 20px;
         position: fixed;
-        z-index: 2;
+        z-index: 1001;
         height: ${props => props.menuIsOpen ? '100vh' : '70px'};
         overflow: hidden;
 
