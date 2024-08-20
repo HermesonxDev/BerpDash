@@ -1,9 +1,12 @@
 import { createContext, useState,useContext } from "react";
 import app from '../config/firebase'
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail  } from 'firebase/auth'
+import SearchUser from "./SearchUser";
+import { FirebaseError } from "firebase/app";
 
 interface IAuthContext {
     logged: boolean,
+    Admin: boolean,
     showNotification: boolean,
     message: string,
     signIn(
@@ -32,8 +35,13 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext)
 const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 
     const [logged, setLogged] = useState<boolean>(() => {
-        const isLogged = localStorage.getItem('@dc5bf16b1811-Dashboard:logged')
+        const isLogged = localStorage.getItem('@dc5bf16b1811-Dashboard:isLogged')
         return !!isLogged
+    })
+
+    const [Admin, setAdmin] = useState<boolean>(() => {
+        const isAdmin = localStorage.getItem('@dc5bf16b1811-Dashboard:isAdmin')
+        return !!isAdmin
     })
 
     const [message, setMessage] = useState('')
@@ -47,22 +55,34 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     *      guardado na base de dados, caso seja guarda essas informações na memória do
     *      navegador para ser usado posteriormente e libera o acesso para a aplicação.
     */
-    const signIn = (event: React.FormEvent<HTMLFormElement>, email: string, password: string) => {
-        event.preventDefault()
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const currentUser = (userCredential.user)
-            localStorage.setItem('@dc5bf16b1811-Dashboard:logged', 'true')
-            setLogged(true)
-            setMessage('')
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log("errorMessage:", errorMessage, "errorCode:", errorCode)
-            setMessage('Usuário ou senha inválidos!')
-        })
-    }
+    const signIn = async (event: React.FormEvent<HTMLFormElement>, email: string, password: string) => {
+        event.preventDefault();
+        
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+    
+            localStorage.setItem('@dc5bf16b1811-Dashboard:isLogged', 'true');
+            setLogged(true);
+            setMessage('');
+
+            const userData = await SearchUser(email);
+    
+            if (userData && userData.length > 0) {
+                const user = userData[0];
+                if (user.role && user.role.includes("admin")) {
+                    localStorage.setItem('@dc5bf16b1811-Dashboard:isAdmin', 'true');
+                    setAdmin(true);
+                }
+            }
+    
+        } catch (error) {
+            const firebaseError = error as FirebaseError;
+            const errorCode = firebaseError.code;
+            const errorMessage = firebaseError.message;
+            console.log("errorMessage:", errorMessage, "errorCode:", errorCode);
+            setMessage('Usuário ou senha inválidos!');
+        }
+    };
 
 
     /*
@@ -92,8 +112,10 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     *      do navegador e retira o acesso dele a aplicação.
     */
     const signOut = () => {
-        localStorage.removeItem('@dc5bf16b1811-Dashboard:logged')
+        localStorage.removeItem('@dc5bf16b1811-Dashboard:isLogged')
+        localStorage.removeItem('@dc5bf16b1811-Dashboard:isAdmin')
         setLogged(false)
+        setAdmin(false)
     }
 
     
@@ -102,7 +124,7 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     }
     
     return (
-        <AuthContext.Provider value={{ logged, showNotification, message, signIn, recoveryPassword, signOut, removeEmailNotification }}>
+        <AuthContext.Provider value={{ logged, Admin, showNotification, message, signIn, recoveryPassword, signOut, removeEmailNotification }}>
             { children }
         </AuthContext.Provider>
     )

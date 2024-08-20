@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Aside: React.FC = () => {
 
-    const { signOut } = useAuth()
+    const { signOut, Admin } = useAuth()
     const { toggleTheme, theme } = useTheme()
     const navigate = useNavigate();
 
@@ -48,25 +48,35 @@ const Aside: React.FC = () => {
             </HeaderContainer>
 
             <MenuContainer>
-                <MenuItemLink href="/">
-                    <MdDashboard />
-                    Dashboard
-                </MenuItemLink>
 
-                <MenuItemLink href="/list/entry-balance">
-                    <MdArrowUpward />
-                    Entradas
-                </MenuItemLink>
+                {
+                    Admin ?
+                    <>
+                        <MenuItemLink href="/">
+                            <MdAdminPanelSettings  />
+                            Administração
+                        </MenuItemLink>
+                    </>
 
-                <MenuItemLink href="/list/exit-balance">
-                    <MdArrowDownward />
-                    Saidas
-                </MenuItemLink>
+                    :
 
-                <MenuItemLink href="/administration">
-                    <MdAdminPanelSettings  />
-                    Administração
-                </MenuItemLink>
+                    <>
+                        <MenuItemLink href="/">
+                            <MdDashboard />
+                            Dashboard
+                        </MenuItemLink>
+
+                        <MenuItemLink href="/list/entry-balance">
+                            <MdArrowUpward />
+                            Entradas
+                        </MenuItemLink>
+
+                        <MenuItemLink href="/list/exit-balance">
+                            <MdArrowDownward />
+                            Saidas
+                        </MenuItemLink>
+                    </>
+                }
 
                 <MenuItemButton onClick={HandleRecoveryPassword}>
                     <RiLockPasswordFill />
