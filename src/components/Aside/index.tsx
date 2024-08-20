@@ -48,34 +48,28 @@ const Aside: React.FC = () => {
             </HeaderContainer>
 
             <MenuContainer>
+                <MenuItemLink href="/">
+                    <MdDashboard />
+                    Dashboard
+                </MenuItemLink>
+
+                <MenuItemLink href="/list/entry-balance">
+                    <MdArrowUpward />
+                    Entradas
+                </MenuItemLink>
+
+                <MenuItemLink href="/list/exit-balance">
+                    <MdArrowDownward />
+                    Saidas
+                </MenuItemLink>
 
                 {
-                    Admin ?
-                    <>
-                        <MenuItemLink href="/">
-                            <MdAdminPanelSettings  />
-                            Administração
-                        </MenuItemLink>
-                    </>
-
-                    :
-
-                    <>
-                        <MenuItemLink href="/">
-                            <MdDashboard />
-                            Dashboard
-                        </MenuItemLink>
-
-                        <MenuItemLink href="/list/entry-balance">
-                            <MdArrowUpward />
-                            Entradas
-                        </MenuItemLink>
-
-                        <MenuItemLink href="/list/exit-balance">
-                            <MdArrowDownward />
-                            Saidas
-                        </MenuItemLink>
-                    </>
+                    Admin
+                    &&
+                    <MenuItemLink href="/administration/list-users">
+                        <MdAdminPanelSettings  />
+                        Administração
+                    </MenuItemLink>
                 }
 
                 <MenuItemButton onClick={HandleRecoveryPassword}>

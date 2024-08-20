@@ -3,15 +3,14 @@ import { useAuth } from "../hooks/auth";
 
 import AppRoutes from "./app.routes";
 import AuthRoutes from "./auth.routes";
-import AdminRoutes from "./admin.routes";
 
 const Routes: React.FC = () => {
     
-    const { logged, Admin } = useAuth()
+    const { logged } = useAuth()
 
     return (
         <BrowserRouter>
-            {logged ? (Admin ? <AdminRoutes /> : <AppRoutes />) : <AuthRoutes />}
+            {logged ? <AppRoutes /> : <AuthRoutes />}
         </BrowserRouter>
     )
 }

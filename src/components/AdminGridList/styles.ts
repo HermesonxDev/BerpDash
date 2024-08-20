@@ -42,5 +42,6 @@ export const Icon = styled.div<IIconButtonProps> `
 
     &:hover {
         opacity: .7;
+        cursor: pointer;
     }
 `;

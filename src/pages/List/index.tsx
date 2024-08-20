@@ -33,6 +33,7 @@ const List: React.FC = () => {
     const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
     const [frequencySelected, setFrequencySelected] = useState(['recorrente', 'eventual']);
     const [data, setData] = useState<IData[]>([]);
+    
     const { type } = useParams();
 
     const urlParams = useMemo(() => {

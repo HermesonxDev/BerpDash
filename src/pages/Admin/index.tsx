@@ -1,19 +1,24 @@
 import { Container } from "./styles"
+import { useParams } from "react-router-dom";
+
 import AdminGridList from "../../components/AdminGridList"
-import useFirestore from "../../hooks/firestore"
-import Loading from "../../components/Loading"
+import AdminGridCreation from "../../components/AdminGridCreation";
 
 const Admin: React.FC = () => {
-
-    const { documents, loading } = useFirestore('users')
-
-    if (loading) {
-        return <Loading />
-    }
     
+    const { type } = useParams();
+
+    if (type === 'create-user') {
+        return (
+            <Container>
+                <AdminGridCreation />
+            </Container>
+        )
+    }
+
     return (
         <Container>
-            <AdminGridList data={documents}/>
+            <AdminGridList />
         </Container>
     )
 }
