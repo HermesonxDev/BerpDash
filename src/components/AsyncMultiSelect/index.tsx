@@ -74,6 +74,10 @@ const AsyncMultiSelect: React.FC = () => {
                 color: "#fff",
             },
         }),
+        placeholder: (provided) => ({
+            ...provided,
+            fontSize: "13px",
+        }),
     };
 
     return (

@@ -58,7 +58,9 @@ const AdminGridCreation: React.FC = () => {
                         <Label>Papel</Label>
 
                         <Select>
-                        <option value="" disabled selected hidden />
+                            <option value="" disabled selected hidden>
+                                Selecione um papel
+                            </option>
                             <option>Admin</option>
                             <option>Dono</option>
                             <option>Gerente</option>
@@ -69,7 +71,9 @@ const AdminGridCreation: React.FC = () => {
                         <Label>Status</Label>
 
                         <Select>
-                            <option value="" disabled selected hidden />
+                            <option value="" disabled selected hidden>
+                                Selecione um status
+                            </option>
                             <option>Ativo</option>
                             <option>Inativo</option>
                         </Select>
