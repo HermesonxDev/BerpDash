@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import AsyncSelect from "react-select/async";
 import { MultiValue, ActionMeta, StylesConfig } from "react-select";
 
@@ -7,20 +7,19 @@ interface OptionType {
     label: string;
 }
 
+interface AsyncMultiSelectProps {
+    onChange: (selectedOptions: OptionType[]) => void;
+}
+
 const mockData = [
-    { id: "1", name: "Item 1" },
-    { id: "2", name: "Item 2" },
-    { id: "3", name: "Item 3" },
-    { id: "4", name: "Item 4" },
-    { id: "5", name: "Item 5" },
+    { id: "1", name: "Unidade 1" },
+    { id: "2", name: "Unidade 2" },
+    { id: "3", name: "Unidade 3" },
+    { id: "4", name: "Unidade 4" },
+    { id: "5", name: "Unidade 5" },
 ];
 
-const AsyncMultiSelect: React.FC = () => {
-    const [selectedOptions, setSelectedOptions] = useState<OptionType[]>([]);
-
-    const handleChange = (newValue: MultiValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
-        setSelectedOptions(newValue as OptionType[]);
-    };
+const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange }) => {
 
     const loadOptions = (inputValue: string): Promise<OptionType[]> => {
         return new Promise((resolve) => {
@@ -86,8 +85,12 @@ const AsyncMultiSelect: React.FC = () => {
             cacheOptions
             defaultOptions={false}
             loadOptions={loadOptions}
-            onChange={handleChange}
-            value={selectedOptions}
+            onChange={(
+                newValue: MultiValue<OptionType>,
+                actionMeta: ActionMeta<OptionType>
+            ) => {
+                onChange(newValue as OptionType[]);
+            }}
             placeholder="Digite para buscar..."
             noOptionsMessage={() => "Digite para buscar opções"}
             styles={customStyles}
