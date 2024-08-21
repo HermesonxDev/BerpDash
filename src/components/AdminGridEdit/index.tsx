@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Container, Form, FormTitle, FormDiv, FormDivButton } from "./styles";
+import { useState, useEffect } from "react";
+import { Container, Form, FormDiv, FormDivButton, FormTitle } from './styles';
+import { useParams } from "react-router-dom";
 
 import ContentHeader from "../ContentHeader";
 import Anchor from "../Anchor";
@@ -8,18 +9,53 @@ import Button from "../Button";
 import Label from "../Label";
 import Select from "../Select";
 import AsyncMultiSelect from "../AsyncMultiSelect";
+import SearchUser from "../../hooks/SearchUser";
 
-const AdminGridCreation: React.FC = () => {
+const AdminGridEdit: React.FC = () => {
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [role, setRole] = useState("");
     const [status, setStatus] = useState<boolean | null>(null);
     const [units, setUnits] = useState<string[]>([]);
 
+    const { id } = useParams();
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (id) {
+                const userData = await SearchUser("id", id);
+
+                if (userData && !Array.isArray(userData)) {
+
+                    const mappedRole = (() => {
+                        switch (userData.role) {
+                            case 'admin':
+                                return 'Admin';
+                            case 'owner':
+                                return 'Dono';
+                            case 'manager':
+                                return 'Gerente';
+                            default:
+                                return '';
+                        }
+                    })();
+
+                    setName(userData.nome || "");
+                    setEmail(userData.email || "");
+                    setRole(mappedRole);
+                    setStatus(userData.status || null);
+                    setUnits(userData.units || []);
+                }
+            }
+        };
+
+        fetchUserData();
+    }, [id]);
+
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({name, email, password, role, status, units});
+        console.log({ name, email, role, status, units });
     };
 
     return (
@@ -31,7 +67,7 @@ const AdminGridCreation: React.FC = () => {
             </ContentHeader>
 
             <Form onSubmit={submit}>
-                <FormTitle>Cadastro de usuário</FormTitle>
+                <FormTitle>Editar usuário</FormTitle>
 
                 <FormDiv>
                     <Label>Nome</Label>
@@ -51,17 +87,6 @@ const AdminGridCreation: React.FC = () => {
                         placeholder="Digite um email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </FormDiv>
-
-                <FormDiv>
-                    <Label>Senha</Label>
-                    <Input
-                        type="password"
-                        placeholder="Digite uma senha"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </FormDiv>
@@ -112,4 +137,5 @@ const AdminGridCreation: React.FC = () => {
     )
 }
 
-export default AdminGridCreation;
+export default AdminGridEdit;
+

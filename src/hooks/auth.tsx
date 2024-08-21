@@ -57,22 +57,25 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     */
     const signIn = async (event: React.FormEvent<HTMLFormElement>, email: string, password: string) => {
         event.preventDefault();
-        
+    
         try {
             await signInWithEmailAndPassword(auth, email, password);
     
             localStorage.setItem('@dc5bf16b1811-Dashboard:isLogged', 'true');
             setLogged(true);
             setMessage('');
-
-            const userData = await SearchUser(email);
     
-            if (userData && userData.length > 0) {
+            const userData = await SearchUser("email", email);
+    
+            if (Array.isArray(userData) && userData.length > 0) {
                 const user = userData[0];
                 if (user.role && user.role.includes("admin")) {
                     localStorage.setItem('@dc5bf16b1811-Dashboard:isAdmin', 'true');
                     setAdmin(true);
                 }
+            } else {
+                // Se userData não for um array, significa que algo deu errado na busca
+                console.log('Nenhum usuário encontrado com o email fornecido.');
             }
     
         } catch (error) {
@@ -83,6 +86,7 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
             setMessage('Usuário ou senha inválidos!');
         }
     };
+    
 
 
     /*

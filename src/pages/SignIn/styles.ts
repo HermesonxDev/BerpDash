@@ -43,11 +43,28 @@ export const Logo = styled.div `
 `;
 
 export const Form = styled.form `
+    display: flex;
+    flex-direction: column;
     width: 300px;
-    height: 300px;
+    height: 320px;
     padding: 30px;
     border-radius: 10px;
     background-color: ${props => props.theme.colors.tertiary};
+
+    > p {
+        margin-top: 20px;
+        color: ${props => props.theme.colors.white}
+    }
+
+    > p a {
+        text-decoration: none;
+        color: ${props => props.theme.colors.white}
+    }
+
+    > p a:hover {
+        text-decoration: underline;
+        color: #0000EE;
+    }
 `;
 
 export const FormTitle = styled.h1 `

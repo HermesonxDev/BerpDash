@@ -25,6 +25,11 @@ export const GridItem = styled.div`
     padding: 10px;
     background-color: ${props => props.theme.colors.tertiary};
     border-radius: 5px;
+
+    > a {
+        text-decoration: none;
+        color: unset;
+    }
 `;
 
 export const UserRow = styled.div`

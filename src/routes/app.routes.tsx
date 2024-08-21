@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import Dashboard from '../pages/Dashboard'
 import List from '../pages/List'
 import AdminPanel from '../pages/Admin';
-import UserProfile from '../pages/UserProfile';
+import AdminGridEdit from '../components/AdminGridEdit';
 
 const AppRoutes: React.FC = () => {
     
@@ -22,7 +22,7 @@ const AppRoutes: React.FC = () => {
                     &&
                     <>
                         <Route path="/administration/:type" element={<AdminPanel />} />
-                        <Route path="/user/:id" element={<UserProfile />} />
+                        <Route path="/administration/edit/user/:id" element={<AdminGridEdit />} />
                     </>
                 }
             </Routes>

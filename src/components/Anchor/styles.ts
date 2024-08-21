@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.a `
+    text-align: center;
     font-size: 14px;
     width: 100%;
     margin: 7px 0;

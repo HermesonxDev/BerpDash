@@ -38,7 +38,11 @@ const SignIn: React.FC = () => {
                     required
                 />
 
+                
+
                 <Button type="submit">Acessar</Button>
+
+                <p>Esqueceu a senha? <a href="/recovery-password">Acesse.</a></p>
             </Form>
             
             {

@@ -48,7 +48,9 @@ const AdminGridList: React.FC = () => {
                                 }
                             </GridItem>
                             <GridItem>
-                                <Icon as={FaPen} />
+                                <a href={`/administration/edit/user/${user.id}`}>
+                                    <Icon as={FaPen} />
+                                </a>
                                 <Icon as={MdDelete} />
                                 <Icon as={MdDisabledVisible } />
                             </GridItem>
