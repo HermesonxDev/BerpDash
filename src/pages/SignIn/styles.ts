@@ -1,4 +1,20 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const animate = keyframes`
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: .3;
+    }
+
+    100% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+`;
 
 export const Container = styled.div `
     height: 100vh;
@@ -49,4 +65,5 @@ export const FormTitle = styled.h1 `
 export const Message = styled.h3 `
     margin-top: 30px;
     color: ${props => props.theme.colors.white};
+    animation: ${animate} .5s;
 `;
