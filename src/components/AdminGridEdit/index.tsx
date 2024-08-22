@@ -29,18 +29,13 @@ const AdminGridEdit: React.FC = () => {
                 if (userData && !Array.isArray(userData)) {
 
                     const mappedRole = (() => {
-                        switch (userData.role) {
-                            case 'admin':
-                                return 'Admin';
-                            case 'owner':
-                                return 'Dono';
-                            case 'manager':
-                                return 'Gerente';
-                            default:
-                                return '';
-                        }
+                        const roles = Array.isArray(userData.role) ? userData.role : [userData.role];
+                        if (roles.includes('admin')) return 'admin';
+                        if (roles.includes('owner')) return 'owner';
+                        if (roles.includes('manager')) return 'manager';
+                        return '';
                     })();
-
+                    
                     setName(userData.nome || "");
                     setEmail(userData.email || "");
                     setRole(mappedRole);
@@ -97,9 +92,9 @@ const AdminGridEdit: React.FC = () => {
                         <option value="" disabled>
                             Selecione um papel
                         </option>
-                        <option value="Admin">Admin</option>
-                        <option value="Dono">Dono</option>
-                        <option value="Gerente">Gerente</option>
+                        <option value="admin">Admin</option>
+                        <option value="owner">Dono</option>
+                        <option value="manager">Gerente</option>
                     </Select>
                 </FormDiv>
 
