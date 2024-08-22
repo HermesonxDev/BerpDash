@@ -11,6 +11,19 @@ const AdminGridList: React.FC = () => {
     
     const { documents: data, loading } = useFirestore('users')
 
+    const handleSetRole = (role: string) => {
+        switch (role) {
+            case 'owner':
+                return 'Dono';
+            case 'admin':
+                return 'Admin';
+            case 'manager':
+                return 'Gerente';
+            default:
+                return role;
+        }
+    };
+
     if (loading) {
         return <Loading />
     }
@@ -38,9 +51,16 @@ const AdminGridList: React.FC = () => {
                 {
                     data.map(user => (
                         <UserRow key={user.id}>
-                            <GridItem>{user.nome}</GridItem>
+                            <GridItem>{user.name}</GridItem>
                             <GridItem>{user.email}</GridItem>
-                            <GridItem>{user.role[0]}</GridItem>
+                            <GridItem>
+                                {user.role.map((r: string, index: number) => (
+                                    <span key={index}>
+                                        {handleSetRole(r)}
+                                        {index < user.role.length - 1 ? ', ' : ''}
+                                    </span>
+                                ))}
+                            </GridItem>
                             <GridItem>{user.units.length} Unidades</GridItem>
                             <GridItem>
                                 {

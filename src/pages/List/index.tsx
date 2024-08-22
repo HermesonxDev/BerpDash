@@ -5,13 +5,13 @@ import { useParams } from "react-router-dom";
 import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import HistoryFinanceCard from "../../components/HistoryFinanceCard";
+import Loading from "../../components/Loading";
 
 import useFirestore from "../../hooks/firestore";
 
 import formatCurrency from "../../utils/formatCurrency";
 import formatDate from "../../utils/formatDate";
 import listOfMonths from "../../utils/months";
-import Loading from "../../components/Loading";
 
 
 /* TIPANDO A FORMA COMO OS DADOS DEVEM SER FORNECIDOS AO COMPONENTE */

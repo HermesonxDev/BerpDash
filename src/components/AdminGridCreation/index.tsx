@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Container, Form, FormTitle, FormDiv, FormDivButton } from "./styles";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
 import ContentHeader from "../ContentHeader";
 import Anchor from "../Anchor";
@@ -9,17 +11,83 @@ import Label from "../Label";
 import Select from "../Select";
 import AsyncMultiSelect from "../AsyncMultiSelect";
 
+import app from "../../config/firebase";
+import { useNavigate } from "react-router-dom";
+
+import listOfRoles from '../../utils/roles'
+import listOfUnits from '../../utils/units'
+
+interface OptionType {
+    value: string;
+    label: string;
+}
+
 const AdminGridCreation: React.FC = () => {
+    
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("");
+    const [role, setRole] = useState<string[]>([]);
     const [status, setStatus] = useState<boolean | null>(null);
     const [units, setUnits] = useState<string[]>([]);
 
-    const submit = (e: React.FormEvent) => {
+    const db = getFirestore(app)
+    const auth = getAuth(app)
+
+    const navigate = useNavigate()
+
+    // const testFirestoreConnection = async () => {
+    //     try {
+    //         await addDoc(collection(db, "test"), {
+    //             test: "Firestore is working!"
+    //         });
+    //         console.log("Test document added successfully");
+    //     } catch (error) {
+    //         console.error("Error adding test document:", error);
+    //     }
+    // };
+    
+    // testFirestoreConnection();
+
+    const loadRoleOptions = async (): Promise<OptionType[]> => {
+        return listOfRoles.map(item => ({
+            value: item.value,
+            label: item.label,
+        }));
+    };
+    
+    const loadUnitOptions = async (): Promise<OptionType[]> => {
+        return listOfUnits.map(item => ({
+            value: item.value,
+            label: item.label,
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({name, email, password, role, status, units});
+
+        console.log('Formulário enviado', { name, email, password, role, status, units })
+        
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            const timestamp = new Date().toISOString()
+
+            await addDoc(collection(db, "users"), {
+                uid: user.uid,
+                name,
+                email,
+                password,
+                role,
+                status,
+                units,
+                created_at: timestamp,
+                last_access: timestamp
+            })
+            navigate("/administration/list-users")
+        } catch (error) {
+            console.error("Erro ao adicionar documento: ", error);
+        }
     };
 
     return (
@@ -30,7 +98,7 @@ const AdminGridCreation: React.FC = () => {
                 </Anchor>
             </ContentHeader>
 
-            <Form onSubmit={submit}>
+            <Form onSubmit={handleSubmit}>
                 <FormTitle>Cadastro de usuário</FormTitle>
 
                 <FormDiv>
@@ -68,14 +136,11 @@ const AdminGridCreation: React.FC = () => {
 
                 <FormDiv>
                     <Label>Papel</Label>
-                    <Select value={role} onChange={(e) => setRole(e.target.value)}>
-                        <option value="" disabled>
-                            Selecione um papel
-                        </option>
-                        <option value="Admin">Admin</option>
-                        <option value="Dono">Dono</option>
-                        <option value="Gerente">Gerente</option>
-                    </Select>
+                    
+                    <AsyncMultiSelect
+                        loadData={loadRoleOptions}
+                        onChange={(selectedOptions) => setRole(selectedOptions.map(option => option.value))}
+                    />
                 </FormDiv>
 
                 <FormDiv>
@@ -95,9 +160,8 @@ const AdminGridCreation: React.FC = () => {
                 <FormDiv>
                     <Label>Unidades</Label>
                     <AsyncMultiSelect
-                        onChange={(selectedOptions) =>
-                            setUnits(selectedOptions.map((option) => option.value))
-                        }
+                        loadData={loadUnitOptions}
+                        onChange={(selectedOptions) => setUnits(selectedOptions.map(option => option.value))}
                     />
                 </FormDiv>
 

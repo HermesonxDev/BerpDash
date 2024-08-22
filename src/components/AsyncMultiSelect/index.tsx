@@ -8,29 +8,18 @@ interface OptionType {
 }
 
 interface AsyncMultiSelectProps {
-    onChange: (selectedOptions: OptionType[]) => void;
+    onChange: (selectedOptions: OptionType[]) => void
+    loadData: () => Promise<OptionType[]>
+    defaultValue?: OptionType[];
 }
 
-const mockData = [
-    { id: "1", name: "Unidade 1" },
-    { id: "2", name: "Unidade 2" },
-    { id: "3", name: "Unidade 3" },
-    { id: "4", name: "Unidade 4" },
-    { id: "5", name: "Unidade 5" },
-];
+const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange, loadData, defaultValue }) => {
 
-const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange }) => {
-
-    const loadOptions = (inputValue: string): Promise<OptionType[]> => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                const filteredOptions = mockData
-                    .filter(item => item.name.toLowerCase().includes(inputValue.toLowerCase()))
-                    .map(item => ({ value: item.id, label: item.name }));
-                resolve(filteredOptions);
-            }, 1000);
-        });
-    };
+    const loadOptions = async (inputValue: string): Promise<OptionType[]> => {
+        const data = await loadData();
+        return data
+            .filter(item => item.label.toLowerCase().includes(inputValue.toLowerCase()));
+    }
 
     const customStyles: StylesConfig<OptionType, true> = {
         container: (provided) => ({
@@ -94,6 +83,7 @@ const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange }) => {
             placeholder="Digite para buscar..."
             noOptionsMessage={() => "Digite para buscar opções"}
             styles={customStyles}
+            defaultValue={defaultValue}
         />
     );
 };

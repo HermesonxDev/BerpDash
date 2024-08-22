@@ -11,15 +11,39 @@ import Select from "../Select";
 import AsyncMultiSelect from "../AsyncMultiSelect";
 import SearchUser from "../../hooks/SearchUser";
 
+import listOfRoles from '../../utils/roles';
+import listOfUnits from '../../utils/units';
+
+interface OptionType {
+    value: string;
+    label: string;
+}
+
 const AdminGridEdit: React.FC = () => {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [role, setRole] = useState("");
+    const [role, setRole] = useState<string[]>([]);
     const [status, setStatus] = useState<boolean | null>(null);
     const [units, setUnits] = useState<string[]>([]);
+    const [selectedRoles, setSelectedRoles] = useState<OptionType[]>([]);
+    const [selectedUnits, setSelectedUnits] = useState<OptionType[]>([]);
 
     const { id } = useParams();
+
+    const loadRoleOptions = async (): Promise<OptionType[]> => {
+        return listOfRoles.map(item => ({
+            value: item.value,
+            label: item.label,
+        }));
+    };
+    
+    const loadUnitOptions = async (): Promise<OptionType[]> => {
+        return listOfUnits.map(item => ({
+            value: item.value,
+            label: item.label,
+        }));
+    };
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -27,18 +51,9 @@ const AdminGridEdit: React.FC = () => {
                 const userData = await SearchUser("id", id);
 
                 if (userData && !Array.isArray(userData)) {
-
-                    const mappedRole = (() => {
-                        const roles = Array.isArray(userData.role) ? userData.role : [userData.role];
-                        if (roles.includes('admin')) return 'admin';
-                        if (roles.includes('owner')) return 'owner';
-                        if (roles.includes('manager')) return 'manager';
-                        return '';
-                    })();
-                    
-                    setName(userData.nome || "");
+                    setName(userData.name || "");
                     setEmail(userData.email || "");
-                    setRole(mappedRole);
+                    setRole(userData.role || []);
                     setStatus(userData.status || null);
                     setUnits(userData.units || []);
                 }
@@ -48,11 +63,28 @@ const AdminGridEdit: React.FC = () => {
         fetchUserData();
     }, [id]);
 
+    useEffect(() => {
+        if (role.length > 0) {
+            setSelectedRoles(role.map(r => ({
+                value: r,
+                label: listOfRoles.find(role => role.value === r)?.label || r
+            })));
+        }
+        if (units.length > 0) {
+            setSelectedUnits(units.map(u => ({
+                value: u,
+                label: listOfUnits.find(unit => unit.value === u)?.label || u
+            })));
+        }
+    }, [role, units]);
+
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log({ name, email, role, status, units });
     };
 
+    console.log("selectedRoles", selectedRoles)
+    console.log("selectedUnits", selectedUnits)
     return (
         <Container>
             <ContentHeader title="Administração" lineColor="#1A73E8">
@@ -88,14 +120,14 @@ const AdminGridEdit: React.FC = () => {
 
                 <FormDiv>
                     <Label>Papel</Label>
-                    <Select value={role} onChange={(e) => setRole(e.target.value)}>
-                        <option value="" disabled>
-                            Selecione um papel
-                        </option>
-                        <option value="admin">Admin</option>
-                        <option value="owner">Dono</option>
-                        <option value="manager">Gerente</option>
-                    </Select>
+                    <AsyncMultiSelect
+                        loadData={loadRoleOptions}
+                        onChange={(selectedOptions) => {
+                            setSelectedRoles(selectedOptions);
+                            setRole(selectedOptions.map(option => option.value));
+                        }}
+                        defaultValue={selectedRoles}
+                    />
                 </FormDiv>
 
                 <FormDiv>
@@ -115,9 +147,12 @@ const AdminGridEdit: React.FC = () => {
                 <FormDiv>
                     <Label>Unidades</Label>
                     <AsyncMultiSelect
-                        onChange={(selectedOptions) =>
-                            setUnits(selectedOptions.map((option) => option.value))
-                        }
+                        loadData={loadUnitOptions}
+                        onChange={(selectedOptions) => {
+                            setSelectedUnits(selectedOptions);
+                            setUnits(selectedOptions.map(option => option.value));
+                        }}
+                        defaultValue={selectedUnits}
                     />
                 </FormDiv>
 
@@ -129,8 +164,7 @@ const AdminGridEdit: React.FC = () => {
                 </FormDivButton>
             </Form>
         </Container>
-    )
+    );
 }
 
 export default AdminGridEdit;
-

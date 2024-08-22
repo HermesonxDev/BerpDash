@@ -52,18 +52,20 @@ export const Form = styled.form `
     background-color: ${props => props.theme.colors.tertiary};
 
     > p {
+        font-size: 15px;
         margin-top: 20px;
-        color: ${props => props.theme.colors.white}
+        color: ${props => props.theme.colors.white};
+        opacity: .9;
     }
 
     > p a {
-        text-decoration: none;
+        font-size: 15px;
         color: ${props => props.theme.colors.white}
     }
 
     > p a:hover {
-        text-decoration: underline;
         color: #0000EE;
+        opacity: 1;
     }
 `;
 
