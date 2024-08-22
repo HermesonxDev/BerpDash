@@ -1,6 +1,6 @@
 import React from "react";
 import AsyncSelect from "react-select/async";
-import { MultiValue, ActionMeta, StylesConfig } from "react-select";
+import { MultiValue, StylesConfig } from "react-select";
 
 interface OptionType {
     value: string;
@@ -21,12 +21,14 @@ const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange, loadData,
             .filter(item => item.label.toLowerCase().includes(inputValue.toLowerCase()));
     }
 
+
+
     const customStyles: StylesConfig<OptionType, true> = {
         container: (provided) => ({
             ...provided,
             width: "100%",
         }),
-        control: (provided, state) => ({
+        control: (provided) => ({
             ...provided,
             width: "100%",
             borderRadius: "5px",
@@ -75,15 +77,15 @@ const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange, loadData,
             defaultOptions={false}
             loadOptions={loadOptions}
             onChange={(
-                newValue: MultiValue<OptionType>,
-                actionMeta: ActionMeta<OptionType>
+                newValue: MultiValue<OptionType>
             ) => {
+                console.log('onChange:', newValue)
                 onChange(newValue as OptionType[]);
             }}
             placeholder="Digite para buscar..."
             noOptionsMessage={() => "Digite para buscar opções"}
             styles={customStyles}
-            defaultValue={defaultValue}
+            value={defaultValue}
         />
     );
 };
