@@ -2,14 +2,15 @@ import { Container, GridContainer, GridItem, HeaderRow, UserRow, Icon } from "./
 import { FaPen } from "react-icons/fa";
 import { MdDelete, MdDisabledVisible } from "react-icons/md";
 
-import useFirestore from "../../hooks/firestore";
 import Loading from "../Loading";
 import ContentHeader from "../ContentHeader";
 import Anchor from "../Anchor";
+import { useFirestore } from "../../hooks/firestore";
 
 const AdminGridList: React.FC = () => {
     
-    const { documents: data, loading } = useFirestore('users')
+    const { getFirestore } = useFirestore()
+    const { documents: data, loading } = getFirestore('users')
 
     const handleSetRole = (role: string) => {
         switch (role) {
@@ -71,7 +72,7 @@ const AdminGridList: React.FC = () => {
                                 <a href={`/administration/edit/user/${user.id}`}>
                                     <Icon as={FaPen} />
                                 </a>
-                                <Icon as={MdDelete} />
+                                <Icon as={MdDelete}/>
                                 <Icon as={MdDisabledVisible } />
                             </GridItem>
                         </UserRow>

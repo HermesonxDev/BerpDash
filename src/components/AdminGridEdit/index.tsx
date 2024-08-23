@@ -9,12 +9,11 @@ import Button from "../Button";
 import Label from "../Label";
 import Select from "../Select";
 import AsyncMultiSelect from "../AsyncMultiSelect";
-import SearchUser from "../../hooks/SearchUser";
 
 import listOfRoles from '../../utils/roles';
 import listOfUnits from '../../utils/units';
-import { doc, getFirestore, setDoc } from "firebase/firestore";
-import app from "../../config/firebase";
+
+import { useFirestore } from "../../hooks/firestore";
 interface OptionType {
     value: string;
     label: string;
@@ -31,7 +30,9 @@ const AdminGridEdit: React.FC = () => {
     const [selectedUnits, setSelectedUnits] = useState<OptionType[]>([]);
 
     const { id } = useParams();
-    const db = getFirestore(app)
+    
+    const { SearchUser, editUserFirebase } = useFirestore()
+
     const navigate = useNavigate()
 
     const loadRoleOptions = async (): Promise<OptionType[]> => {
@@ -80,26 +81,6 @@ const AdminGridEdit: React.FC = () => {
             })));
         }
     }, [role, units]);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-    
-        try {
-            if (id) {
-                const userRef = doc(db, "users", id);
-                await setDoc(userRef, {
-                    name,
-                    email,
-                    role,
-                    status,
-                    units
-                }, { merge: true });
-            }
-            navigate("/administration/list-users")
-        } catch (error) {
-            console.error("Erro ao atualizar usuário:", error);
-        }
-    }
     
     return (
         <Container>
@@ -109,7 +90,16 @@ const AdminGridEdit: React.FC = () => {
                 </Anchor>
             </ContentHeader>
 
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={(event) => editUserFirebase(
+                event,
+                id,
+                name,
+                email,
+                role,
+                status,
+                units,
+                navigate
+            )}>
                 <FormTitle>Editar usuário</FormTitle>
 
                 <FormDiv>

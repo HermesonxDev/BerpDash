@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Container, Form, FormTitle, FormDiv, FormDivButton } from "./styles";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
 
 import ContentHeader from "../ContentHeader";
 import Anchor from "../Anchor";
@@ -11,11 +9,11 @@ import Label from "../Label";
 import Select from "../Select";
 import AsyncMultiSelect from "../AsyncMultiSelect";
 
-import app from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 
 import listOfRoles from '../../utils/roles'
 import listOfUnits from '../../utils/units'
+import { useFirestore } from "../../hooks/firestore";
 
 interface OptionType {
     value: string;
@@ -31,9 +29,7 @@ const AdminGridCreation: React.FC = () => {
     const [status, setStatus] = useState<boolean | null>(null);
     const [units, setUnits] = useState<string[]>([]);
 
-    const db = getFirestore(app)
-    const auth = getAuth(app)
-
+    const { createUserFirebase } = useFirestore()
     const navigate = useNavigate()
 
     const loadRoleOptions = async (): Promise<OptionType[]> => {
@@ -50,31 +46,6 @@ const AdminGridCreation: React.FC = () => {
         }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            const timestamp = new Date().toISOString()
-
-            await addDoc(collection(db, "users"), {
-                uid: user.uid,
-                name,
-                email,
-                password,
-                role,
-                status,
-                units,
-                created_at: timestamp,
-                last_access: timestamp
-            })
-            navigate("/administration/list-users")
-        } catch (error) {
-            console.error("Erro ao adicionar documento: ", error);
-        }
-    };
-
     return (
         <Container>
             <ContentHeader title="Administração" lineColor="#1A73E8">
@@ -83,7 +54,17 @@ const AdminGridCreation: React.FC = () => {
                 </Anchor>
             </ContentHeader>
 
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={
+                (event) => createUserFirebase(
+                    event,
+                    name,
+                    email,
+                    password,
+                    role,
+                    status,
+                    units,
+                    navigate
+            )}>
                 <FormTitle>Cadastro de usuário</FormTitle>
 
                 <FormDiv>

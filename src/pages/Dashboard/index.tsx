@@ -14,16 +14,18 @@ import happyIMG from '../../assets/happy.svg';
 import sadIMG from '../../assets/sad.svg';
 import grinningIMG from '../../assets/grinning.svg';
 import BarChartBox from "../../components/BarChartBox";
-import useFirestore from "../../hooks/firestore";
 import Loading from "../../components/Loading";
+import { useFirestore } from "../../hooks/firestore";
 
 const Dashboard: React.FC = () => {
 
     const [unitSelected, setUnitSelected] = useState<string>('01');
     const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
     const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
-    const { documents: gains, loading: loadingGains } = useFirestore('gains');
-    const { documents: expenses, loading: loadingExpenses } = useFirestore('expenses');
+
+    const { getFirestore } = useFirestore()
+    const { documents: gains, loading: loadingGains } = getFirestore('gains');
+    const { documents: expenses, loading: loadingExpenses } = getFirestore('expenses');
 
     /*
     * --> GUARDA OS DADOS QUE VÃO SER USADOS NA PÁGINA

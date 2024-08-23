@@ -17,7 +17,9 @@ const SelectInput: React.FC<ISelectInputProps> = ({ options, selectedValue, defa
                     <option
                         key={option.value}
                         value={option.value}
-                    >{option.label}</option>
+                    >
+                        {option.label}
+                    </option>
                 ))
             }
         </select>

@@ -3,10 +3,12 @@ import { Container, Profile, Welcome, UserName } from "./styles";
 import Toggle from "../Toggle";
 
 import { useTheme } from "../../hooks/theme";
+import { useFirestore } from "../../hooks/firestore";
 
 const MainHeader: React.FC = () => {
 
     const { toggleTheme, theme } = useTheme()
+    const { user } = useFirestore()
 
     const [darkTheme, setDarkTheme] = useState(() => theme.title === 'dark' ? true : false)
 
@@ -26,7 +28,7 @@ const MainHeader: React.FC = () => {
 
             <Profile>
                 <Welcome>Olá</Welcome>
-                <UserName>Administrador</UserName>
+                <UserName>{user.name}</UserName>
             </Profile>
         </Container>
     )

@@ -7,11 +7,10 @@ import SelectInput from "../../components/SelectInput";
 import HistoryFinanceCard from "../../components/HistoryFinanceCard";
 import Loading from "../../components/Loading";
 
-import useFirestore from "../../hooks/firestore";
-
 import formatCurrency from "../../utils/formatCurrency";
 import formatDate from "../../utils/formatDate";
 import listOfMonths from "../../utils/months";
+import { useFirestore } from "../../hooks/firestore";
 
 
 /* TIPANDO A FORMA COMO OS DADOS DEVEM SER FORNECIDOS AO COMPONENTE */
@@ -36,6 +35,8 @@ const List: React.FC = () => {
     
     const { type } = useParams();
 
+    const { getFirestore } = useFirestore()
+    
     const urlParams = useMemo(() => {
         return type === 'entry-balance'
         ?
@@ -60,7 +61,7 @@ const List: React.FC = () => {
     *      Trás do firebase os documentos da coleção a serem usados na página,
     *      assim como variáveis auxiliares (documents, loading, error)
     */
-    const { documents, loading } = useFirestore(collection)
+    const { documents, loading } = getFirestore(collection)
 
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE UNIDADES

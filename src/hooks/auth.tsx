@@ -1,8 +1,7 @@
 import { createContext, useState,useContext } from "react";
-import app from '../config/firebase'
-import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail  } from 'firebase/auth'
-import SearchUser from "./SearchUser";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'
 import { FirebaseError } from "firebase/app";
+import { useFirestore } from "./firestore";
 
 interface IAuthContext {
     logged: boolean,
@@ -21,6 +20,18 @@ interface IAuthContext {
     ): void,
     signOut(): void,
     removeEmailNotification(): void,
+}
+
+interface IUserProps {
+    created_at: string;
+    email: string;
+    last_access: string;
+    name: string;
+    password: string;
+    role: string[];
+    status: boolean;
+    uid: string;
+    units: string[];
 }
 
 /* CRIA O CONTEXTO PARA SER USADO NA APLICAÇÃO */
@@ -47,6 +58,8 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     const [message, setMessage] = useState('')
     const [showNotification, setShowNotification] = useState(false)
 
+    const { app, setUser, SearchUser } = useFirestore()
+
     const auth = getAuth(app)
 
     /*
@@ -63,21 +76,34 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     
             localStorage.setItem('@dc5bf16b1811-Dashboard:isLogged', 'true');
             setLogged(true);
-            setMessage('');
     
             const userData = await SearchUser("email", email);
-    
+            
             if (Array.isArray(userData) && userData.length > 0) {
                 const user = userData[0];
+    
                 if (user.role && user.role.includes("admin")) {
                     localStorage.setItem('@dc5bf16b1811-Dashboard:isAdmin', 'true');
                     setAdmin(true);
                 }
+
+                const userProps: IUserProps = {
+                    created_at: user.created_at || '',
+                    email: user.email || '',
+                    last_access: user.last_access || '',
+                    name: user.name || '',
+                    password: user.password || '',
+                    role: user.role || [],
+                    status: user.status || false,
+                    uid: user.uid || '',
+                    units: user.units || [],
+                };
+    
+                setUser(userProps);
             } else {
-                // Se userData não for um array, significa que algo deu errado na busca
                 console.log('Nenhum usuário encontrado com o email fornecido.');
             }
-    
+            setMessage('');
         } catch (error) {
             const firebaseError = error as FirebaseError;
             const errorCode = firebaseError.code;
@@ -86,7 +112,6 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
             setMessage('Usuário ou senha inválidos!');
         }
     };
-    
 
 
     /*
@@ -118,6 +143,7 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     const signOut = () => {
         localStorage.removeItem('@dc5bf16b1811-Dashboard:isLogged')
         localStorage.removeItem('@dc5bf16b1811-Dashboard:isAdmin')
+        localStorage.removeItem('@dc5bf16b1811-Dashboard:user')
         setLogged(false)
         setAdmin(false)
     }
@@ -128,7 +154,16 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
     }
     
     return (
-        <AuthContext.Provider value={{ logged, Admin, showNotification, message, signIn, recoveryPassword, signOut, removeEmailNotification }}>
+        <AuthContext.Provider value={{
+            logged,
+            Admin,
+            showNotification,
+            message,
+            signIn,
+            recoveryPassword,
+            signOut,
+            removeEmailNotification
+        }}>
             { children }
         </AuthContext.Provider>
     )

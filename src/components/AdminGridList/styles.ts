@@ -36,7 +36,7 @@ export const UserRow = styled.div`
     display: contents;
 `;
 
-export const Icon = styled.div<IIconButtonProps> `
+export const Icon = styled.button<IIconButtonProps> `
     width: 30px;
     height: 30px;
     padding: 5px;
