@@ -36,19 +36,6 @@ const AdminGridCreation: React.FC = () => {
 
     const navigate = useNavigate()
 
-    // const testFirestoreConnection = async () => {
-    //     try {
-    //         await addDoc(collection(db, "test"), {
-    //             test: "Firestore is working!"
-    //         });
-    //         console.log("Test document added successfully");
-    //     } catch (error) {
-    //         console.error("Error adding test document:", error);
-    //     }
-    // };
-    
-    // testFirestoreConnection();
-
     const loadRoleOptions = async (): Promise<OptionType[]> => {
         return listOfRoles.map(item => ({
             value: item.value,
@@ -65,8 +52,6 @@ const AdminGridCreation: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        console.log('Formulário enviado', { name, email, password, role, status, units })
         
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);

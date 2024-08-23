@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, Form, FormDiv, FormDivButton, FormTitle } from './styles';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import ContentHeader from "../ContentHeader";
 import Anchor from "../Anchor";
@@ -13,7 +13,8 @@ import SearchUser from "../../hooks/SearchUser";
 
 import listOfRoles from '../../utils/roles';
 import listOfUnits from '../../utils/units';
-
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+import app from "../../config/firebase";
 interface OptionType {
     value: string;
     label: string;
@@ -30,6 +31,8 @@ const AdminGridEdit: React.FC = () => {
     const [selectedUnits, setSelectedUnits] = useState<OptionType[]>([]);
 
     const { id } = useParams();
+    const db = getFirestore(app)
+    const navigate = useNavigate()
 
     const loadRoleOptions = async (): Promise<OptionType[]> => {
         return listOfRoles.map(item => ({
@@ -78,13 +81,25 @@ const AdminGridEdit: React.FC = () => {
         }
     }, [role, units]);
 
-    const submit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({ name, email, role, status, units });
-    };
-
-    console.log("selectedRoles", selectedRoles)
-    console.log("selectedUnits", selectedUnits)
+    
+        try {
+            if (id) {
+                const userRef = doc(db, "users", id);
+                await setDoc(userRef, {
+                    name,
+                    email,
+                    role,
+                    status,
+                    units
+                }, { merge: true });
+            }
+            navigate("/administration/list-users")
+        } catch (error) {
+            console.error("Erro ao atualizar usuário:", error);
+        }
+    }
     
     return (
         <Container>
@@ -94,7 +109,7 @@ const AdminGridEdit: React.FC = () => {
                 </Anchor>
             </ContentHeader>
 
-            <Form onSubmit={submit}>
+            <Form onSubmit={handleSubmit}>
                 <FormTitle>Editar usuário</FormTitle>
 
                 <FormDiv>
