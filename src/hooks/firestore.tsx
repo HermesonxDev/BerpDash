@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { initializeApp, FirebaseApp } from "firebase/app";
 import { getFirestore as getFirestoreDB, collection, getDocs, query, QuerySnapshot, DocumentData, where, getDoc, doc, addDoc, setDoc } from "firebase/firestore";
-import { getAuth, Auth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, Auth, createUserWithEmailAndPassword, updateEmail } from "firebase/auth";
 import firebaseConfig from "../config/firebase";
 
 interface IUserProps {
@@ -51,8 +51,15 @@ interface IFirestoreContext {
     ): void
 }
 
+/* CRIA O CONTEXTO PARA SER USADO NA APLICAÇÃO */
 const FirestoreContext = createContext<IFirestoreContext>({} as IFirestoreContext);
 
+
+/*
+* --> PROVÊ O CONTEXTO PARA A APLICAÇÃO
+*      Guarda as funções e variáveis que podem ser chamadas e utilizadas em qualquer
+*      canto da aplicação.
+*/
 const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 
     const app = initializeApp(firebaseConfig);
@@ -76,6 +83,11 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
     });
 
 
+    /*
+    * --> GUARDA OS DADOS DO USUÁRIO
+    *      Verifica e guarda os dados do usuário no localstorage do navegador
+    *      para ser usado em qualquer lugar da aplicação.
+    */
     const setUser: React.Dispatch<React.SetStateAction<IUserProps>> = (value) => {
         if (typeof value === 'function') {
             setUserState((prevState) => {
@@ -90,6 +102,11 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
     };
 
 
+    /*
+    * --> BUSCA OS DADOS DO USUÁRIO NO BANCO
+    *      Recebe um campo em especifico e busca os dados do usuário de acordo com 
+    *      o campo fornecido.
+    */
     const SearchUser = async (field: string, value: string | number): Promise<DocumentData | DocumentData[] | null> => {
         try {
             if (field === "id") {
@@ -121,6 +138,11 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
     };
 
 
+    /*
+    * --> BUSCA UMA COLEÇÃO NO BANCO
+    *      Recebe o nome da coleção e busca todos os documentos contidos nela
+    *      para serem usados na aplicação.
+    */
     const getFirestore = (collectionName: string) => {
         const [documents, setDocuments] = useState<any[]>([]);
         const [loading, setLoading] = useState(true);
@@ -152,6 +174,11 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
     };
 
 
+    /*
+    * --> CRIA UM USUÁRIO NO BANCO
+    *      Recebe todos os dados do usuário e depois cria ele no Firebase Authentication
+    *      e no depois Firestore, na coleção "users".
+    */
     const createUserFirebase = async (
         event: React.FormEvent<HTMLFormElement>,
         name: string,
@@ -187,6 +214,12 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
     }
 
 
+    /*
+    * --> EDITA UM USUÁRIO NO BANCO
+    *      Recebe todos os dados do usuário e depois edita as informações dele na
+    *      coleção "users" do Firestore, caso o email do usuário tenha sido alterado ele também
+    *      ira mudar no Firebase Authentication.
+    */
     const editUserFirebase = async (
         event: React.FormEvent<HTMLFormElement>,
         id: string,
@@ -199,7 +232,7 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
 
     ) => {
         event.preventDefault();
-    
+
         try {
             if (id) {
                 const userRef = doc(db, "users", id);
@@ -211,7 +244,12 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
                     units
                 }, { merge: true });
             }
-            navigate("/administration/list-users")
+
+            if (auth.currentUser && auth.currentUser.email !== email) {
+                await updateEmail(auth.currentUser, email);
+            }
+
+            navigate("/administration/list-users");
         } catch (error) {
             console.error("Erro ao atualizar usuário:", error);
         }
@@ -234,6 +272,12 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
     );
 };
 
+
+/*
+* --> DA ACESSO AS FUNÇÕES E VARIÁVEIS DO CONTEXTO
+*      Por meio de desestruturação é possivel acessar qualquer dado do contexto
+*      ao instanciar a função abaixo.
+*/
 function useFirestore(): IFirestoreContext {
     const context = useContext(FirestoreContext);
     if (!context) {

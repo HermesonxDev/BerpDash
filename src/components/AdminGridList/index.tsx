@@ -6,9 +6,13 @@ import Loading from "../Loading";
 import ContentHeader from "../ContentHeader";
 import Anchor from "../Anchor";
 import { useFirestore } from "../../hooks/firestore";
+import { useState } from "react";
+import Modal from "../Modal";
 
 const AdminGridList: React.FC = () => {
     
+    const [deleteModal, setDeleteModal] = useState(false)
+
     const { getFirestore } = useFirestore()
     const { documents: data, loading } = getFirestore('users')
 
@@ -72,13 +76,22 @@ const AdminGridList: React.FC = () => {
                                 <a href={`/administration/edit/user/${user.id}`}>
                                     <Icon as={FaPen} />
                                 </a>
-                                <Icon as={MdDelete}/>
+                                <Icon
+                                    as={MdDelete}
+                                    onClick={() => setDeleteModal(!deleteModal)}
+                                />
                                 <Icon as={MdDisabledVisible } />
                             </GridItem>
                         </UserRow>
                     ))
                 }
             </GridContainer>
+
+            {
+                deleteModal
+                &&
+                <Modal />
+            }
         </Container>
     )
 }
