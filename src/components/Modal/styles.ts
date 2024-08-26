@@ -1,5 +1,9 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, DefaultTheme } from 'styled-components';
 import { IoWarningOutline } from "react-icons/io5";
+
+interface IHeaderModalProps {
+    backgroundColor?: keyof DefaultTheme['colors']
+}
 
 const animate = keyframes`
     0% {
@@ -42,14 +46,17 @@ export const Container = styled.div`
     animation: ${animate} .5s;
 `;
 
-export const HeaderModal = styled.div `
+export const HeaderModal = styled.div<IHeaderModalProps> `
     display: flex;
     flex-direction: row;
     gap: 10px;
     width: 100%;
     height: 50px;
     padding: 12px;
-    background-color: ${props => props.theme.colors.warning};
+    background-color: ${(props) =>
+        props.backgroundColor
+        ? props.theme.colors[props.backgroundColor]
+        : props.theme.colors.warning};
     border-radius: 8px 8px 0 0;
     box-shadow: 0 6px 6px -1px rgba(0, 0, 0, 0.1);
 `;

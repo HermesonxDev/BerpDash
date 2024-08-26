@@ -1,29 +1,45 @@
-import React from 'react';
-import Button from "../Button";
 import { Container, HeaderModal, WarningIcon, ContentModal, AlertText, FooterModal, Controllers, Backdrop } from "./styles";
 
+import Button from "../Button";
+
+import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
+
 interface ModalProps {
-    onClose: () => void;
-    onDelete: () => void;
+    title: string,
+    action: string,
+    backgroundColor?: string,
+    onAction: () => void,
+    onClose: () => void
 }
 
-const Modal: React.FC<ModalProps> = ({ onClose, onDelete }) => (
+const Modal: React.FC<ModalProps> = ({ title, action, backgroundColor, onAction, onClose }) => (
     <>
         <Backdrop />
         <Container>
-            <HeaderModal>
-                <h2>Excluir Usuário</h2>
+            <HeaderModal backgroundColor={backgroundColor}>
+                <h2>{title}</h2>
                 <WarningIcon />
             </HeaderModal>
 
             <ContentModal>
-                <AlertText>Tem certeza que deseja excluir esse usuário?</AlertText>
+                <AlertText>Tem certeza que deseja {action} esse usuário?</AlertText>
             </ContentModal>
 
             <FooterModal>
                 <Controllers>
-                    <Button onClick={onDelete}>Excluir</Button>
-                    <Button onClick={onClose}>Cancelar</Button>
+                    <Button
+                        backgroundColor="info"
+                        onClick={onAction}
+                    >
+                        {capitalizeFirstLetter(action)}
+                    </Button>
+                    
+                    <Button
+                        backgroundColor="info"
+                        onClick={onClose}
+                    >
+                        Cancelar
+                    </Button>
                 </Controllers>
             </FooterModal>
         </Container>

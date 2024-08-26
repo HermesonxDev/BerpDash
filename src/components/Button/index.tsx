@@ -1,12 +1,12 @@
 import { ButtonHTMLAttributes } from "react";
-import { Container } from "./styles";
+import { Container, ButtonProps } from "./styles";
 
-type IButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
+interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonProps {}
 
-const Button: React.FC<IButtonProps> = ({ children, ...rest }) => (
-    <Container {...rest}>
-        { children }
+const Button: React.FC<IButtonProps> = ({ children, backgroundColor, ...rest }) => (
+    <Container backgroundColor={backgroundColor} {...rest}>
+        {children}
     </Container>
-)
+);
 
-export default Button
+export default Button;

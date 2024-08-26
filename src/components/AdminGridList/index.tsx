@@ -1,6 +1,6 @@
 import { Container, GridContainer, GridItem, HeaderRow, UserRow, Icon } from "./styles";
 import { FaPen } from "react-icons/fa";
-import { MdDelete, MdDisabledVisible } from "react-icons/md";
+import { MdDelete, MdAppBlocking  } from "react-icons/md";
 
 import Loading from "../Loading";
 import ContentHeader from "../ContentHeader";
@@ -15,6 +15,8 @@ const AdminGridList: React.FC = () => {
     const { documents: data, loading } = getFirestore('users')
 
     const [deleteModal, setDeleteModal] = useState(false);
+    const [deactiveModal, setDeactiveModal] = useState(false);
+
     const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null)
 
     const handleSetRole = (role: string) => {
@@ -93,7 +95,10 @@ const AdminGridList: React.FC = () => {
                                 as={MdDelete}
                                 onClick={() => handleOpenDeleteModal(user.id)}
                             />
-                            <Icon as={MdDisabledVisible} />
+                            <Icon
+                                as={MdAppBlocking}
+                                onClick={() => setDeactiveModal(true)}
+                            />
                         </GridItem>
                     </UserRow>
                 ))}
@@ -101,8 +106,20 @@ const AdminGridList: React.FC = () => {
 
             {deleteModal && 
                 <Modal
-                    onDelete={handleDeleteUser}
+                    title="Excluir Usuário"
+                    action="excluir"
+                    onAction={handleDeleteUser}
                     onClose={() => setDeleteModal(false)}
+                />
+            }
+
+            {deactiveModal && 
+                <Modal
+                    title="Desativar Usuário"
+                    action="desativar"
+                    backgroundColor="info"
+                    onAction={() => {}}
+                    onClose={() => setDeactiveModal(false)}
                 />
             }
         </Container>
