@@ -10,11 +10,12 @@ import { useState } from "react";
 import Modal from "../Modal";
 
 const AdminGridList: React.FC = () => {
-    
-    const [deleteModal, setDeleteModal] = useState(false)
 
-    const { getFirestore } = useFirestore()
+    const { getFirestore, deleteUserFirebase } = useFirestore()
     const { documents: data, loading } = getFirestore('users')
+
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null)
 
     const handleSetRole = (role: string) => {
         switch (role) {
@@ -27,22 +28,39 @@ const AdminGridList: React.FC = () => {
             default:
                 return role;
         }
-    };
+    }
+
+    const handleDeleteUser = async () => {
+        if (userIdToDelete) {
+            const result = await deleteUserFirebase(userIdToDelete);
+
+            if (result.success) {
+                alert(result.message);
+                setUserIdToDelete(null);
+                setDeleteModal(false);
+            } else {
+                alert(`Erro ao deletar usuário: ${result.message}`);
+            }
+        }
+    }
+
+    const handleOpenDeleteModal = (userId: string) => {
+        setUserIdToDelete(userId);
+        setDeleteModal(true);
+    }
 
     if (loading) {
-        return <Loading />
+        return <Loading />;
     }
 
     return (
         <Container>
             <ContentHeader title="Administração" lineColor="#1A73E8">
-                <Anchor href="/administration/create-user">
-                    Adicionar
-                </Anchor>
+                <Anchor href="/administration/create-user">Adicionar</Anchor>
             </ContentHeader>
 
             <h2>Usuários</h2>
-            
+
             <GridContainer>
                 <HeaderRow>
                     <GridItem>Nome</GridItem>
@@ -53,47 +71,42 @@ const AdminGridList: React.FC = () => {
                     <GridItem>Ações</GridItem>
                 </HeaderRow>
 
-                {
-                    data.map(user => (
-                        <UserRow key={user.id}>
-                            <GridItem>{user.name}</GridItem>
-                            <GridItem>{user.email}</GridItem>
-                            <GridItem>
-                                {user.role.map((r: string, index: number) => (
-                                    <span key={index}>
-                                        {handleSetRole(r)}
-                                        {index < user.role.length - 1 ? ', ' : ''}
-                                    </span>
-                                ))}
-                            </GridItem>
-                            <GridItem>{user.units.length} Unidades</GridItem>
-                            <GridItem>
-                                {
-                                    user.status ? "Ativo" : "Inativo"
-                                }
-                            </GridItem>
-                            <GridItem>
-                                <a href={`/administration/edit/user/${user.id}`}>
-                                    <Icon as={FaPen} />
-                                </a>
-                                <Icon
-                                    as={MdDelete}
-                                    onClick={() => setDeleteModal(!deleteModal)}
-                                />
-                                <Icon as={MdDisabledVisible } />
-                            </GridItem>
-                        </UserRow>
-                    ))
-                }
+                {data.map(user => (
+                    <UserRow key={user.id}>
+                        <GridItem>{user.name}</GridItem>
+                        <GridItem>{user.email}</GridItem>
+                        <GridItem>
+                            {user.role.map((r: string, index: number) => (
+                                <span key={index}>
+                                    {handleSetRole(r)}
+                                    {index < user.role.length - 1 ? ', ' : ''}
+                                </span>
+                            ))}
+                        </GridItem>
+                        <GridItem>{user.units.length} Unidades</GridItem>
+                        <GridItem>{user.status ? "Ativo" : "Inativo"}</GridItem>
+                        <GridItem>
+                            <a href={`/administration/edit/user/${user.id}`}>
+                                <Icon as={FaPen} />
+                            </a>
+                            <Icon
+                                as={MdDelete}
+                                onClick={() => handleOpenDeleteModal(user.id)}
+                            />
+                            <Icon as={MdDisabledVisible} />
+                        </GridItem>
+                    </UserRow>
+                ))}
             </GridContainer>
 
-            {
-                deleteModal
-                &&
-                <Modal />
+            {deleteModal && 
+                <Modal
+                    onDelete={handleDeleteUser}
+                    onClose={() => setDeleteModal(false)}
+                />
             }
         </Container>
-    )
-}
+    );
+};
 
-export default AdminGridList
+export default AdminGridList;

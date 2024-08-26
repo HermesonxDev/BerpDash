@@ -1,24 +1,33 @@
+import React from 'react';
 import Button from "../Button";
-import { Container, HeaderModal, WarningIcon, ContentModal, AlertText, FooterModal, Controllers } from "./styles";
+import { Container, HeaderModal, WarningIcon, ContentModal, AlertText, FooterModal, Controllers, Backdrop } from "./styles";
 
-const Modal: React.FC = () => (
-    <Container>
-        <HeaderModal>
-            <h2>Excluir Usuário</h2>
-            <WarningIcon />
-        </HeaderModal>
+interface ModalProps {
+    onClose: () => void;
+    onDelete: () => void;
+}
 
-        <ContentModal>
-            <AlertText>Tem certeza que deseja excluir esse usuário?</AlertText>
-        </ContentModal>
+const Modal: React.FC<ModalProps> = ({ onClose, onDelete }) => (
+    <>
+        <Backdrop />
+        <Container>
+            <HeaderModal>
+                <h2>Excluir Usuário</h2>
+                <WarningIcon />
+            </HeaderModal>
 
-        <FooterModal>
-            <Controllers>
-                <Button>Excluir</Button>
-                <Button>Cancelar</Button>
-            </Controllers>
-        </FooterModal>
-    </Container>
-)
+            <ContentModal>
+                <AlertText>Tem certeza que deseja excluir esse usuário?</AlertText>
+            </ContentModal>
 
-export default Modal
+            <FooterModal>
+                <Controllers>
+                    <Button onClick={onDelete}>Excluir</Button>
+                    <Button onClick={onClose}>Cancelar</Button>
+                </Controllers>
+            </FooterModal>
+        </Container>
+    </>
+);
+
+export default Modal;

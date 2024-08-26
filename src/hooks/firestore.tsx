@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { initializeApp, FirebaseApp } from "firebase/app";
 import { getFirestore as getFirestoreDB, collection, getDocs, query, QuerySnapshot, DocumentData, where, getDoc, doc, addDoc, setDoc } from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
 import { getAuth, Auth, createUserWithEmailAndPassword, updateEmail } from "firebase/auth";
 import firebaseConfig from "../config/firebase";
 
@@ -14,6 +15,11 @@ interface IUserProps {
     status: boolean;
     uid: string;
     units: string[];
+}
+
+interface DeleteUserResult {
+    success: boolean;
+    message: string;
 }
 
 interface IFirestoreContext {
@@ -48,7 +54,8 @@ interface IFirestoreContext {
         status: boolean | null,
         units: string[],
         navigate: (path: string) => void
-    ): void
+    ): void,
+    deleteUserFirebase(uid: string): Promise<DeleteUserResult>
 }
 
 /* CRIA O CONTEXTO PARA SER USADO NA APLICAÇÃO */
@@ -255,6 +262,25 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
         }
     }
 
+
+    /*
+    * --> DELETA UM USUÁRIO NO BANCO
+    *      Recebe o ID do usuário e deleta as informações dele no Firebase Authentication
+    *      e na coleção "users" do Firestore.
+    */
+    const deleteUserFirebase = async (uid: string): Promise<DeleteUserResult> => {
+        const functions = getFunctions(app);
+        const deleteUserFunction = httpsCallable(functions, 'deleteUser');
+
+        try {
+            const result = await deleteUserFunction({ uid });
+            return result.data as DeleteUserResult;
+        } catch (error: any) {
+            console.error("Erro ao deletar usuário:", error);
+            return { success: false, message: error.message };
+        }
+    }
+
     return (
         <FirestoreContext.Provider value={{
             user,
@@ -265,7 +291,8 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
             SearchUser,
             getFirestore,
             createUserFirebase,
-            editUserFirebase
+            editUserFirebase,
+            deleteUserFirebase
         }}>
             {children}
         </FirestoreContext.Provider>

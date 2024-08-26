@@ -112,7 +112,7 @@ export const Legend = styled.li<ILegendProps> `
     }
 
     /* --> MEDIA QUERY DO MOBILE <-- */
-    @media(max-width: 1354px) {
+    @media(max-width: 1345px) {
         font-size: 14px;
         margin: 3px 0;
 

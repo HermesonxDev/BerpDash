@@ -1,13 +1,45 @@
-import styled from 'styled-components'
-import { IoWarningOutline } from "react-icons/io5"
+import styled, { keyframes } from 'styled-components';
+import { IoWarningOutline } from "react-icons/io5";
 
-export const Container = styled.div `
-    width: 500px;
+const animate = keyframes`
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: .3;
+    }
+
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+`;
+
+export const Backdrop = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 998;
+`;
+
+export const Container = styled.div`
+    position: fixed;
+    top: 250px;
+    right: 300px;
+    width: 600px;
     height: 175px;
     display: flex;
     flex-direction: column;
     background-color: ${props => props.theme.colors.white};
     border-radius: 8px;
+    z-index: 999;
+    animation: ${animate} .5s;
 `;
 
 export const HeaderModal = styled.div `
