@@ -8,20 +8,16 @@ interface OptionType {
 }
 
 interface AsyncMultiSelectProps {
-    onChange: (selectedOptions: OptionType[]) => void
-    loadData: () => Promise<OptionType[]>
+    onChange: (selectedOptions: OptionType[]) => void,
+    loadData: (inputValue: string) => Promise<OptionType[]>,
     defaultValue?: OptionType[];
 }
 
 const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange, loadData, defaultValue }) => {
 
     const loadOptions = async (inputValue: string): Promise<OptionType[]> => {
-        const data = await loadData();
-        return data
-            .filter(item => item.label.toLowerCase().includes(inputValue.toLowerCase()));
+        return await loadData(inputValue);
     }
-
-
 
     const customStyles: StylesConfig<OptionType, true> = {
         container: (provided) => ({
@@ -76,12 +72,7 @@ const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange, loadData,
             cacheOptions
             defaultOptions={false}
             loadOptions={loadOptions}
-            onChange={(
-                newValue: MultiValue<OptionType>
-            ) => {
-                console.log('onChange:', newValue)
-                onChange(newValue as OptionType[]);
-            }}
+            onChange={(newValue: MultiValue<OptionType>) => onChange(newValue as OptionType[])}
             placeholder="Digite para buscar..."
             noOptionsMessage={() => "Digite para buscar opções"}
             styles={customStyles}

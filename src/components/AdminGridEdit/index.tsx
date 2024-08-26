@@ -11,7 +11,6 @@ import Select from "../Select";
 import AsyncMultiSelect from "../AsyncMultiSelect";
 
 import listOfRoles from '../../utils/roles';
-import listOfUnits from '../../utils/units';
 
 import { useFirestore } from "../../hooks/firestore";
 interface OptionType {
@@ -31,7 +30,9 @@ const AdminGridEdit: React.FC = () => {
 
     const { id } = useParams();
     
-    const { SearchUser, editUserFirebase } = useFirestore()
+    const { SearchUser, getFirestore, editUserFirebase, getFirestoreWithSearch } = useFirestore()
+
+    const { documents: listOfUnits } = getFirestore('units')
 
     const navigate = useNavigate()
 
@@ -39,15 +40,16 @@ const AdminGridEdit: React.FC = () => {
         return listOfRoles.map(item => ({
             value: item.value,
             label: item.label,
-        }));
-    };
+        }))
+    }
     
-    const loadUnitOptions = async (): Promise<OptionType[]> => {
-        return listOfUnits.map(item => ({
-            value: item.value,
-            label: item.label,
-        }));
-    };
+    const loadUnitOptions = async (inputValue: string): Promise<OptionType[]> => {
+        const units = await getFirestoreWithSearch('units', inputValue);
+        return units.map(unit => ({
+            value: unit.id,
+            label: unit.name,
+        }))
+    }
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -74,13 +76,17 @@ const AdminGridEdit: React.FC = () => {
                 label: listOfRoles.find(role => role.value === r)?.label || r
             })));
         }
+
         if (units.length > 0) {
-            setSelectedUnits(units.map(u => ({
-                value: u,
-                label: listOfUnits.find(unit => unit.value === u)?.label || u
-            })));
+            setSelectedUnits(units.map(u => {
+                const foundUnit = listOfUnits.find(unit => unit.id === u);
+                return {
+                    value: foundUnit?.id || u,
+                    label: foundUnit?.name || u
+                };
+            }));
         }
-    }, [role, units]);
+    }, [role, units, listOfUnits]);
     
     return (
         <Container>

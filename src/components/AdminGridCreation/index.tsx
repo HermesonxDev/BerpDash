@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Container, Form, FormTitle, FormDiv, FormDivButton } from "./styles";
+import { useNavigate } from "react-router-dom";
+import { useFirestore } from "../../hooks/firestore";
 
 import ContentHeader from "../ContentHeader";
 import Anchor from "../Anchor";
@@ -9,11 +11,7 @@ import Label from "../Label";
 import Select from "../Select";
 import AsyncMultiSelect from "../AsyncMultiSelect";
 
-import { useNavigate } from "react-router-dom";
-
 import listOfRoles from '../../utils/roles'
-import listOfUnits from '../../utils/units'
-import { useFirestore } from "../../hooks/firestore";
 
 interface OptionType {
     value: string;
@@ -29,22 +27,23 @@ const AdminGridCreation: React.FC = () => {
     const [status, setStatus] = useState<boolean | null>(null);
     const [units, setUnits] = useState<string[]>([]);
 
-    const { createUserFirebase } = useFirestore()
+    const { createUserFirebase, getFirestoreWithSearch } = useFirestore()
     const navigate = useNavigate()
 
     const loadRoleOptions = async (): Promise<OptionType[]> => {
         return listOfRoles.map(item => ({
             value: item.value,
             label: item.label,
-        }));
-    };
+        }))
+    }
     
-    const loadUnitOptions = async (): Promise<OptionType[]> => {
-        return listOfUnits.map(item => ({
-            value: item.value,
-            label: item.label,
-        }));
-    };
+    const loadUnitOptions = async (inputValue: string): Promise<OptionType[]> => {
+        const units = await getFirestoreWithSearch('units', inputValue);
+        return units.map(unit => ({
+            value: unit.id,
+            label: unit.name,
+        }))
+    }
 
     return (
         <Container>

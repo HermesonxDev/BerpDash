@@ -35,6 +35,10 @@ interface IFirestoreContext {
     getFirestore: (
         collectionName: string
     ) => { documents: any[]; loading: boolean; error: Error | null },
+    getFirestoreWithSearch: (
+        collectionName: string,
+        inputValue: string
+    ) => Promise<any[]>,
     createUserFirebase(
         event: React.FormEvent<HTMLFormElement>,
         name: string,
@@ -181,6 +185,29 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
     };
 
 
+    const getFirestoreWithSearch = async (collectionName: string, inputValue: string) => {
+        try {
+            const q = query(
+                collection(db, collectionName),
+                where('name', '>=', inputValue),  // Filtrando com base no nome
+                where('name', '<=', inputValue + '\uf8ff') // Fazendo o filtro para nomes que começam com inputValue
+            );
+    
+            const querySnapshot: QuerySnapshot = await getDocs(q);
+            const docs: any[] = [];
+    
+            querySnapshot.forEach((doc) => {
+                docs.push({ id: doc.id, ...doc.data() });
+            });
+    
+            return docs; // Retorna os documentos filtrados
+        } catch (error) {
+            console.error("Erro ao buscar documentos do Firestore:", error);
+            return []; // Retorna um array vazio em caso de erro
+        }
+    }
+
+
     /*
     * --> CRIA UM USUÁRIO NO BANCO
     *      Recebe todos os dados do usuário e depois cria ele no Firebase Authentication
@@ -290,6 +317,7 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
             setUser,
             SearchUser,
             getFirestore,
+            getFirestoreWithSearch,
             createUserFirebase,
             editUserFirebase,
             deleteUserFirebase
