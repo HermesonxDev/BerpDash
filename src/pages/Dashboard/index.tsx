@@ -9,6 +9,7 @@ import PieChartBox from "../../components/PieChartBox";
 import HistoryBox from "../../components/HistoryBox";
 
 import listOfMonths from "../../utils/months";
+import getYears from "../../utils/getYears";
 
 import happyIMG from '../../assets/happy.svg';
 import sadIMG from '../../assets/sad.svg';
@@ -23,9 +24,11 @@ const Dashboard: React.FC = () => {
     const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
     const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
 
-    const { getFirestore } = useFirestore()
+    const { user, getFirestore } = useFirestore()
+
     const { documents: gains, loading: loadingGains } = getFirestore('gains');
     const { documents: expenses, loading: loadingExpenses } = getFirestore('expenses');
+    const { documents: databaseUnits, loading: loadingUnits } = getFirestore('units');
 
     /*
     * --> GUARDA OS DADOS QUE VÃO SER USADOS NA PÁGINA
@@ -35,30 +38,18 @@ const Dashboard: React.FC = () => {
     
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE UNIDADES
-    *      Em vez de criar um array com as unidades, essa constante verifica
-    *      de quais unidades os dados vinheram, devolvendo no final apenas esses
-    *      em vez de unidades em que não tiveram nenhuma movimentação.
+    *      Verifica quais unidades o usuário possui, e pega as informações
+    *      dessas unidades na base de dados.
     */
     const units = useMemo(() => {
-        let uniqueUnits: string[] = [];
+        const filteredUnits = databaseUnits.filter(unit => user.units.includes(unit.id));
 
-        listData.forEach(item => {
-            const unit = item.unit;
-
-            if(!uniqueUnits.includes(unit)) {
-                uniqueUnits.push(unit)
-            }
-        });
-
-        return uniqueUnits.map(unit => {
-            return {
-                value: unit,
-                label: "Unidade " + unit,
-            }
-        });
-
-    }, [listData]);
-
+        return filteredUnits.map(unit => ({
+            value: unit.id,
+            label: unit.name,
+        }));
+    }, [user, databaseUnits]);
+    
 
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE MESES
@@ -78,30 +69,21 @@ const Dashboard: React.FC = () => {
 
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE ANOS
-    *      Em vez de criar um array com os anos, essa constante verifica
-    *      os anos em que os dados foram salvos, devolvendo no final apenas 
-    *      esses em vez de anos em que não tiveram nenhuma movimentação.
+    *      Mantém atualizado, o ano atual e os 4 anos anteriores a ele,
+    *      fazendo com que se mantenham sempre 5 opções de anos para o
+    *      usuário selecionar.
     */
     const years = useMemo(() => {
-        let uniqueYears: number[] = [];
+        const listOfYears = getYears()
 
-        listData.forEach(item => {
-            const date = new Date(item.date);
-            const year = date.getFullYear();
-
-            if(!uniqueYears.includes(year)) {
-                uniqueYears.push(year)
-            }
-        });
-
-        return uniqueYears.map(year => {
+        return listOfYears.map(year => {
             return {
                 value: year,
                 label: year,
             }
         });
 
-    }, [listData]);
+    }, [user, databaseUnits]);
 
 
     /*
@@ -539,7 +521,7 @@ const Dashboard: React.FC = () => {
         }
     }, [])
 
-    if (loadingGains && loadingExpenses) {
+    if (loadingGains && loadingExpenses && loadingUnits) {
         return <Loading />
     }
 
