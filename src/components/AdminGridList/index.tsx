@@ -1,6 +1,6 @@
 import { Container, GridContainer, GridItem, HeaderRow, UserRow, Icon } from "./styles";
 import { FaPen } from "react-icons/fa";
-import { MdDelete, MdAppBlocking  } from "react-icons/md";
+import { MdDelete, MdAppBlocking, MdAppShortcut  } from "react-icons/md";
 
 import Loading from "../Loading";
 import ContentHeader from "../ContentHeader";
@@ -11,13 +11,17 @@ import Modal from "../Modal";
 
 const AdminGridList: React.FC = () => {
 
-    const { getFirestore, deleteUserFirebase } = useFirestore()
-    const { documents: data, loading } = getFirestore('users')
+    const {
+        getFirestore,
+        deactiveUserFirebase,
+        activeUserFirebase,
+        deleteUserFirebase
+    } = useFirestore();
 
-    const [deleteModal, setDeleteModal] = useState(false);
-    const [deactiveModal, setDeactiveModal] = useState(false);
+    const { documents: data, loading } = getFirestore('users');
 
-    const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null)
+    const [modalType, setModalType] = useState<string | null>(null);
+    const [userId, setUserId] = useState<string | null>(null);
 
     const handleSetRole = (role: string) => {
         switch (role) {
@@ -32,24 +36,33 @@ const AdminGridList: React.FC = () => {
         }
     }
 
-    const handleDeleteUser = async () => {
-        if (userIdToDelete) {
-            const result = await deleteUserFirebase(userIdToDelete);
+    const handleUserAction = async () => {
+        if (!userId || !modalType) return;
 
-            if (result.success) {
-                alert(result.message);
-                setUserIdToDelete(null);
-                setDeleteModal(false);
-            } else {
-                alert(`Erro ao deletar usuário: ${result.message}`);
-            }
+        if (modalType === 'delete') {
+            await deleteUserFirebase(userId);
+            window.location.reload()
+
+        } else if (modalType === 'deactivate') {
+            await deactiveUserFirebase(userId);
+            window.location.reload()
+
+        } else if (modalType === 'activate') {
+            await activeUserFirebase(userId);
+            window.location.reload()
         }
-    }
 
-    const handleOpenDeleteModal = (userId: string) => {
-        setUserIdToDelete(userId);
-        setDeleteModal(true);
-    }
+        setUserId(null);
+        setModalType(null);
+    };
+
+    const handleOpenModal = (
+        actionType: "delete" | "deactivate" | "activate",
+        userId: string
+    ) => {
+        setModalType(actionType);
+        setUserId(userId);
+    };
 
     if (loading) {
         return <Loading />;
@@ -91,35 +104,57 @@ const AdminGridList: React.FC = () => {
                             <a href={`/administration/edit/user/${user.id}`}>
                                 <Icon as={FaPen} />
                             </a>
+
                             <Icon
                                 as={MdDelete}
-                                onClick={() => handleOpenDeleteModal(user.id)}
+                                onClick={() => handleOpenModal('delete', user.id)}
                             />
-                            <Icon
-                                as={MdAppBlocking}
-                                onClick={() => setDeactiveModal(true)}
-                            />
+
+                            {user.status
+                                ? <Icon
+                                    as={MdAppBlocking}
+                                    onClick={() => handleOpenModal('deactivate', user.id)}
+                                  />
+
+                                : <Icon
+                                    as={MdAppShortcut}
+                                    onClick={() => handleOpenModal('activate', user.id)}
+                                  />
+                            }
+                            
                         </GridItem>
                     </UserRow>
                 ))}
             </GridContainer>
 
-            {deleteModal && 
+            {modalType === 'delete' && 
                 <Modal
                     title="Excluir Usuário"
                     action="excluir"
-                    onAction={handleDeleteUser}
-                    onClose={() => setDeleteModal(false)}
+                    onAction={handleUserAction}
+                    onClose={() => setModalType(null)}
                 />
             }
 
-            {deactiveModal && 
+            {modalType === 'deactivate' && 
                 <Modal
                     title="Desativar Usuário"
                     action="desativar"
                     backgroundColor="info"
-                    onAction={() => {}}
-                    onClose={() => setDeactiveModal(false)}
+                    buttonColor="info"
+                    onAction={handleUserAction}
+                    onClose={() => setModalType(null)}
+                />
+            }
+
+            {modalType === 'activate' && 
+                <Modal
+                    title="Reativar Usuário"
+                    action="reativar"
+                    backgroundColor="info"
+                    buttonColor="info"
+                    onAction={handleUserAction}
+                    onClose={() => setModalType(null)}
                 />
             }
         </Container>

@@ -11,6 +11,7 @@ import formatCurrency from "../../utils/formatCurrency";
 import formatDate from "../../utils/formatDate";
 import listOfMonths from "../../utils/months";
 import { useFirestore } from "../../hooks/firestore";
+import getYears from "../../utils/getYears";
 
 
 /* TIPANDO A FORMA COMO OS DADOS DEVEM SER FORNECIDOS AO COMPONENTE */
@@ -35,7 +36,7 @@ const List: React.FC = () => {
     
     const { type } = useParams();
 
-    const { getFirestore } = useFirestore()
+    const { user, getFirestore } = useFirestore()
     
     const urlParams = useMemo(() => {
         return type === 'entry-balance'
@@ -63,31 +64,21 @@ const List: React.FC = () => {
     */
     const { documents, loading } = getFirestore(collection)
 
+    const { documents: databaseUnits, loading: loadingUnits } = getFirestore('units');
+
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE UNIDADES
-    *      Em vez de criar um array com as unidades, essa constante verifica
-    *      de quais unidades os dados vinheram, devolvendo no final apenas esses
-    *      em vez de unidades em que não tiveram nenhuma movimentação.
+    *      Verifica quais unidades o usuário possui, e pega as informações
+    *      dessas unidades na base de dados.
     */
     const units = useMemo(() => {
-        let uniqueUnits: string[] = [];
+        const filteredUnits = databaseUnits.filter(unit => user.units.includes(unit.id));
 
-        documents.forEach(item => {
-            const unit = item.unit;
-
-            if(!uniqueUnits.includes(unit)) {
-                uniqueUnits.push(unit)
-            }
-        });
-
-        return uniqueUnits.map(unit => {
-            return {
-                value: unit,
-                label: "Unidade " + unit,
-            }
-        });
-
-    }, [documents]);
+        return filteredUnits.map(unit => ({
+            value: unit.unit_id,
+            label: unit.name,
+        }));
+    }, [user, databaseUnits]);
     
 
     /*
@@ -108,30 +99,21 @@ const List: React.FC = () => {
 
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE ANOS
-    *      Em vez de criar um array com os anos, essa constante verifica
-    *      os anos em que os dados foram salvos, devolvendo no final apenas 
-    *      esses em vez de anos em que não tiveram nenhuma movimentação.
+    *      Mantém atualizado, o ano atual e os 4 anos anteriores a ele,
+    *      fazendo com que se mantenham sempre 5 opções de anos para o
+    *      usuário selecionar.
     */
     const years = useMemo(() => {
-        let uniqueYears: number[] = [];
+        const listOfYears = getYears()
 
-        documents.forEach(item => {
-            const date = new Date(item.date);
-            const year = date.getFullYear();
-
-            if(!uniqueYears.includes(year)) {
-                uniqueYears.push(year)
-            }
-        });
-
-        return uniqueYears.map(year => {
+        return listOfYears.map(year => {
             return {
                 value: year,
                 label: year,
             }
         });
 
-    }, [documents]);
+    }, [user, databaseUnits]);
 
 
     /*
@@ -231,7 +213,7 @@ const List: React.FC = () => {
         setData(formattedData)
     }, [documents, monthSelected, yearSelected, unitSelected, frequencySelected]);
 
-    if (loading) {
+    if (loading && loadingUnits) {
         return <Loading />
     }
 

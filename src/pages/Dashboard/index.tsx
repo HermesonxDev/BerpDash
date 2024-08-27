@@ -20,7 +20,7 @@ import { useFirestore } from "../../hooks/firestore";
 
 const Dashboard: React.FC = () => {
 
-    const [unitSelected, setUnitSelected] = useState<string>('01');
+    const [unitSelected, setUnitSelected] = useState<string>('');
     const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
     const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
 
@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
         const filteredUnits = databaseUnits.filter(unit => user.units.includes(unit.id));
 
         return filteredUnits.map(unit => ({
-            value: unit.id,
+            value: unit.unit_id,
             label: unit.name,
         }));
     }, [user, databaseUnits]);

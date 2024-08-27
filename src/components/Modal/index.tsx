@@ -8,11 +8,19 @@ interface ModalProps {
     title: string,
     action: string,
     backgroundColor?: string,
+    buttonColor?: string,
     onAction: () => void,
     onClose: () => void
 }
 
-const Modal: React.FC<ModalProps> = ({ title, action, backgroundColor, onAction, onClose }) => (
+const Modal: React.FC<ModalProps> = ({
+    title,
+    action,
+    backgroundColor,
+    buttonColor,
+    onAction,
+    onClose
+}) => (
     <>
         <Backdrop />
         <Container>
@@ -28,14 +36,14 @@ const Modal: React.FC<ModalProps> = ({ title, action, backgroundColor, onAction,
             <FooterModal>
                 <Controllers>
                     <Button
-                        backgroundColor="info"
+                        backgroundColor={buttonColor}
                         onClick={onAction}
                     >
                         {capitalizeFirstLetter(action)}
                     </Button>
                     
                     <Button
-                        backgroundColor="info"
+                        backgroundColor={buttonColor}
                         onClick={onClose}
                     >
                         Cancelar

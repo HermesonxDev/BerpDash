@@ -55,7 +55,12 @@ exports.deleteUser = functions.https.onCall(async (data: DeleteUserData, context
 
   try {
     // Deletar o usuário do Firebase Authentication
-    await admin.auth().deleteUser(uid);
+    await admin.auth().deleteUser(uid).then(() => {
+      console.log('Successfully deleted user');
+    })
+    .catch((error) => {
+      console.log('Error deleting user:', error);
+    });
 
     // Deletar o documento do Firestore
     const db = admin.firestore();

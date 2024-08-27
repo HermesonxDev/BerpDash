@@ -59,6 +59,8 @@ interface IFirestoreContext {
         units: string[],
         navigate: (path: string) => void
     ): void,
+    deactiveUserFirebase(id: string): void,
+    activeUserFirebase(id: string): void,
     deleteUserFirebase(uid: string): Promise<DeleteUserResult>
 }
 
@@ -291,6 +293,44 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
 
 
     /*
+    * --> DESATIVA UM USUÁRIO NO BANCO
+    *      Recebe o ID do usuário e muda o status dele para inativo, fazendo com que
+    *      ele não consiga acessar a aplicação.
+    */
+    const deactiveUserFirebase = async (id: string) => {
+        try {
+            if (id) {
+                const userRef = doc(db, "users", id);
+                await setDoc(userRef, {
+                    status: false
+                }, { merge: true });
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar usuário:", error);
+        }
+    }
+
+
+    /*
+    * --> ATIVA UM USUÁRIO NO BANCO
+    *      Recebe o ID do usuário e muda o status dele para ativo, fazendo com que
+    *      ele consiga acessar a aplicação.
+    */
+    const activeUserFirebase = async (id: string) => {
+        try {
+            if (id) {
+                const userRef = doc(db, "users", id);
+                await setDoc(userRef, {
+                    status: true
+                }, { merge: true });
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar usuário:", error);
+        }
+    }
+
+
+    /*
     * --> DELETA UM USUÁRIO NO BANCO
     *      Recebe o ID do usuário e deleta as informações dele no Firebase Authentication
     *      e na coleção "users" do Firestore.
@@ -320,6 +360,8 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
             getFirestoreWithSearch,
             createUserFirebase,
             editUserFirebase,
+            deactiveUserFirebase,
+            activeUserFirebase,
             deleteUserFirebase
         }}>
             {children}

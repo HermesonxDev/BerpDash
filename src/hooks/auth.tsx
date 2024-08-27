@@ -74,18 +74,10 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
     
-            localStorage.setItem('@dc5bf16b1811-Dashboard:isLogged', 'true');
-            setLogged(true);
-    
             const userData = await SearchUser("email", email);
             
             if (Array.isArray(userData) && userData.length > 0) {
                 const user = userData[0];
-    
-                if (user.role && user.role.includes("admin")) {
-                    localStorage.setItem('@dc5bf16b1811-Dashboard:isAdmin', 'true');
-                    setAdmin(true);
-                }
 
                 const userProps: IUserProps = {
                     created_at: user.created_at || '',
@@ -99,9 +91,23 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
                     units: user.units || [],
                 };
     
-                setUser(userProps);
+                if (user.status) {
+                    if (user.role && user.role.includes("admin")) {
+                        localStorage.setItem('@dc5bf16b1811-Dashboard:isAdmin', 'true');
+                        localStorage.setItem('@dc5bf16b1811-Dashboard:isLogged', 'true');
+                        setAdmin(true);
+                        setLogged(true);
+                        setUser(userProps);
+                    }
+
+                    localStorage.setItem('@dc5bf16b1811-Dashboard:isLogged', 'true');
+                    setLogged(true);
+                    setUser(userProps);
+                } else {
+                    setMessage('Usuário desativado, entre em contato com a Berp Sistemas!');
+                }
             } else {
-                console.log('Nenhum usuário encontrado com o email fornecido.');
+                setMessage('Usuário ou senha inválidos!');
             }
             setMessage('');
         } catch (error) {
