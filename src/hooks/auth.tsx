@@ -98,24 +98,27 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
                         setAdmin(true);
                         setLogged(true);
                         setUser(userProps);
+                        setMessage('');
                     }
 
                     localStorage.setItem('@dc5bf16b1811-Dashboard:isLogged', 'true');
                     setLogged(true);
                     setUser(userProps);
+                    setMessage('');
                 } else {
                     setMessage('Usuário desativado, entre em contato com a Berp Sistemas!');
                 }
-            } else {
-                setMessage('Usuário ou senha inválidos!');
             }
-            setMessage('');
         } catch (error) {
             const firebaseError = error as FirebaseError;
-            const errorCode = firebaseError.code;
-            const errorMessage = firebaseError.message;
-            console.log("errorMessage:", errorMessage, "errorCode:", errorCode);
-            setMessage('Usuário ou senha inválidos!');
+
+            // const errorCode = firebaseError.code;
+            // const errorMessage = firebaseError.message;
+            // console.log("errorMessage:", errorMessage, "errorCode:", errorCode);
+
+            if (firebaseError.code === "auth/invalid-credential"){
+                setMessage('Usuário ou senha inválidos!');
+            }
         }
     };
 
