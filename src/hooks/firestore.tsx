@@ -61,7 +61,7 @@ interface IFirestoreContext {
     ): void,
     deactiveUserFirebase(id: string): void,
     activeUserFirebase(id: string): void,
-    deleteUserFirebase(uid: string): Promise<DeleteUserResult>
+    deleteUserFirebase(id: string): void
 }
 
 /* CRIA O CONTEXTO PARA SER USADO NA APLICAÇÃO */
@@ -241,6 +241,7 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
                 status,
                 units,
                 created_at: timestamp,
+                deleted_at: '',
                 last_access: timestamp
             })
             navigate("/administration/list-users")
@@ -335,16 +336,19 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
     *      Recebe o ID do usuário e deleta as informações dele no Firebase Authentication
     *      e na coleção "users" do Firestore.
     */
-    const deleteUserFirebase = async (uid: string): Promise<DeleteUserResult> => {
-        const functions = getFunctions(app);
-        const deleteUserFunction = httpsCallable(functions, 'deleteUser');
-
+    const deleteUserFirebase = async (id: string) => {
         try {
-            const result = await deleteUserFunction({ uid });
-            return result.data as DeleteUserResult;
-        } catch (error: any) {
-            console.error("Erro ao deletar usuário:", error);
-            return { success: false, message: error.message };
+            const timestamp = new Date().toISOString()
+
+            if (id) {
+                const userRef = doc(db, "users", id);
+                await setDoc(userRef, {
+                    deleted_at: timestamp,
+                    status: false
+                }, { merge: true });
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar usuário:", error);
         }
     }
 

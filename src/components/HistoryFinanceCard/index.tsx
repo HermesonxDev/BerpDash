@@ -4,17 +4,16 @@ interface IHistoryFinanceCardProps {
     tagColor: string,
     title: string,
     subTitle: string,
-    amount: string,
-    unit: string
+    amount: string
 }
 
-const HistoryFinanceCard: React.FC<IHistoryFinanceCardProps> = ({ tagColor, title, subTitle, amount, unit }) => (
+const HistoryFinanceCard: React.FC<IHistoryFinanceCardProps> = ({ tagColor, title, subTitle, amount}) => (
     <Container>
         <Tag color={tagColor} />
 
         <div>
             <span>{ title }</span>
-            <small>{ subTitle } - Unidade: { unit }</small>
+            <small>{ subTitle }</small>
         </div>
 
         <h3>{ amount }</h3>

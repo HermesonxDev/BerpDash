@@ -28,7 +28,7 @@ interface IData {
 /* COMPONENTE DA PÁGINA */
 const List: React.FC = () => {
     
-    const [unitSelected, setUnitSelected] = useState<string>('01');
+    const [unitSelected, setUnitSelected] = useState<string>('');
     const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
     const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
     const [frequencySelected, setFrequencySelected] = useState(['recorrente', 'eventual']);
@@ -276,7 +276,6 @@ const List: React.FC = () => {
                                 title={item.description}
                                 subTitle={item.dateFormatted}
                                 amount={item.amountFormatted}
-                                unit={item.unit}
                             />
                         ))
                     ) : (

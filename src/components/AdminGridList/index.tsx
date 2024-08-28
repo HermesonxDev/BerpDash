@@ -87,43 +87,44 @@ const AdminGridList: React.FC = () => {
                 </HeaderRow>
 
                 {data.map(user => (
-                    <UserRow key={user.id}>
-                        <GridItem>{user.name}</GridItem>
-                        <GridItem>{user.email}</GridItem>
-                        <GridItem>
-                            {user.role.map((r: string, index: number) => (
-                                <span key={index}>
-                                    {handleSetRole(r)}
-                                    {index < user.role.length - 1 ? ', ' : ''}
-                                </span>
-                            ))}
-                        </GridItem>
-                        <GridItem>{user.units.length} Unidades</GridItem>
-                        <GridItem>{user.status ? "Ativo" : "Inativo"}</GridItem>
-                        <GridItem>
-                            <a href={`/administration/edit/user/${user.id}`}>
-                                <Icon as={FaPen} />
-                            </a>
+                    user.deleted_at ? null : (
+                        <UserRow key={user.id}>
+                            <GridItem>{user.name}</GridItem>
+                            <GridItem>{user.email}</GridItem>
+                            <GridItem>
+                                {user.role.map((r: string, index: number) => (
+                                    <span key={index}>
+                                        {handleSetRole(r)}
+                                        {index < user.role.length - 1 ? ', ' : ''}
+                                    </span>
+                                ))}
+                            </GridItem>
+                            <GridItem>{user.units.length} Unidades</GridItem>
+                            <GridItem>{user.status ? "Ativo" : "Inativo"}</GridItem>
+                            <GridItem>
+                                <a href={`/administration/edit/user/${user.id}`}>
+                                    <Icon as={FaPen} />
+                                </a>
 
-                            <Icon
-                                as={MdDelete}
-                                onClick={() => handleOpenModal('delete', user.id)}
-                            />
+                                <Icon
+                                    as={MdDelete}
+                                    onClick={() => handleOpenModal('delete', user.id)}
+                                />
 
-                            {user.status
-                                ? <Icon
-                                    as={MdAppBlocking}
-                                    onClick={() => handleOpenModal('deactivate', user.id)}
-                                  />
-
-                                : <Icon
-                                    as={MdAppShortcut}
-                                    onClick={() => handleOpenModal('activate', user.id)}
-                                  />
-                            }
-                            
-                        </GridItem>
-                    </UserRow>
+                                {user.status
+                                    ? <Icon
+                                        as={MdAppBlocking}
+                                        onClick={() => handleOpenModal('deactivate', user.id)}
+                                    />
+                                    : <Icon
+                                        as={MdAppShortcut}
+                                        onClick={() => handleOpenModal('activate', user.id)}
+                                    />
+                                }
+                                
+                            </GridItem>
+                        </UserRow>
+                    )
                 ))}
             </GridContainer>
 
