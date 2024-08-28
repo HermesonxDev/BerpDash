@@ -27,7 +27,10 @@ const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange, loadData,
                 width: "80%"
             },
             '@media (max-width: 420px)': {
-                width: "70%"
+                width: "70%",
+            },
+            '@media (max-width: 400px)': {
+                width: "68%"
             }
         }),
         control: (provided) => ({

@@ -20,6 +20,16 @@ export const FormTitle = styled.h1 `
         width: 55px;
         border-bottom: 10px solid ${props => props.theme.colors.warning};
     }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 770px) {
+        margin-bottom: 20px;
+    }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 400px) {
+        font-size: 1.8rem;
+    }
 `;
 
 export const FormDiv = styled.div `
@@ -33,5 +43,10 @@ export const FormDivButton = styled.div `
     flex-direction: row;
     gap: 10px;
     margin: 30px auto 0;
-    width: 30%;
+    width: 50%;
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 770px) {
+        width: auto;
+    }
 `;

@@ -16,4 +16,9 @@ export const Container = styled.select<{ isPlaceholder: boolean }> `
     @media(max-width: 420px) {
        width: 70%;
     }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 400px) {
+       width: 68%;
+    }
 `;

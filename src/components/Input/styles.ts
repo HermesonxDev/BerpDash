@@ -15,4 +15,9 @@ export const Container = styled.input `
     @media(max-width: 420px) {
        width: 70%;
     }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 400px) {
+       width: 68%;
+    }
 `;
