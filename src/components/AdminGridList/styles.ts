@@ -14,6 +14,11 @@ export const GridContainer = styled.div`
     grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
     gap: 5px;
     padding: 20px 0;
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 770px) {
+
+    }
 `;
 
 export const HeaderRow = styled.div`

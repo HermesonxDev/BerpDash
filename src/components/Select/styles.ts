@@ -6,4 +6,14 @@ export const Container = styled.select<{ isPlaceholder: boolean }> `
     padding: 10px;
     border-radius: 5px;
     color: ${({ isPlaceholder }) => (isPlaceholder && "#A9A9A9")};
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 770px) {
+       width: 80%;
+    }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 420px) {
+       width: 70%;
+    }
 `;

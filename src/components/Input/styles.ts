@@ -5,4 +5,14 @@ export const Container = styled.input `
     margin: 7px 0;
     padding: 10px;
     border-radius: 5px;
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 770px) {
+       width: 80%;
+    }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 420px) {
+       width: 70%;
+    }
 `;
