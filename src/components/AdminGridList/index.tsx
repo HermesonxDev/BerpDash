@@ -1,4 +1,4 @@
-import { Container, GridContainer, GridItem, HeaderRow, UserRow, Icon } from "./styles";
+import { Container, GridContainer, GridItem, HeaderRow, HeaderGridItem, GridActionItem, UserRow, Icon } from "./styles";
 import { FaPen } from "react-icons/fa";
 import { MdDelete, MdAppBlocking, MdAppShortcut  } from "react-icons/md";
 
@@ -78,12 +78,12 @@ const AdminGridList: React.FC = () => {
 
             <GridContainer>
                 <HeaderRow>
-                    <GridItem>Nome</GridItem>
-                    <GridItem>Email</GridItem>
-                    <GridItem>Função</GridItem>
-                    <GridItem>Qtd. Unid</GridItem>
-                    <GridItem>Status</GridItem>
-                    <GridItem>Ações</GridItem>
+                    <HeaderGridItem>Nome</HeaderGridItem>
+                    <HeaderGridItem>Email</HeaderGridItem>
+                    <HeaderGridItem>Função</HeaderGridItem>
+                    <HeaderGridItem>Qtd. Unid</HeaderGridItem>
+                    <HeaderGridItem>Status</HeaderGridItem>
+                    <HeaderGridItem>Ações</HeaderGridItem>
                 </HeaderRow>
 
                 {data.map(user => (
@@ -101,7 +101,7 @@ const AdminGridList: React.FC = () => {
                             </GridItem>
                             <GridItem>{user.units.length} Unidades</GridItem>
                             <GridItem>{user.status ? "Ativo" : "Inativo"}</GridItem>
-                            <GridItem>
+                            <GridActionItem>
                                 <a href={`/administration/edit/user/${user.id}`}>
                                     <Icon as={FaPen} />
                                 </a>
@@ -122,7 +122,7 @@ const AdminGridList: React.FC = () => {
                                     />
                                 }
                                 
-                            </GridItem>
+                            </GridActionItem>
                         </UserRow>
                     )
                 ))}

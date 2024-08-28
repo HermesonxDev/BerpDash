@@ -44,6 +44,24 @@ export const Container = styled.div`
     border-radius: 8px;
     z-index: 999;
     animation: ${animate} .5s;
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 770px) {
+        right: 80px;
+    }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 420px) {
+        width: 400px;
+        height: 200px;
+        right: 5px;
+    }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 400px) {
+        width: 350px;
+        right: 10px;
+    }
 `;
 
 export const HeaderModal = styled.div<IHeaderModalProps> `
@@ -88,4 +106,9 @@ export const Controllers = styled.div `
     gap: 10px;
     width: 30%;
     margin-right: 10px;
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 420px) {
+        width: 50%;
+    }
 `;

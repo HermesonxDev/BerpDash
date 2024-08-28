@@ -29,7 +29,7 @@ export const Grid = styled.div `
     *        |
     *        |
     */
-    grid-template-columns: 250px auto;
+    grid-template-columns: 200px auto;
     grid-template-rows: 70px auto;
     grid-template-areas: "AS MH" "AS CT";
     
