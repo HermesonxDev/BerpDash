@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Container, Content } from "./styles";
 
 import ContentHeader from "../../components/ContentHeader";
@@ -28,7 +28,6 @@ const Dashboard: React.FC = () => {
         setUnitSelected,
         setMonthSelected,
         setYearSelected
-
     } = useGlobal()
 
     const { user, getFirestore } = useFirestore()
@@ -37,12 +36,15 @@ const Dashboard: React.FC = () => {
     const { documents: expenses, loading: loadingExpenses } = getFirestore('expenses');
     const { documents: databaseUnits, loading: loadingUnits } = getFirestore('units');
 
+    const [totalGains, setTotalGains] = useState<number>(0)
+
     /*
     * --> GUARDA OS DADOS QUE VÃO SER USADOS NA PÁGINA
     *      Recebe todas as despesas e ganhos.
     */
     const listData = [...expenses, ...gains];
     
+
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE UNIDADES
     *      Verifica quais unidades o usuário possui, e pega as informações
@@ -73,7 +75,7 @@ const Dashboard: React.FC = () => {
 
     }, []);
 
-
+        
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE ANOS
     *      Mantém atualizado, o ano atual e os 4 anos anteriores a ele,
@@ -140,42 +142,39 @@ const Dashboard: React.FC = () => {
     *       Soma e devolve todos os valores das entradas do mês
     *       selecionado pelo usuário.
     */
-    const totalGains = useMemo(() => {
-        
-        let total: number = 0
-
+    useEffect(() => {
+        let total: number = 0;
+    
         /*
         * --> FILTRA OS DADOS POR UNIDADE
         *      Carrega somente os dados da unidade selecionada pelo usuário.  
         */
         const filteredDataByUnit = gains.filter(item => {
-            const unit = item.unit;
-            return unit === unitSelected;
+          const unit = item.unit;
+          return unit === unitSelected;
         });
-        
-
+    
         /*
         * --> FILTRA OS DADOS POR MÊS E ANO
         *      Verifica se o mês e ano selecionado pelo usuário
         *      bate com o mês e ano dos dados fornecido pela base de dados.
         */
         filteredDataByUnit.forEach(item => {
-            const date = new Date(item.date)
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-
-            if(month === monthSelected && year === yearSelected){
-                try {
-                    total += Number(item.amount)
-                } catch {
-                    throw new Error('Invalid amount! Amount must be number.')
-                }
+          const date = new Date(item.date);
+          const year = date.getFullYear();
+          const month = date.getMonth() + 1;
+    
+          if (month === monthSelected && year === yearSelected) {
+            try {
+              total += Number(item.amount);
+            } catch {
+              throw new Error('Invalid amount! Amount must be number.');
             }
-        })
-
-        return total
-    }, [monthSelected, yearSelected, unitSelected]);
-
+          }
+        });
+    
+        setTotalGains(total);
+    }, [monthSelected, yearSelected, unitSelected, gains]);
 
     /*
     * --> CALCULA O VALOR TOTAL DO SALDO
@@ -527,6 +526,7 @@ const Dashboard: React.FC = () => {
             throw new Error('Invalid year value. Is accept integer numbers.')
         }
     }, [])
+
 
     if (loadingGains && loadingExpenses && loadingUnits) {
         return <Loading />
