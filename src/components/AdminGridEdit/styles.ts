@@ -21,12 +21,20 @@ export const FormTitle = styled.h1 `
         border-bottom: 10px solid ${props => props.theme.colors.warning};
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
         margin-bottom: 20px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
     @media(max-width: 400px) {
         font-size: 1.8rem;
     }
@@ -45,7 +53,11 @@ export const FormDivButton = styled.div `
     margin: 30px auto 0;
     width: 50%;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
         width: auto;
     }

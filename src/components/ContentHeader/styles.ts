@@ -10,15 +10,27 @@ export const Container = styled.div `
     justify-content: space-between;
     margin-bottom: 25px;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
-    @media(max-width: 400px) {
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
+    @media(max-width: 420px) {
         flex-direction: column;
         background-color: ${props => props.theme.colors.primary};
         padding: 15px 0;
         margin-bottom: 10px;
         position: sticky;
         top: 0;
-        z-index: 1000;
+
+        /*
+        * --> Z-INDEX 998
+        *      Faz com que o ContentHeader acompanhe o scroll do usuário pela página
+        *      inteira, mantendo ele acima dos outros componentes do Content e abaixo
+        *      dos componentes de Modal e Aside.
+        */
+        z-index: 998;
     }
 `;
 
@@ -34,10 +46,15 @@ export const TitleContainer = styled.div<ITitleContainerProps> `
         }
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
     @media(max-width: 420px) {
         > h1 {
-            font-size: 22px;
+            font-size: 25px;
 
             &::after {
                 content: '';
@@ -52,8 +69,13 @@ export const TitleContainer = styled.div<ITitleContainerProps> `
 export const Controllers = styled.div `
     display: flex;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
-    @media(max-width: 400px) {
+    
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
+    @media(max-width: 420px) {
         width: 100%;
         justify-content: space-around;
         margin-top: 20px;

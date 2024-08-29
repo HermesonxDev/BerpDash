@@ -51,7 +51,10 @@ export const Container = styled.div<IContainerProps> `
     }
 
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
         > span {
             font-size: 14px;
@@ -69,6 +72,12 @@ export const Container = styled.div<IContainerProps> `
         }
     }
 
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
     @media(max-width: 420px) {
         width: 100%;
 

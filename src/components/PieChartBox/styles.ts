@@ -30,7 +30,11 @@ export const Container = styled.div `
     display: flex;
     animation: ${animate} .5s;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
         display: flex;
         width: 100%;
@@ -44,7 +48,11 @@ export const SideLeft = styled.aside `
         margin-bottom: 20px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1345px) {
         padding: 0 15px 5px;
         margin-bottom: 7px;
@@ -55,6 +63,12 @@ export const SideLeft = styled.aside `
         }
     }
 
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
     @media(max-width: 420px) {
         padding: 15px;
         margin-bottom: 7px;
@@ -85,7 +99,11 @@ export const LegendContainer = styled.ul `
         background-color: none;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1345px) {
         display: flex;
         flex-direction: column;
@@ -111,7 +129,11 @@ export const Legend = styled.li<ILegendProps> `
         margin-left: 5px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1345px) {
         font-size: 14px;
         margin: 3px 0;
@@ -133,7 +155,11 @@ export const SideRight = styled.main `
     flex: 1;
     justify-content: center;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1345px) {
         height: 100%;
     }

@@ -23,12 +23,21 @@ const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange, loadData,
         container: (provided) => ({
             ...provided,
             width: "100%",
+
+            /*
+            * --> MEDIA QUERY TABLET
+            *      Dispositivo usado: iPad (768x1024)
+            */
             '@media (max-width: 770px)': {
                 width: "80%"
             },
+
+
             '@media (max-width: 420px)': {
                 width: "70%",
             },
+
+            
             '@media (max-width: 400px)': {
                 width: "68%"
             }

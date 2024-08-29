@@ -29,7 +29,13 @@ export const Backdrop = styled.div`
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
-    z-index: 998;
+
+    /*
+    * --> Z-INDEX 1000
+    *      Faz com que o desfoque do modal se mantenha acima de todos os outros
+    *      componentes da página inteira, para dar foque no modal.
+    */
+    z-index: 1000;
 `;
 
 export const Container = styled.div`
@@ -42,22 +48,41 @@ export const Container = styled.div`
     flex-direction: column;
     background-color: ${props => props.theme.colors.white};
     border-radius: 8px;
-    z-index: 999;
     animation: ${animate} .5s;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    /*
+    * --> Z-INDEX 1001
+    *      Faz com que o Modal se mantenha acima de qualquer outro
+    *      componente da página inteira.
+    */
+    z-index: 1001;
+
+    
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
         right: 80px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
     @media(max-width: 420px) {
         width: 400px;
         height: 200px;
         right: 5px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
     @media(max-width: 400px) {
         width: 350px;
         right: 10px;
@@ -107,7 +132,12 @@ export const Controllers = styled.div `
     width: 30%;
     margin-right: 10px;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
     @media(max-width: 420px) {
         width: 50%;
     }

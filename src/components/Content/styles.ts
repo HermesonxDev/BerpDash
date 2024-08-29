@@ -26,8 +26,13 @@ export const Container = styled.div `
         background-color: none;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
-    @media(max-width: 400px) {
+    
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
+    @media(max-width: 420px) {
         padding-top: 0;
     }
 `;

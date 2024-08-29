@@ -31,7 +31,11 @@ export const Container = styled.div `
     right: 20px;
     bottom: 30px;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
     @media(max-width: 400px) {
         max-width: 20rem;
         bottom: 500px;
@@ -47,7 +51,11 @@ export const EmailIcon = styled(MdOutlineMarkEmailRead) `
     height: 3.5rem;
     margin-top: 12px;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
     @media(max-width: 400px) {
         margin-top: 10px;
     }
@@ -79,7 +87,11 @@ export const Content = styled.div `
         line-height: 1.5; 
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
     @media(max-width: 400px) {
         > h4 {
             font-size: 1rem;
