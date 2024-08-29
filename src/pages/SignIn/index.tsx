@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Container, Logo, Form, FormTitle, Message } from "./styles";
 import LogoIMG from "../../assets/logo.svg"
-import Input from "../../components/Input";
+import LoginInput from "../../components/LoginInput";
 import Button from "../../components/Button";
 
 import { useAuth } from "../../hooks/auth";
@@ -24,14 +24,14 @@ const SignIn: React.FC = () => {
             <Form onSubmit={(event) => signIn(event, email, password)}>
                 <FormTitle>Entrar</FormTitle>
 
-                <Input
+                <LoginInput
                     type="email"
                     placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
 
-                <Input
+                <LoginInput
                     type="password"
                     placeholder="Senha"
                     onChange={(e) => setPassword(e.target.value)}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Container, Logo, Form, FormTitle } from "./styles";
 import LogoIMG from "../../assets/logo.svg"
-import Input from "../../components/Input";
+import LoginInput from "../../components/LoginInput";
 import Button from "../../components/Button";
 
 import { useAuth } from "../../hooks/auth";
@@ -25,7 +25,7 @@ const RecoveryPassword: React.FC = () => {
             <Form onSubmit={(event) => recoveryPassword(event, email, navigate)}>
                 <FormTitle>Redefinir senha</FormTitle>
 
-                <Input
+                <LoginInput
                     type="email"
                     placeholder="Digite seu email"
                     onChange={(e) => setEmail(e.target.value)}
