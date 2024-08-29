@@ -1,4 +1,4 @@
-import { createContext, useState,useContext } from "react";
+import { createContext, useState, useContext } from "react";
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'
 import { FirebaseError } from "firebase/app";
 import { useFirestore } from "./firestore";
@@ -186,6 +186,9 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 */
 function useAuth(): IAuthContext {
     const context = useContext(AuthContext)
+    if (!context) {
+        throw new Error("useAuth must be used within a AuthProvider");
+    }
     return context
 }
 

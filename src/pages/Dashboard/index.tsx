@@ -17,12 +17,19 @@ import grinningIMG from '../../assets/grinning.svg';
 import BarChartBox from "../../components/BarChartBox";
 import Loading from "../../components/Loading";
 import { useFirestore } from "../../hooks/firestore";
+import { useGlobal } from "../../hooks/global";
 
 const Dashboard: React.FC = () => {
 
-    const [unitSelected, setUnitSelected] = useState<string>('');
-    const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
-    const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
+    const {
+        unitSelected,
+        monthSelected,
+        yearSelected,
+        setUnitSelected,
+        setMonthSelected,
+        setYearSelected
+
+    } = useGlobal()
 
     const { user, getFirestore } = useFirestore()
 

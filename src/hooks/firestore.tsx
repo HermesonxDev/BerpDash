@@ -1,7 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { initializeApp, FirebaseApp } from "firebase/app";
 import { getFirestore as getFirestoreDB, collection, getDocs, query, QuerySnapshot, DocumentData, where, getDoc, doc, addDoc, setDoc } from "firebase/firestore";
-import { getFunctions, httpsCallable } from "firebase/functions";
 import { getAuth, Auth, createUserWithEmailAndPassword, updateEmail } from "firebase/auth";
 import firebaseConfig from "../config/firebase";
 
@@ -15,11 +14,6 @@ interface IUserProps {
     status: boolean;
     uid: string;
     units: string[];
-}
-
-interface DeleteUserResult {
-    success: boolean;
-    message: string;
 }
 
 interface IFirestoreContext {

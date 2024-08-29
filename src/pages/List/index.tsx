@@ -12,6 +12,7 @@ import formatDate from "../../utils/formatDate";
 import listOfMonths from "../../utils/months";
 import { useFirestore } from "../../hooks/firestore";
 import getYears from "../../utils/getYears";
+import { useGlobal } from "../../hooks/global";
 
 
 /* TIPANDO A FORMA COMO OS DADOS DEVEM SER FORNECIDOS AO COMPONENTE */
@@ -28,9 +29,16 @@ interface IData {
 /* COMPONENTE DA PÁGINA */
 const List: React.FC = () => {
     
-    const [unitSelected, setUnitSelected] = useState<string>('');
-    const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
-    const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
+    const {
+        unitSelected,
+        monthSelected,
+        yearSelected,
+        setUnitSelected,
+        setMonthSelected,
+        setYearSelected
+
+    } = useGlobal()
+
     const [frequencySelected, setFrequencySelected] = useState(['recorrente', 'eventual']);
     const [data, setData] = useState<IData[]>([]);
     

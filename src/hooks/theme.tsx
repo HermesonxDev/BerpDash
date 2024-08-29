@@ -77,6 +77,9 @@ const ThemeProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 */
 function useTheme(): IThemeContext {
     const context = useContext(ThemeContext)
+    if (!context) {
+        throw new Error("useTheme must be used within a ThemeProvider");
+    }
     return context
 }
 
