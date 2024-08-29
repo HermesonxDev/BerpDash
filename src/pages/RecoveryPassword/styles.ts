@@ -32,6 +32,23 @@ export const Form = styled.form `
     padding: 30px;
     border-radius: 10px;
     background-color: ${props => props.theme.colors.tertiary};
+
+    > p {
+        font-size: 15px;
+        margin-top: 20px;
+        color: ${props => props.theme.colors.white};
+        opacity: .9;
+    }
+
+    > p a {
+        font-size: 15px;
+        color: ${props => props.theme.colors.white}
+    }
+
+    > p a:hover {
+        color: #0000EE;
+        opacity: 1;
+    }
 `;
 
 export const FormTitle = styled.h1 `

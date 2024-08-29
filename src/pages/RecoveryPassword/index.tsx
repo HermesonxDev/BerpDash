@@ -6,7 +6,6 @@ import Button from "../../components/Button";
 
 import { useAuth } from "../../hooks/auth";
 import { useNavigate } from "react-router-dom";
-import Anchor from "../../components/Anchor";
 
 const RecoveryPassword: React.FC = () => {
 
@@ -33,9 +32,8 @@ const RecoveryPassword: React.FC = () => {
                 />
 
                 <Button type="submit">Confirmar</Button>
-                <Button>
-                    <Anchor href="/">Voltar</Anchor>
-                </Button>
+
+                <p>Lembrou-se da senha? <a href="/">Acesse.</a></p>
             </Form>
         </Container>
     )
