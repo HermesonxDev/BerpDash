@@ -15,13 +15,17 @@ export const GridContainer = styled.div`
     gap: 5px;
     padding: 20px 0;
     
-    /* --> MEDIA QUERY PARA MOBILE <-- */
+    
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media (max-width: 770px) {
         margin-top: 15px;
         grid-template-columns: 1fr;
-        background-color: ${props => props.theme.colors.tertiary};
+        
         border-radius: 5px;
-        padding: unset;
+        padding: 0;
     }
 `;
 
@@ -29,13 +33,22 @@ export const HeaderRow = styled.div`
     display: contents;
     font-weight: bold;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
         display: flex;
         flex-direction: row;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
     @media(max-width: 420px) {
         grid-template-columns: 1fr;
     }
@@ -51,20 +64,33 @@ export const HeaderGridItem = styled.div`
         color: unset;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
+        padding: 10px 5px;
         width: 30%;
         text-align: center;
-        background-color: unset;
-        border-radius: unset;
+        border: 1px solid ${props => props.theme.colors.primary};
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
     @media(max-width: 420px) {
         padding: 7px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
     @media(max-width: 400px) {
         padding: 4.5px;
     }
@@ -73,13 +99,22 @@ export const HeaderGridItem = styled.div`
 export const UserRow = styled.div`
     display: contents;
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
         display: flex;
         flex-direction: row;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
     @media(max-width: 420px) {
         grid-template-columns: 1fr;
     }
@@ -95,16 +130,28 @@ export const GridItem = styled.div`
         color: unset;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
-        width: 90px;
+        font-size: 17px;
+        width: 97px;
         max-width: 100%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        border: 1px solid ${props => props.theme.colors.primary};
+        padding: 20px 10px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
     @media(max-width: 420px) {
         padding: 6px;
         text-align: center;
@@ -121,9 +168,15 @@ export const GridActionItem = styled.div `
         color: unset;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
         padding: 0;
+        border: 1px solid ${props => props.theme.colors.primary};
+        padding: 5px 3px;
     }
 `;
 
@@ -141,12 +194,25 @@ export const Icon = styled.button<IIconButtonProps> `
         cursor: pointer;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY TABLET
+    *      Dispositivo usado: iPad (768x1024)
+    */
     @media(max-width: 770px) {
-        
+        padding: 3px;
+        width: 25px;
+        height: 25px;
+        margin-right: 0;
+        margin-left: 5px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
     @media(max-width: 420px) {
         
     }
