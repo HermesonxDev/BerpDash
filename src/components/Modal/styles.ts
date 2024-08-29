@@ -84,8 +84,8 @@ export const Container = styled.div`
     *      Dispositivo usado: iPhone X (375x812)
     */
     @media(max-width: 400px) {
-        width: 350px;
-        right: 10px;
+        width: 360px;
+        right: 8px;
     }
 `;
 
