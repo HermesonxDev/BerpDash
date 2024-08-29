@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 
 import Layout from '../components/Layout';
@@ -25,6 +25,8 @@ const AppRoutes: React.FC = () => {
                         <Route path="/administration/edit/user/:id" element={<AdminGridEdit />} />
                     </>
                 }
+
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </Layout>
     )
