@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Container, GridContainer, GridItem, HeaderRow, HeaderGridItem, GridActionItem, UserRow, Icon } from "./styles";
 import { FaPen } from "react-icons/fa";
 import { MdDelete, MdAppBlocking, MdAppShortcut  } from "react-icons/md";
@@ -5,9 +6,10 @@ import { MdDelete, MdAppBlocking, MdAppShortcut  } from "react-icons/md";
 import Loading from "../Loading";
 import ContentHeader from "../ContentHeader";
 import Anchor from "../Anchor";
-import { useFirestore } from "../../hooks/firestore";
-import { useState } from "react";
 import Modal from "../Modal";
+
+import { useFirestore } from "../../hooks/firestore";
+
 
 const AdminGridList: React.FC = () => {
 
@@ -51,7 +53,6 @@ const AdminGridList: React.FC = () => {
             await activeUserFirebase(userId);
             window.location.reload()
         }
-
         setUserId(null);
         setModalType(null);
     };

@@ -19,6 +19,22 @@ import Loading from "../../components/Loading";
 import { useFirestore } from "../../hooks/firestore";
 import { useGlobal } from "../../hooks/global";
 
+interface DataType {
+    amount: string;
+    date: string;
+    description: string;
+    frequency: string;
+    id: string;
+    type: string;
+    unit: string;
+}
+
+interface UnitData {
+    id: string;
+    expenses: Record<string, DataType>;
+    gains: Record<string, DataType>;
+}
+
 const Dashboard: React.FC = () => {
 
     const {
@@ -32,12 +48,24 @@ const Dashboard: React.FC = () => {
 
     const { user, getFirestore } = useFirestore()
 
-    const { documents: gains, loading: loadingGains } = getFirestore('gains');
-    const { documents: expenses, loading: loadingExpenses } = getFirestore('expenses');
-    const { documents: databaseUnits, loading: loadingUnits } = getFirestore('units');
+    const { documents: listOfUnits, loading: loadingListOfUnits } = getFirestore('units');
+    const { documents: unitsData } = getFirestore('unitsData')
+
+    const [expenses, setExpenses] = useState<DataType[]>([]);
+    const [gains, setGains] = useState<DataType[]>([]);
 
     const [totalGains, setTotalGains] = useState<number>(0)
+    const [totalExpenses, setTotalExpenses] = useState<number>(0)
+    const [totalBalance, setTotalBalance] = useState<number>(0)
 
+    const unitData: UnitData | undefined = unitsData.find(unit => {
+        const unitID = unit.id;
+        const year = String(yearSelected);
+        const month = monthSelected > 9 ? String(monthSelected) : "0" + String(monthSelected);
+        return unitID === unitSelected + year + month;
+    })
+
+    
     /*
     * --> GUARDA OS DADOS QUE VÃO SER USADOS NA PÁGINA
     *      Recebe todas as despesas e ganhos.
@@ -51,13 +79,13 @@ const Dashboard: React.FC = () => {
     *      dessas unidades na base de dados.
     */
     const units = useMemo(() => {
-        const filteredUnits = databaseUnits.filter(unit => user.units.includes(unit.id));
+        const filteredUnits = listOfUnits.filter(unit => user.units.includes(unit.id));
 
         return filteredUnits.map(unit => ({
-            value: unit.unit_id,
+            value: unit.cnpj,
             label: unit.name,
         }));
-    }, [user, databaseUnits]);
+    }, [user, listOfUnits]);
     
 
     /*
@@ -92,7 +120,18 @@ const Dashboard: React.FC = () => {
             }
         });
 
-    }, [user, databaseUnits]);
+    }, [user, listOfUnits]);
+
+
+    useEffect(() => {
+        if (unitData) {
+            const expensesArray = Object.values(unitData.expenses);
+            const gainsArray = Object.values(unitData.gains);
+
+            setExpenses(expensesArray);
+            setGains(gainsArray);
+        }
+    }, [unitData])
 
 
     /*
@@ -100,41 +139,21 @@ const Dashboard: React.FC = () => {
     *       Soma e devolve todos os valores das saídas do mês
     *       selecionado pelo usuário.
     */
-    const totalExpenses = useMemo(() => {
+    useEffect(() => {
         
         let total: number = 0
-
-        /*
-        * --> FILTRA OS DADOS POR UNIDADE
-        *      Carrega somente os dados da unidade selecionada pelo usuário.  
-        */
-        const filteredDataByUnit = expenses.filter(item => {
-            const unit = item.unit;
-            return unit === unitSelected;
-        });
         
-
-        /*
-        * --> FILTRA OS DADOS POR MÊS E ANO
-        *      Verifica se o mês e ano selecionado pelo usuário
-        *      bate com o mês e ano dos dados fornecido pela base de dados.
-        */
-        filteredDataByUnit.forEach(item => {
-            const date = new Date(item.date)
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-
-            if(month === monthSelected && year === yearSelected){
-                try {
+        expenses.forEach(item => {
+            try {
                     total += Number(item.amount)
                 } catch {
                     throw new Error('Invalid amount! Amount must be number.')
                 }
             }
-        })
+        )
 
-        return total
-    }, [monthSelected, yearSelected, unitSelected]);
+        setTotalExpenses(total)
+    }, [monthSelected, yearSelected, unitSelected, expenses]);
 
 
     /*
@@ -145,36 +164,18 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         let total: number = 0;
     
-        /*
-        * --> FILTRA OS DADOS POR UNIDADE
-        *      Carrega somente os dados da unidade selecionada pelo usuário.  
-        */
-        const filteredDataByUnit = gains.filter(item => {
-          const unit = item.unit;
-          return unit === unitSelected;
-        });
-    
-        /*
-        * --> FILTRA OS DADOS POR MÊS E ANO
-        *      Verifica se o mês e ano selecionado pelo usuário
-        *      bate com o mês e ano dos dados fornecido pela base de dados.
-        */
-        filteredDataByUnit.forEach(item => {
-          const date = new Date(item.date);
-          const year = date.getFullYear();
-          const month = date.getMonth() + 1;
-    
-          if (month === monthSelected && year === yearSelected) {
-            try {
+        gains.forEach(item => {
+          try {
               total += Number(item.amount);
             } catch {
               throw new Error('Invalid amount! Amount must be number.');
             }
           }
-        });
+        );
     
         setTotalGains(total);
     }, [monthSelected, yearSelected, unitSelected, gains]);
+
 
     /*
     * --> CALCULA O VALOR TOTAL DO SALDO
@@ -182,8 +183,8 @@ const Dashboard: React.FC = () => {
     *       mostrar o valor do saldo adquirido no mês selecionado
     *       pelo usuário.
     */
-    const totalBalance = useMemo(() => {
-        return totalGains - totalExpenses
+    useEffect(() => {
+        setTotalBalance(totalGains - totalExpenses)
     }, [totalGains, totalExpenses]);
 
 
@@ -269,21 +270,11 @@ const Dashboard: React.FC = () => {
 
 
             /*
-            * --> FILTRA OS DADOS POR UNIDADE
-            *      Carrega somente os dados da unidade selecionada pelo usuário.  
-            */
-            const filteredDataByUnit = listData.filter(item => {
-                const unit = item.unit;
-                return unit === unitSelected;
-            });
-
-
-            /*
             * --> FILTRA OS DADOS DO TIPO "ENTRADAS"
             *      Carrega somente os dados de entrada para serem usados no gráfico de histórico 
             *      anual.
             */
-            const filteredGains = filteredDataByUnit.filter(item => {
+            const filteredGains = listData.filter(item => {
                 const type = item.type;
                 return type === 'entrada'
             });
@@ -294,7 +285,7 @@ const Dashboard: React.FC = () => {
             *      Carrega somente os dados de saídas para serem usados no gráfico de histórico
             *      anual.
             */
-            const filteredExpenses = filteredDataByUnit.filter(item => {
+            const filteredExpenses = listData.filter(item => {
                 const type = item.type;
                 return type === 'saída'
             });
@@ -306,16 +297,10 @@ const Dashboard: React.FC = () => {
             *      meses do ano selecionado pelo usuário.
             */
             filteredGains.forEach(gain => {
-                const date = new Date(gain.date)
-                const gainMonth = date.getMonth()
-                const gainYear = date.getFullYear()
-
-                if (gainMonth === month && gainYear === yearSelected) {
-                    try {
-                        amountEntry += Number(gain.amount)
-                    } catch {
-                        throw new Error('Amount entry is invalid. AmountEntry must be valid number.')
-                    }
+                try {
+                    amountEntry += Number(gain.amount)
+                } catch {
+                    throw new Error('Amount entry is invalid. AmountEntry must be valid number.')
                 }
             })
 
@@ -326,16 +311,10 @@ const Dashboard: React.FC = () => {
             *      meses do ano selecionado pelo usuário.
             */
             filteredExpenses.forEach(expense => {
-                const date = new Date(expense.date)
-                const expenseMonth = date.getMonth()
-                const expenseYear = date.getFullYear()
-
-                if (expenseMonth === month && expenseYear === yearSelected) {
-                    try {
-                        amountOutput += Number(expense.amount)
-                    } catch {
-                        throw new Error('Amount entry is invalid. AmountEntry must be valid number.')
-                    }
+                try {
+                    amountOutput += Number(expense.amount)
+                } catch {
+                    throw new Error('Amount entry is invalid. AmountEntry must be valid number.')
                 }
             })
 
@@ -373,16 +352,6 @@ const Dashboard: React.FC = () => {
         let amountEventual = 0
 
         /*
-        * --> FILTRA OS DADOS POR UNIDADE
-        *      Carrega somente os dados da unidade selecionada pelo usuário.  
-        */
-        const filteredDataByUnit = expenses.filter(item => {
-            const unit = item.unit;
-            return unit === unitSelected;
-        });
-
-
-        /*
         * --> FILTRA OS DADOS POR MÊS E ANO
         *      Verifica se o mês e ano selecionado pelo usuário
         *      bate com o mês e ano dos dados fornecido pela base de dados.
@@ -391,14 +360,7 @@ const Dashboard: React.FC = () => {
         *      Percorre todos os dados filtrados somando os valores individuais por
         *      frequência.
         */
-        filteredDataByUnit
-        .filter(expense => {
-            const date = new Date(expense.date)
-            const month = date.getMonth() + 1
-            const year = date.getFullYear()
-
-            return month === monthSelected && year === yearSelected
-        })
+        expenses
         .forEach(expense => {
             if (expense.frequency === 'recorrente') {
                 return amountRecurrent += Number(expense.amount)
@@ -441,16 +403,6 @@ const Dashboard: React.FC = () => {
         let amountEventual = 0
 
         /*
-        * --> FILTRA OS DADOS POR UNIDADE
-        *      Carrega somente os dados da unidade selecionada pelo usuário.  
-        */
-        const filteredDataByUnit = gains.filter(item => {
-            const unit = item.unit;
-            return unit === unitSelected;
-        });
-
-
-        /*
         * --> FILTRA OS DADOS POR MÊS E ANO
         *      Verifica se o mês e ano selecionado pelo usuário
         *      bate com o mês e ano dos dados fornecido pela base de dados.
@@ -459,14 +411,7 @@ const Dashboard: React.FC = () => {
         *      Percorre todos os dados filtrados somando os valores individuais por
         *      frequência.
         */
-        filteredDataByUnit
-        .filter(gain => {
-            const date = new Date(gain.date)
-            const month = date.getMonth() + 1
-            const year = date.getFullYear()
-
-            return month === monthSelected && year === yearSelected
-        })
+        gains
         .forEach(gain => {
             if (gain.frequency === 'recorrente') {
                 return amountRecurrent += Number(gain.amount)
@@ -528,7 +473,7 @@ const Dashboard: React.FC = () => {
     }, [])
 
 
-    if (loadingGains && loadingExpenses && loadingUnits) {
+    if (loadingListOfUnits) {
         return <Loading />
     }
 

@@ -1,6 +1,8 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { initializeApp, FirebaseApp } from "firebase/app";
-import { getFirestore as getFirestoreDB, collection, getDocs, query, QuerySnapshot, DocumentData, where, getDoc, doc, addDoc, setDoc } from "firebase/firestore";
+import { getFirestore as getFirestoreDB, collection, getDocs, query, QuerySnapshot, DocumentData, where, getDoc, doc, addDoc, setDoc,
+    initializeFirestore, persistentLocalCache, persistentMultipleTabManager
+  } from "firebase/firestore";
 import { getAuth, Auth, createUserWithEmailAndPassword, updateEmail } from "firebase/auth";
 import firebaseConfig from "../config/firebase";
 
@@ -70,9 +72,10 @@ const FirestoreContext = createContext<IFirestoreContext>({} as IFirestoreContex
 const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 
     const app = initializeApp(firebaseConfig);
-    const db = getFirestoreDB(app);
-    const auth = getAuth(app);
-
+    const db = initializeFirestore(app, {
+        localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+    });
+   const auth = getAuth(app);
 
     const [user, setUserState] = useState<IUserProps>(() => {
         const onUser = localStorage.getItem('@dc5bf16b1811-Dashboard:user');
@@ -181,12 +184,17 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
     };
 
 
+    /*
+    * --> BUSCA UMA COLEÇÃO NO BANCO POR PESQUISA
+    *      Recebe o nome da coleção e busca todos os documentos contidos nela
+    *      para serem usados na aplicação.
+    */
     const getFirestoreWithSearch = async (collectionName: string, inputValue: string) => {
         try {
             const q = query(
                 collection(db, collectionName),
-                where('name', '>=', inputValue),  // Filtrando com base no nome
-                where('name', '<=', inputValue + '\uf8ff') // Fazendo o filtro para nomes que começam com inputValue
+                where('name', '>=', inputValue),
+                where('name', '<=', inputValue + '\uf8ff')
             );
     
             const querySnapshot: QuerySnapshot = await getDocs(q);
@@ -196,10 +204,10 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
                 docs.push({ id: doc.id, ...doc.data() });
             });
     
-            return docs; // Retorna os documentos filtrados
+            return docs;
         } catch (error) {
             console.error("Erro ao buscar documentos do Firestore:", error);
-            return []; // Retorna um array vazio em caso de erro
+            return [];
         }
     }
 
