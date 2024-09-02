@@ -16,6 +16,16 @@ import { useGlobal } from "../../hooks/global";
 
 
 /* TIPANDO A FORMA COMO OS DADOS DEVEM SER FORNECIDOS AO COMPONENTE */
+
+interface DataType {
+    amount: string,
+    date: string,
+    description: string,
+    frequency: string,
+    id: string,
+    type: string,
+    unit: string
+}
 interface IData {
     id: string,
     description: string,
@@ -24,6 +34,12 @@ interface IData {
     dateFormatted: string,
     tagColor: string,
     unit:string,
+}
+
+interface UnitData {
+    id: string,
+    expenses: Record<string, DataType>,
+    gains: Record<string, DataType>
 }
 
 /* COMPONENTE DA PÁGINA */
@@ -36,15 +52,21 @@ const List: React.FC = () => {
         setUnitSelected,
         setMonthSelected,
         setYearSelected
-
     } = useGlobal()
 
-    const [frequencySelected, setFrequencySelected] = useState(['recorrente', 'eventual']);
-    const [data, setData] = useState<IData[]>([]);
+    const {
+        user,
+        getFirestore
+    } = useFirestore()
     
     const { type } = useParams();
 
-    const { user, getFirestore } = useFirestore()
+    const { documents: listOfUnits, loading: loadingListOfUnits } = getFirestore('units');
+    const { documents: unitsData } = getFirestore('unitsData')
+
+    const [frequencySelected, setFrequencySelected] = useState(['recorrente', 'eventual']);
+    const [data, setData] = useState<IData[]>([]);
+    const [subData, setSubData] = useState<DataType[]>([]);
     
     const urlParams = useMemo(() => {
         return type === 'entry-balance'
@@ -56,37 +78,18 @@ const List: React.FC = () => {
 
 
     /*
-    * --> GUARDA A COLEÇÃO USADA NA PÁGINA
-    *      Verifica pela URL qual tipo de dado o usuário está querendo visualizar,
-    *      devolvendo esses dados para serem utilizados.
-    */
-    const collection = useMemo(() => {
-        return type === 'entry-balance' ? 'gains' : 'expenses'
-    }, [type]);
-
-
-    /*
-    * --> GUARDA OS DOCUMENTOS DA COLEÇÃO
-    *      Trás do firebase os documentos da coleção a serem usados na página,
-    *      assim como variáveis auxiliares (documents, loading, error)
-    */
-    const { documents, loading } = getFirestore(collection)
-
-    const { documents: databaseUnits, loading: loadingUnits } = getFirestore('units');
-
-    /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE UNIDADES
     *      Verifica quais unidades o usuário possui, e pega as informações
     *      dessas unidades na base de dados.
     */
     const units = useMemo(() => {
-        const filteredUnits = databaseUnits.filter(unit => user.units.includes(unit.id));
+        const filteredUnits = listOfUnits.filter(unit => user.units.includes(unit.id));
 
         return filteredUnits.map(unit => ({
-            value: unit.unit_id,
+            value: unit.cnpj,
             label: unit.name,
         }));
-    }, [user, databaseUnits]);
+    }, [user, listOfUnits]);
     
 
     /*
@@ -121,7 +124,64 @@ const List: React.FC = () => {
             }
         });
 
-    }, [user, databaseUnits]);
+    }, [user, listOfUnits]);
+
+
+    /*
+    * --> GUARDA OS DADOS DA UNIDADE SELECIONADA PELO USUÁRIO
+    *      Carrega todas as despesas e ganhos da unidade selecionada,
+    *      pelo usuário, no determinado mês e ano, para ser usado
+    *      na aplicação.
+    */
+    const unitData: UnitData | undefined = unitsData.find(unit => {
+        const unitID = unit.id;
+        const year = String(yearSelected);
+        const month = monthSelected > 9 ? String(monthSelected) : "0" + String(monthSelected);
+        return unitID === unitSelected + year + month;
+    })
+
+
+    /*
+    * --> GUARDA O TIPO DE DADO USADO NA PÁGINA
+    *      Verifica pela URL qual tipo de dado o usuário está querendo visualizar,
+    *      devolvendo esses dados para serem utilizados.
+    */
+    useEffect(() => {
+        if (unitData) {
+            if (type === 'entry-balance') {
+                const gainsArray = Object.values(unitData.gains);
+                setSubData(gainsArray); 
+            } else {
+                const expensesArray = Object.values(unitData.expenses);
+                setSubData(expensesArray);
+            }
+        }
+    }, [unitData])
+
+
+    /*
+    * --> FORMATA E FILTRA OS DADOS A SEREM MOSTRADOS
+    *      Formata a data e o valores númericos para o padrão do Brasil,
+    *      e também, verifica quais filtros estão ativos para mostrar,
+    *      somente os dados com as frequencias selecionadas.
+    */
+    useEffect(() => {
+        const formattedData = subData
+        .filter(item => frequencySelected.includes(item.frequency))
+        .map(item => {
+            return {
+            id: item.id,
+            description: item.description,
+            amountFormatted: formatCurrency(Number(item.amount)),
+            frequency: item.frequency,
+            dateFormatted: formatDate(item.date),
+            tagColor: item.frequency === 'recorrente' ? '#4e41f0' : '#e44c4e',
+            unit: item.unit
+            };
+        });
+
+        setData(formattedData)
+    }, [subData, monthSelected, yearSelected, unitSelected, frequencySelected])
 
 
     /*
@@ -170,58 +230,7 @@ const List: React.FC = () => {
         }
     }
 
-
-    /* MANTENDO A PÁGINA EM CONSTANTE ATUALIZAÇÃO */
-    useEffect(() => {
-
-        /*
-        * --> FILTRA OS DADOS POR UNIDADE
-        *      Carrega somente os dados da unidade selecionada pelo usuário.  
-        */
-        const filteredDataByUnit = documents.filter(item => {
-            const unit = item.unit;
-            return unit === unitSelected;
-        });
-
-
-        /*
-        * --> FILTRA OS DADOS POR MÊS E ANO
-        *      Verifica se o mês e ano selecionado pelo usuário
-        *      bate com o mês e ano dos dados fornecido pela base de dados.
-        *      E mostra eles de acordo com os filtros ativados (Recorrentes ou Eventuais).
-        */
-        const filteredData = filteredDataByUnit.filter(item => {
-            const date = new Date(item.date);
-            const month = date.getMonth() + 1;
-            const year = date.getFullYear();
-
-            return month === monthSelected
-            && year === yearSelected
-            && frequencySelected.includes(item.frequency);
-        });
-
-
-        /*
-        * --> MAPEIA OS DADOS DE ACORDO COM A TIPAGEM ESTABELECIDA DOS CARDS
-        *      Distribui e formata os dados de acordo com os campos
-        *      fornecidos pela interface dos cards.
-        */
-        const formattedData = filteredData.map(item => {
-            return {
-                id: item.id,
-                description: item.description,
-                amountFormatted: formatCurrency(Number(item.amount)),
-                frequency: item.frequency,
-                dateFormatted: formatDate(item.date),
-                tagColor: item.frequency === 'recorrente' ? '#4e41f0' : "#e44c4e",
-                unit: item.unit
-            }
-        });
-
-        setData(formattedData)
-    }, [documents, monthSelected, yearSelected, unitSelected, frequencySelected]);
-
-    if (loading && loadingUnits) {
+    if (loadingListOfUnits) {
         return <Loading />
     }
 

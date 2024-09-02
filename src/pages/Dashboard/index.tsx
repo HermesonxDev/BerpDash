@@ -20,21 +20,41 @@ import { useFirestore } from "../../hooks/firestore";
 import { useGlobal } from "../../hooks/global";
 
 interface DataType {
-    amount: string;
-    date: string;
-    description: string;
-    frequency: string;
-    id: string;
-    type: string;
-    unit: string;
+    amount: string,
+    date: string,
+    description: string,
+    frequency: string,
+    id: string,
+    type: string,
+    unit: string
 }
 
 interface UnitData {
-    id: string;
-    expenses: Record<string, DataType>;
-    gains: Record<string, DataType>;
+    id: string,
+    expenses: Record<string, DataType>,
+    gains: Record<string, DataType>
 }
 
+interface RelationData {
+    name: string,
+    value: number,
+    percent: number,
+    color: string
+}
+
+interface HistoryData {
+    monthNumber: number,
+    month: string,
+    amountEntry: number,
+    amountOutput: number
+}
+
+interface RelationRecurrentVersusEventual {
+    name: string,
+    amount: number,
+    percent: number,
+    color: string
+}
 const Dashboard: React.FC = () => {
 
     const {
@@ -57,21 +77,23 @@ const Dashboard: React.FC = () => {
     const [totalGains, setTotalGains] = useState<number>(0)
     const [totalExpenses, setTotalExpenses] = useState<number>(0)
     const [totalBalance, setTotalBalance] = useState<number>(0)
+    const [historyData, setHistoryData] = useState<HistoryData[]>([])
 
-    const unitData: UnitData | undefined = unitsData.find(unit => {
-        const unitID = unit.id;
-        const year = String(yearSelected);
-        const month = monthSelected > 9 ? String(monthSelected) : "0" + String(monthSelected);
-        return unitID === unitSelected + year + month;
-    })
+    const [
+        relationExpensesVersusGains,
+        setRelationExpensesVersusGains
+    ] = useState<RelationData[]>([])
 
-    
-    /*
-    * --> GUARDA OS DADOS QUE VÃO SER USADOS NA PÁGINA
-    *      Recebe todas as despesas e ganhos.
-    */
-    const listData = [...expenses, ...gains];
-    
+    const [
+        relationExpensesRecurrentVersusEventual,
+        setRelationExpensesRecurrentVersusEventual
+    ] = useState<RelationRecurrentVersusEventual[]>([])
+
+    const [
+        relationGainsRecurrentVersusEventual,
+        setRelationGainsRecurrentVersusEventual
+    ] = useState<RelationRecurrentVersusEventual[]>([])
+
 
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE UNIDADES
@@ -123,6 +145,26 @@ const Dashboard: React.FC = () => {
     }, [user, listOfUnits]);
 
 
+    /*
+    * --> GUARDA OS DADOS DA UNIDADE SELECIONADA PELO USUÁRIO
+    *      Carrega todas as despesas e ganhos da unidade selecionada,
+    *      pelo usuário, no determinado mês e ano, para ser usado
+    *      na aplicação.
+    */
+    const unitData: UnitData | undefined = unitsData.find(unit => {
+        const unitID = unit.id;
+        const year = String(yearSelected);
+        const month = monthSelected > 9 ? String(monthSelected) : "0" + String(monthSelected);
+        return unitID === unitSelected + year + month;
+    })
+
+    
+    /*
+    * --> SEPARA OS DADOS QUE SERAM USADO NA APLICAÇÃO
+    *      Sempre que o usuário selecionar a unidade, mês e ano, um array
+    *      de dados sobre aquela unidade sera carregado do firebase
+    *      aqui, e será separado os ganhos e despesas da unidade.
+    */
     useEffect(() => {
         if (unitData) {
             const expensesArray = Object.values(unitData.expenses);
@@ -189,6 +231,172 @@ const Dashboard: React.FC = () => {
 
 
     /*
+    * --> CONVERTE VALORES EM PORCENTAGEM
+    *      Converte os valores das entradas e saídas em porcentagem
+    *      para serem usados no gráfico de pizza.
+    */
+    useEffect(() => {
+        const total = totalGains + totalExpenses;
+        const percentGains = Number(((totalGains / total) * 100).toFixed(1));
+        const percentExpenses = Number(((totalExpenses / total) * 100).toFixed(1));
+    
+        const data = [
+            {
+                name: "Entradas",
+                value: totalGains,
+                percent: percentGains ? percentGains : 0,
+                color: "#f7931b"
+            },
+            {
+                name: "Saídas",
+                value: totalExpenses,
+                percent: percentExpenses ? percentExpenses : 0,
+                color: "#e44c4e"
+            },
+        ];
+    
+        setRelationExpensesVersusGains(data);
+    }, [totalGains, totalExpenses])
+
+
+    /*
+    * --> AGRUPA OS VALORES POR MÊS
+    *      Soma os valores de todas as entradas e saídas individualmente para
+    *      serem usados no gráfico de histórico anual.
+    */
+    useEffect(() => {
+        const data = listOfMonths.map((_, month) => {
+            let amountEntry = 0;
+            let amountOutput = 0;
+    
+            /*
+            * --> CALCULA O VALOR TOTAL DAS ENTRADAS POR MÊS
+            *      Soma e retorna o valor total das entradas de todos os
+            *      meses do ano selecionado pelo usuário.
+            */
+            gains.forEach(gain => {
+                try {
+                    amountEntry += Number(gain.amount);
+                } catch {
+                    throw new Error('Amount entry is invalid. AmountEntry must be a valid number.');
+                }
+            });
+    
+            /*
+            * --> CALCULA O VALOR TOTAL DAS SAÍDAS POR MÊS
+            *      Soma e retorna o valor total das saídas de todos os
+            *      meses do ano selecionado pelo usuário.
+            */
+            expenses.forEach(expense => {
+                try {
+                    amountOutput += Number(expense.amount);
+                } catch {
+                    throw new Error('Amount output is invalid. AmountOutput must be a valid number.');
+                }
+            });
+    
+            return {
+                monthNumber: month,
+                month: listOfMonths[month].substring(0, 3),
+                amountEntry,
+                amountOutput,
+            };
+        }).filter(item => {
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+    
+            return (yearSelected === currentYear && item.monthNumber <= currentMonth) || (yearSelected < currentYear);
+        });
+    
+        setHistoryData(data);
+    }, [listOfMonths, gains, expenses, yearSelected])
+
+
+    /*
+    * --> SEPARA OS VALORES DAS DESPESAS POR FREQUÊNCIA
+    *      Separa e soma individualmente os valores das despesas por tipo
+    *      para serem usados no gráfico de linhas.
+    */
+    useEffect(() => {
+
+        let amountRecurrent = 0
+        let amountEventual = 0
+
+        expenses
+        .forEach(expense => {
+            if (expense.frequency === 'recorrente') {
+                return amountRecurrent += Number(expense.amount)
+            }
+
+            if (expense.frequency === 'eventual') {
+                return amountEventual += Number(expense.amount)
+            }
+        })
+
+        const total = amountRecurrent + amountEventual
+        const percentRecurrent = Number(((amountRecurrent / total) * 100).toFixed(1))
+        const percentEventual = Number(((amountEventual / total) * 100).toFixed(1))
+
+        setRelationExpensesRecurrentVersusEventual([
+            {
+                name: 'Recorrentes',
+                amount: amountRecurrent,
+                percent: percentRecurrent ? percentRecurrent : 0,
+                color: '#f7931b'
+            },
+            {
+                name: 'Eventual',
+                amount: amountEventual,
+                percent: percentEventual ? percentEventual : 0,
+                color: '#e44c4e'
+            }
+        ])
+    }, [unitSelected, monthSelected, yearSelected])
+
+
+    /*
+    * --> SEPARA OS VALORES DAS ENTRADAS POR FREQUÊNCIA
+    *      Separa e soma individualmente os valores das entradas por tipo
+    *      para serem usados no gráfico de linhas.
+    */
+    useEffect(() => {
+
+        let amountRecurrent = 0
+        let amountEventual = 0
+
+        gains
+        .forEach(gain => {
+            if (gain.frequency === 'recorrente') {
+                return amountRecurrent += Number(gain.amount)
+            }
+
+            if (gain.frequency === 'eventual') {
+                return amountEventual += Number(gain.amount)
+            }
+        })
+
+        const total = amountRecurrent + amountEventual
+        const percentRecurrent = Number(((amountRecurrent / total) * 100).toFixed(1))
+        const percentEventual = Number(((amountEventual / total) * 100).toFixed(1))
+
+        setRelationGainsRecurrentVersusEventual([
+            {
+                name: 'Recorrentes',
+                amount: amountRecurrent,
+                percent: percentRecurrent ? percentRecurrent : 0,
+                color: '#f7931b'
+            },
+            {
+                name: 'Eventual',
+                amount: amountEventual,
+                percent: percentEventual ? percentEventual : 0,
+                color: '#e44c4e'
+            }
+        ])
+    }, [unitSelected, monthSelected, yearSelected])
+
+
+    /*
     * --> GUARDA UMA MENSAGEM A SER MOSTRADA
     *      Verifica constantemente e de acordo com o balanço total
     *      dos gastos e despesas da aplicação, qual mensagem será
@@ -225,222 +433,6 @@ const Dashboard: React.FC = () => {
             }
         }
     }, [totalGains, totalExpenses, totalBalance])
-
-
-    /*
-    * --> CONVERTE VALORES EM PORCENTAGEM
-    *      Converte os valores das entradas e saídas em porcentagem
-    *      para serem usados no gráfico de pizza.
-    */
-    const relationExpensesVersusGains = useMemo(() => {
-        const total = totalGains + totalExpenses
-        const percentGains = Number(((totalGains / total) * 100).toFixed(1))
-        const percentExpenses = Number(((totalExpenses / total) * 100).toFixed(1))
-
-        const data = [
-            {
-                name: "Entradas",
-                value: totalGains,
-                percent: percentGains ? percentGains : 0,
-                color: "#f7931b"
-            },
-            {
-                name: "Saídas",
-                value: totalExpenses,
-                percent: percentExpenses ? percentExpenses : 0,
-                color: "#e44c4e"
-            },
-        ]
-
-        return data
-
-    }, [totalGains, totalExpenses])
-
-
-    /*
-    * --> AGRUPA OS VALORES POR MÊS
-    *      Soma os valores de todas as entradas e saídas individualmente para
-    *      serem usados no gráfico de histórico anual.
-    */
-    const historyData = useMemo(() => {
-        return listOfMonths.map((_, month) => {
-
-            let amountEntry = 0
-            let amountOutput = 0
-
-
-            /*
-            * --> FILTRA OS DADOS DO TIPO "ENTRADAS"
-            *      Carrega somente os dados de entrada para serem usados no gráfico de histórico 
-            *      anual.
-            */
-            const filteredGains = listData.filter(item => {
-                const type = item.type;
-                return type === 'entrada'
-            });
-
-
-            /*
-            * --> FILTRA OS DADOS DO TIPO "SAÍDAS"
-            *      Carrega somente os dados de saídas para serem usados no gráfico de histórico
-            *      anual.
-            */
-            const filteredExpenses = listData.filter(item => {
-                const type = item.type;
-                return type === 'saída'
-            });
-
-
-            /*
-            * --> CALCULA O VALOR TOTAL DAS ENTRADAS POR MÊS
-            *      Soma e retorna o valor total das entradas de todos os
-            *      meses do ano selecionado pelo usuário.
-            */
-            filteredGains.forEach(gain => {
-                try {
-                    amountEntry += Number(gain.amount)
-                } catch {
-                    throw new Error('Amount entry is invalid. AmountEntry must be valid number.')
-                }
-            })
-
-
-            /*
-            * --> CALCULA O VALOR TOTAL DAS SAÍDAS POR MÊS
-            *      Soma e retorna o valor total das saídas de todos os
-            *      meses do ano selecionado pelo usuário.
-            */
-            filteredExpenses.forEach(expense => {
-                try {
-                    amountOutput += Number(expense.amount)
-                } catch {
-                    throw new Error('Amount entry is invalid. AmountEntry must be valid number.')
-                }
-            })
-
-            return {
-                monthNumber: month,
-                month: listOfMonths[month].substring(0, 3),
-                amountEntry,
-                amountOutput
-            }
-
-            /*
-            * --> DECIDE QUAIS MESES MOSTRAR NO GRÁFICO DE LINHAS
-            *      Verifica se o ano selecionado pelo usuário é igual ao ano atual em que
-            *      o sistema está online e devolve somente os meses anteriores ao mês atual
-            *      do ano selecionado, e se o ano selecionado for um que ja passou ele
-            *      mostra todos os meses.
-            */
-        }).filter(item => {
-            const currentMonth = new Date().getMonth()
-            const currentYear = new Date().getFullYear()
-
-            return (yearSelected === currentYear && item.monthNumber <= currentMonth) || (yearSelected < currentYear)
-        })
-    },[unitSelected, yearSelected])
-
-
-    /*
-    * --> SEPARA OS VALORES DAS DESPESAS POR FREQUÊNCIA
-    *      Separa e soma individualmente os valores das despesas por tipo
-    *      para serem usados no gráfico de linhas.
-    */
-    const relationExpensesRecurrentVersusEventual = useMemo(() => {
-
-        let amountRecurrent = 0
-        let amountEventual = 0
-
-        /*
-        * --> FILTRA OS DADOS POR MÊS E ANO
-        *      Verifica se o mês e ano selecionado pelo usuário
-        *      bate com o mês e ano dos dados fornecido pela base de dados.
-        * 
-        * --> SOMA OS DADOS FILTRADOS POR FREQUÊNCIA
-        *      Percorre todos os dados filtrados somando os valores individuais por
-        *      frequência.
-        */
-        expenses
-        .forEach(expense => {
-            if (expense.frequency === 'recorrente') {
-                return amountRecurrent += Number(expense.amount)
-            }
-
-            if (expense.frequency === 'eventual') {
-                return amountEventual += Number(expense.amount)
-            }
-        })
-
-        const total = amountRecurrent + amountEventual
-        const percentRecurrent = Number(((amountRecurrent / total) * 100).toFixed(1))
-        const percentEventual = Number(((amountEventual / total) * 100).toFixed(1))
-
-        return [
-            {
-                name: 'Recorrentes',
-                amount: amountRecurrent,
-                percent: percentRecurrent ? percentRecurrent : 0,
-                color: '#f7931b'
-            },
-            {
-                name: 'Eventual',
-                amount: amountEventual,
-                percent: percentEventual ? percentEventual : 0,
-                color: '#e44c4e'
-            }
-        ]
-    }, [unitSelected, monthSelected, yearSelected])
-
-
-    /*
-    * --> SEPARA OS VALORES DAS ENTRADAS POR FREQUÊNCIA
-    *      Separa e soma individualmente os valores das entradas por tipo
-    *      para serem usados no gráfico de linhas.
-    */
-    const relationGainsRecurrentVersusEventual = useMemo(() => {
-
-        let amountRecurrent = 0
-        let amountEventual = 0
-
-        /*
-        * --> FILTRA OS DADOS POR MÊS E ANO
-        *      Verifica se o mês e ano selecionado pelo usuário
-        *      bate com o mês e ano dos dados fornecido pela base de dados.
-        * 
-        * --> SOMA OS DADOS FILTRADOS POR FREQUÊNCIA
-        *      Percorre todos os dados filtrados somando os valores individuais por
-        *      frequência.
-        */
-        gains
-        .forEach(gain => {
-            if (gain.frequency === 'recorrente') {
-                return amountRecurrent += Number(gain.amount)
-            }
-
-            if (gain.frequency === 'eventual') {
-                return amountEventual += Number(gain.amount)
-            }
-        })
-
-        const total = amountRecurrent + amountEventual
-        const percentRecurrent = Number(((amountRecurrent / total) * 100).toFixed(1))
-        const percentEventual = Number(((amountEventual / total) * 100).toFixed(1))
-
-        return [
-            {
-                name: 'Recorrentes',
-                amount: amountRecurrent,
-                percent: percentRecurrent ? percentRecurrent : 0,
-                color: '#f7931b'
-            },
-            {
-                name: 'Eventual',
-                amount: amountEventual,
-                percent: percentEventual ? percentEventual : 0,
-                color: '#e44c4e'
-            }
-        ]
-    }, [unitSelected, monthSelected, yearSelected])
 
 
     /*
