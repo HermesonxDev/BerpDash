@@ -17,8 +17,8 @@ const animate = keyframes`
 `;
 
 export const Container = styled.div `
-    width: 48%;
-    height: 260px;
+    width: 49%;
+    height: 400px;
     background-color: ${props => props.theme.colors.tertiary};
     color: ${props => props.theme.colors.white};
     border-radius: 7px;

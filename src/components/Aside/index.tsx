@@ -1,5 +1,17 @@
-import { MdDashboard, MdArrowDownward, MdArrowUpward, MdExitToApp, MdClose, MdMenu, MdAdminPanelSettings } from 'react-icons/md';
+import {
+    MdDashboard,
+    MdArrowDownward,
+    MdArrowUpward,
+    MdExitToApp,
+    MdClose,
+    MdMenu,
+    MdAdminPanelSettings,
+    MdDeliveryDining
+} from 'react-icons/md';
+
 import { RiLockPasswordFill } from "react-icons/ri";
+import { FaDollarSign } from "react-icons/fa6"
+import { FaCashRegister } from "react-icons/fa"
 
 import { Container, LogoIMG, Title, HeaderContainer, MenuContainer, MenuItemLink, MenuItemButton, ToggleMenu, ThemeToggleFooter } from "./styles";
 import Toggle from "../Toggle";
@@ -61,6 +73,21 @@ const Aside: React.FC = () => {
                 <MenuItemLink href="/list/exit-balance">
                     <MdArrowDownward />
                     Saidas
+                </MenuItemLink>
+
+                <MenuItemLink href="/">
+                    <FaDollarSign />
+                    Vendas
+                </MenuItemLink>
+                
+                <MenuItemLink href="/">
+                    <FaCashRegister />
+                    Caixa
+                </MenuItemLink>
+
+                <MenuItemLink href="/">
+                    <MdDeliveryDining />
+                    Delivery
                 </MenuItemLink>
 
                 {

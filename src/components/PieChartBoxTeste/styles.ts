@@ -22,12 +22,13 @@ interface ILegendProps {
 
 export const Container = styled.div `
     width: 49%;
-    height: 400px;
+    height: 500px;
     margin: 10px 0;
     background-color: ${props => props.theme.colors.tertiary};
     color: ${props => props.theme.colors.white};
     border-radius: 7px;
     display: flex;
+    flex-direction: column;
     animation: ${animate} .5s;
 
     
@@ -41,8 +42,14 @@ export const Container = styled.div `
     }
 `;
 
+export const HeaderRow = styled.div `
+    display: flex;
+    flex-direction: row;
+    height: 90%;
+`;
+
 export const SideLeft = styled.aside `
-    padding: 30px 20px;
+    padding: 20px 0 0 20px;
 
     > h2 {
         margin-bottom: 20px;
@@ -116,7 +123,7 @@ export const Legend = styled.li<ILegendProps> `
     margin-bottom: 7px;
 
     > div {
-        font-size: 14px;
+        font-size: 13px;
         text-align: center;
         width: 40px;
         height: 40px;
@@ -135,7 +142,6 @@ export const Legend = styled.li<ILegendProps> `
     *      Dispositivo usado: Laptop (1280x950)
     */
     @media(max-width: 1345px) {
-        font-size: 14px;
         margin: 3px 0;
 
         > div {
@@ -154,7 +160,6 @@ export const SideRight = styled.main `
     display: flex;
     flex: 1;
     justify-content: center;
-
     
     /*
     * --> MEDIA QUERY PC
@@ -163,4 +168,10 @@ export const SideRight = styled.main `
     @media(max-width: 1345px) {
         height: 100%;
     }
+`;
+
+export const FooterRow = styled.div `
+    display: flex;
+    flex-direction: column;
+    height: 10%;
 `;

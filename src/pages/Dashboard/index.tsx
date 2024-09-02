@@ -18,6 +18,7 @@ import BarChartBox from "../../components/BarChartBox";
 import Loading from "../../components/Loading";
 import { useFirestore } from "../../hooks/firestore";
 import { useGlobal } from "../../hooks/global";
+import PieChartBoxTeste from "../../components/PieChartBoxTeste";
 
 interface DataType {
     amount: string,
@@ -540,6 +541,8 @@ const Dashboard: React.FC = () => {
                     title="Saídas"
                     data={relationExpensesRecurrentVersusEventual}
                 />
+
+                <PieChartBoxTeste data={relationExpensesVersusGains}/>
                 
             </Content>
         </Container>
