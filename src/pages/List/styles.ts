@@ -46,6 +46,10 @@ export const Filters = styled.div `
 `;
 
 export const Content = styled.div `
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
     > h3 {
         display: flex;
         justify-content: center;

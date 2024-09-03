@@ -65,6 +65,7 @@ const List: React.FC = () => {
     const { documents: unitsData } = getFirestore('unitsData')
 
     const [frequencySelected, setFrequencySelected] = useState(['recorrente', 'eventual']);
+
     const [data, setData] = useState<IData[]>([]);
     const [subData, setSubData] = useState<DataType[]>([]);
     

@@ -542,7 +542,7 @@ const Dashboard: React.FC = () => {
                     data={relationExpensesRecurrentVersusEventual}
                 />
 
-                <PieChartBoxTeste data={relationExpensesVersusGains}/>
+                <PieChartBoxTeste data={relationExpensesVersusGains} />
                 
             </Content>
         </Container>
