@@ -1,4 +1,6 @@
-import Button from "../Button";
+import { useEffect, useState } from "react";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+
 import HistoryFinanceCard from "../HistoryFinanceCard";
 import {
     Container,
@@ -12,33 +14,47 @@ import {
     Descriptions
 } from "./styles";
 
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import Button from "../Button";
 
-import getRandomColorFromHexPalette from "../../utils/getRandomColorFromHexPalette";
-import { useState } from "react";
+interface DataType {
+    name: string,
+    value: number,
+    percent: number,
+    color: string
+}
+
+interface DataController {
+    name: string,
+    value: string
+}
 interface IPieChartProps {
     data: {
-        name: string,
-        value: number,
-        percent: number,
-        color: string
-    }[]
+        controllers: DataController[],
+        day: DataType[],
+        month: DataType[]
+    }
 }
 
 const PieChartBoxTeste: React.FC<IPieChartProps> = ({ data }) => {
 
+    const [dataChart, setDataChart] = useState<DataType[]>([])
+    const [controllers, setControllers] = useState<DataController[]>([])
     const [periodSelected, setPeriodSelected] = useState('month');
 
-    /*
-    * --> TROCA DE PERIODO
-    *      Verifica o periodo atual do gráfico e troca pelo o periodo que o
-    *      usuário selecionar.
-    */
-    const handlePeriodClick = (period: string) => {
-        if (periodSelected !== period) {
-            setPeriodSelected(period)
+    useEffect(() => {
+        if (data) {
+            const controllersArray = Object.values(data.controllers)
+            setControllers(controllersArray)
+
+            if (periodSelected === 'month') {
+                const monthArray = Object.values(data.month)
+                setDataChart(monthArray)
+            } else if (periodSelected === 'day') {
+                const dayArray = Object.values(data.day)
+                setDataChart(dayArray)
+            }
         }
-    }
+    }, [periodSelected, data])
 
     return (
         <Container>
@@ -47,39 +63,7 @@ const PieChartBoxTeste: React.FC<IPieChartProps> = ({ data }) => {
                     <h2>Relação</h2>
                     <LegendContainer>
                         {
-                            data.map(indicator => (
-                                <Legend key={indicator.name} color={indicator.color}>
-                                    <div>{indicator.percent}%</div>
-                                    <span>{indicator.name}</span>
-                                </Legend>
-                            ))
-                        }
-                        {
-                            data.map(indicator => (
-                                <Legend key={indicator.name} color={indicator.color}>
-                                    <div>{indicator.percent}%</div>
-                                    <span>{indicator.name}</span>
-                                </Legend>
-                            ))
-                        }
-                        {
-                            data.map(indicator => (
-                                <Legend key={indicator.name} color={indicator.color}>
-                                    <div>{indicator.percent}%</div>
-                                    <span>{indicator.name}</span>
-                                </Legend>
-                            ))
-                        }
-                        {
-                            data.map(indicator => (
-                                <Legend key={indicator.name} color={indicator.color}>
-                                    <div>{indicator.percent}%</div>
-                                    <span>{indicator.name}</span>
-                                </Legend>
-                            ))
-                        }
-                        {
-                            data.map(indicator => (
+                            dataChart.map(indicator => (
                                 <Legend key={indicator.name} color={indicator.color}>
                                     <div>{indicator.percent}%</div>
                                     <span>{indicator.name}</span>
@@ -93,13 +77,16 @@ const PieChartBoxTeste: React.FC<IPieChartProps> = ({ data }) => {
                     <ResponsiveContainer>
                         <PieChart>
                             <Pie 
-                                data={data}
+                                data={dataChart}
                                 labelLine={false}
                                 dataKey="percent"
                             >
                                 {
-                                    data.map(indicator => (
-                                        <Cell key={indicator.name} fill={getRandomColorFromHexPalette()} />
+                                    dataChart.map(indicator => (
+                                        <Cell
+                                            key={indicator.name}
+                                            fill={indicator.color}
+                                        />
                                     ))
                                 }
                             </Pie>
@@ -109,56 +96,35 @@ const PieChartBoxTeste: React.FC<IPieChartProps> = ({ data }) => {
             </HeaderRow>
 
             <Controllers>
-                <Button
-                    className={`${periodSelected === 'month' && 'tag-deactivate'}`}
-                    onClick={() => handlePeriodClick('day')}
-                >Dia</Button>
-
-                <Button
-                    className={`${periodSelected === 'day' && 'tag-deactivate'}`}
-                    onClick={() => handlePeriodClick('month')}
-                >Mês</Button>
+                {
+                    controllers.map(controller => (
+                        <Button
+                            key={controller.name}
+                            className={`${
+                                periodSelected
+                                !== controller.value
+                                && 'tag-deactivate'
+                            }`}
+                            onChange={() => setPeriodSelected(controller.value)}
+                        >{controller.name}</Button>
+                    ))
+                }
             </Controllers>
 
             <FooterRow>
                 <Descriptions>
-                    <HistoryFinanceCard
-                        tagColor="red"
-                        title="Mesa"
-                        subTitle="5%"
-                        amount="R$650"
-                        backgroundColor="secondary"
-                    />
-
-                    <HistoryFinanceCard
-                        tagColor="blue"
-                        title="Balcão"
-                        subTitle="5%"
-                        amount="R$650"
-                        backgroundColor="secondary"
-                    />
-
-                    <HistoryFinanceCard
-                        tagColor="gray"
-                        title="Delivery"
-                        subTitle="10%"
-                        amount="R$1300"
-                        backgroundColor="secondary"
-                    />
-                    <HistoryFinanceCard
-                        tagColor="gray"
-                        title="Delivery"
-                        subTitle="10%"
-                        amount="R$1300"
-                        backgroundColor="secondary"
-                    />
-                    <HistoryFinanceCard
-                        tagColor="gray"
-                        title="Delivery"
-                        subTitle="10%"
-                        amount="R$1300"
-                        backgroundColor="secondary"
-                    />
+                    {
+                        dataChart.map(indicator => (
+                            <HistoryFinanceCard
+                                key={indicator.name}
+                                tagColor={indicator.color}
+                                title={indicator.name}
+                                subTitle="5%"
+                                amount={String(indicator.value)}
+                                backgroundColor="secondary"
+                            />
+                        ))
+                    }
                 </Descriptions>
             </FooterRow>
         </Container>

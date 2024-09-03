@@ -18,8 +18,10 @@ import BarChartBox from "../../components/BarChartBox";
 import Loading from "../../components/Loading";
 import { useFirestore } from "../../hooks/firestore";
 import { useGlobal } from "../../hooks/global";
-import PieChartBoxTeste from "../../components/PieChartBoxTeste";
 
+import PieChartData from "../../mock/PieChartData";
+import PieChartData2 from "../../mock/PieChartData2";
+import PieChartBoxTeste from "../../components/PieChartBoxTeste";
 interface DataType {
     amount: string,
     date: string,
@@ -542,7 +544,8 @@ const Dashboard: React.FC = () => {
                     data={relationExpensesRecurrentVersusEventual}
                 />
 
-                <PieChartBoxTeste data={relationExpensesVersusGains} />
+                <PieChartBoxTeste data={PieChartData} />
+                <PieChartBoxTeste data={PieChartData2} />
                 
             </Content>
         </Container>

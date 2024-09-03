@@ -176,8 +176,13 @@ export const Controllers = styled.div `
     height: 6%;
     margin-bottom: 10px;
 
+    > button {
+        border: 1px solid ${props => props.theme.colors.white};
+    }
+
     .tag-deactivate {
         opacity: 0.7;
+        border: unset;
     }
 `;
 
