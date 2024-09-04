@@ -5,7 +5,6 @@ import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import WalletBox from "../../components/WalletBox";
 import MessageBox from "../../components/MessageBox";
-import PieChartBox from "../../components/PieChartBox";
 import HistoryBox from "../../components/HistoryBox";
 
 import listOfMonths from "../../utils/months";
@@ -19,9 +18,6 @@ import Loading from "../../components/Loading";
 import { useFirestore } from "../../hooks/firestore";
 import { useGlobal } from "../../hooks/global";
 
-import PieChartData from "../../mock/PieChartData";
-import PieChartData2 from "../../mock/PieChartData2";
-import PieChartBoxTeste from "../../components/PieChartBoxTeste";
 interface DataType {
     amount: string,
     date: string,
@@ -35,14 +31,7 @@ interface DataType {
 interface UnitData {
     id: string,
     expenses: Record<string, DataType>,
-    gains: Record<string, DataType>
-}
-
-interface RelationData {
-    name: string,
-    value: number,
-    percent: number,
-    color: string
+    gains: Record<string, DataType>,
 }
 
 interface HistoryData {
@@ -81,11 +70,6 @@ const Dashboard: React.FC = () => {
     const [totalExpenses, setTotalExpenses] = useState<number>(0)
     const [totalBalance, setTotalBalance] = useState<number>(0)
     const [historyData, setHistoryData] = useState<HistoryData[]>([])
-
-    const [
-        relationExpensesVersusGains,
-        setRelationExpensesVersusGains
-    ] = useState<RelationData[]>([])
 
     const [
         relationExpensesRecurrentVersusEventual,
@@ -231,35 +215,6 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         setTotalBalance(totalGains - totalExpenses)
     }, [totalGains, totalExpenses]);
-
-
-    /*
-    * --> CONVERTE VALORES EM PORCENTAGEM
-    *      Converte os valores das entradas e saídas em porcentagem
-    *      para serem usados no gráfico de pizza.
-    */
-    useEffect(() => {
-        const total = totalGains + totalExpenses;
-        const percentGains = Number(((totalGains / total) * 100).toFixed(1));
-        const percentExpenses = Number(((totalExpenses / total) * 100).toFixed(1));
-    
-        const data = [
-            {
-                name: "Entradas",
-                value: totalGains,
-                percent: percentGains ? percentGains : 0,
-                color: "#f7931b"
-            },
-            {
-                name: "Saídas",
-                value: totalExpenses,
-                percent: percentExpenses ? percentExpenses : 0,
-                color: "#e44c4e"
-            },
-        ];
-    
-        setRelationExpensesVersusGains(data);
-    }, [totalGains, totalExpenses])
 
 
     /*
@@ -526,8 +481,6 @@ const Dashboard: React.FC = () => {
                     icon={message.icon}
                 />
 
-                <PieChartBox data={relationExpensesVersusGains}/>
-
                 <HistoryBox
                     data={historyData}
                     lineColorAmountEntry="#f7931b"
@@ -543,9 +496,6 @@ const Dashboard: React.FC = () => {
                     title="Saídas"
                     data={relationExpensesRecurrentVersusEventual}
                 />
-
-                <PieChartBoxTeste data={PieChartData} />
-                <PieChartBoxTeste data={PieChartData2} />
                 
             </Content>
         </Container>

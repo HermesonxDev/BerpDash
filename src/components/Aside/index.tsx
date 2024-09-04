@@ -75,7 +75,7 @@ const Aside: React.FC = () => {
                     Saidas
                 </MenuItemLink>
 
-                <MenuItemLink href="/">
+                <MenuItemLink href="/sales">
                     <FaDollarSign />
                     Vendas
                 </MenuItemLink>

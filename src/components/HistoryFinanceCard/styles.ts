@@ -17,7 +17,7 @@ const animate = keyframes`
 `;
 
 interface ITagProps {
-    color: string
+    color?: string
 }
 
 interface IContainerProps {
@@ -62,7 +62,7 @@ export const Tag = styled.div<ITagProps> `
     width: 10px;
     height: 60%;
     border-radius: 0 5px 5px 0;
-    background-color: ${props => props.color};
+    background-color: ${props => props.color || 'transparent'};
     position: absolute;
     left: 0;
 `;

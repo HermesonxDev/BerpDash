@@ -6,6 +6,7 @@ import Dashboard from '../pages/Dashboard'
 import List from '../pages/List'
 import AdminPanel from '../pages/Admin';
 import AdminGridEdit from '../components/AdminGridEdit';
+import Sales from '../pages/Sales';
 
 const AppRoutes: React.FC = () => {
     
@@ -21,6 +22,7 @@ const AppRoutes: React.FC = () => {
                     Admin
                     &&
                     <>
+                        <Route path="/sales" element={<Sales />} />
                         <Route path="/administration/:type" element={<AdminPanel />} />
                         <Route path="/administration/edit/user/:id" element={<AdminGridEdit />} />
                     </>

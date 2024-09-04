@@ -22,12 +22,14 @@ interface ILegendProps {
 
 export const Container = styled.div `
     width: 49%;
-    height: 400px;
+    height: 800px;
     margin: 10px 0;
+    padding: 0 10px;
     background-color: ${props => props.theme.colors.tertiary};
     color: ${props => props.theme.colors.white};
     border-radius: 7px;
     display: flex;
+    flex-direction: column;
     animation: ${animate} .5s;
 
     
@@ -41,8 +43,14 @@ export const Container = styled.div `
     }
 `;
 
+export const HeaderRow = styled.div `
+    display: flex;
+    flex-direction: row;
+    height: 60%;
+`;
+
 export const SideLeft = styled.aside `
-    padding: 30px 20px;
+    padding: 20px 0 0 5px;
 
     > h2 {
         margin-bottom: 20px;
@@ -54,8 +62,7 @@ export const SideLeft = styled.aside `
     *      Dispositivo usado: Laptop (1280x950)
     */
     @media(max-width: 1345px) {
-        padding: 0 15px 5px;
-        margin-bottom: 7px;
+        padding: 0 15px;
 
         > h2 {
             margin-top: 15px;
@@ -71,18 +78,17 @@ export const SideLeft = styled.aside `
     */
     @media(max-width: 420px) {
         padding: 15px;
-        margin-bottom: 7px;
     }
 `;
 
 export const LegendContainer = styled.ul `
     list-style: none;
-    height: 175px;
+    height: 80%;
     padding-right: 15px;
     overflow: scroll;
 
     &::-webkit-scrollbar {
-        width: 10px;
+        width: 5px;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -116,7 +122,7 @@ export const Legend = styled.li<ILegendProps> `
     margin-bottom: 7px;
 
     > div {
-        font-size: 14px;
+        font-size: 13px;
         text-align: center;
         width: 40px;
         height: 40px;
@@ -135,7 +141,6 @@ export const Legend = styled.li<ILegendProps> `
     *      Dispositivo usado: Laptop (1280x950)
     */
     @media(max-width: 1345px) {
-        font-size: 14px;
         margin: 3px 0;
 
         > div {
@@ -154,7 +159,6 @@ export const SideRight = styled.main `
     display: flex;
     flex: 1;
     justify-content: center;
-
     
     /*
     * --> MEDIA QUERY PC
@@ -163,4 +167,57 @@ export const SideRight = styled.main `
     @media(max-width: 1345px) {
         height: 100%;
     }
+`;
+
+export const Controllers = styled.div `
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    height: 6%;
+    margin-bottom: 10px;
+
+    > button {
+        border: 1px solid ${props => props.theme.colors.white};
+    }
+
+    .tag-deactivate {
+        opacity: 0.7;
+        border: unset;
+    }
+`;
+
+export const FooterRow = styled.div `
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 34%;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+        width: 0.5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: ${props => props.theme.colors.secondary};
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: ${props => props.theme.colors.tertiary};
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background-color: none;
+    }
+`;
+
+export const Descriptions = styled.div `
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+`;
+
+export const TotalRow = styled.div `
+    margin-bottom: 10px;
 `;
