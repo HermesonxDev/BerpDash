@@ -80,12 +80,12 @@ const Aside: React.FC = () => {
                     Vendas
                 </MenuItemLink>
                 
-                <MenuItemLink href="/">
+                <MenuItemLink href="/point-of-sale">
                     <FaCashRegister />
                     Caixa
                 </MenuItemLink>
 
-                <MenuItemLink href="/">
+                <MenuItemLink href="/delivery">
                     <MdDeliveryDining />
                     Delivery
                 </MenuItemLink>

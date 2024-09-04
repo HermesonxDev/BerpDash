@@ -7,6 +7,8 @@ import List from '../pages/List'
 import AdminPanel from '../pages/Admin';
 import AdminGridEdit from '../components/AdminGridEdit';
 import Sales from '../pages/Sales';
+import Delivery from '../pages/Delivery';
+import PointOfSale from '../pages/PointOfSale';
 
 const AppRoutes: React.FC = () => {
     
@@ -17,12 +19,14 @@ const AppRoutes: React.FC = () => {
             <Routes>
                 <Route path="/" element={<Dashboard />}/>
                 <Route path="/list/:type" element={<List />}/>
+                <Route path="/sales" element={<Sales />} />
+                <Route path="/point-of-sale" element={<PointOfSale />} />
+                <Route path="/delivery" element={<Delivery />} />
 
                 {
                     Admin
                     &&
                     <>
-                        <Route path="/sales" element={<Sales />} />
                         <Route path="/administration/:type" element={<AdminPanel />} />
                         <Route path="/administration/edit/user/:id" element={<AdminGridEdit />} />
                     </>
