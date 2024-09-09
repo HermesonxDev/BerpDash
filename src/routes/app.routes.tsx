@@ -16,17 +16,15 @@ const AppRoutes: React.FC = () => {
 
     return (
         <Layout>
-            <Routes>
-                <Route path="/" element={<Dashboard />}/>
+            <Routes> 
                 <Route path="/list/:type" element={<List />}/>
                 <Route path="/sales" element={<Sales />} />
                 <Route path="/point-of-sale" element={<PointOfSale />} />
                 <Route path="/delivery" element={<Delivery />} />
 
-                {
-                    Admin
-                    &&
+                {Admin &&
                     <>
+                        <Route path="/" element={<Dashboard />}/>
                         <Route path="/administration/:type" element={<AdminPanel />} />
                         <Route path="/administration/edit/user/:id" element={<AdminGridEdit />} />
                     </>

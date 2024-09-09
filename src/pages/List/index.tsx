@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import { Container, Content, Filters } from "./styles";
+import { Container, Content, Filters, TotalRow, HeaderTotalRow, Clock } from "./styles";
 import { useParams } from "react-router-dom";
 
 import ContentHeader from "../../components/ContentHeader";
@@ -10,8 +10,9 @@ import Loading from "../../components/Loading";
 import formatCurrency from "../../utils/formatCurrency";
 import formatDate from "../../utils/formatDate";
 import listOfMonths from "../../utils/months";
-import { useFirestore } from "../../hooks/firestore";
 import getYears from "../../utils/getYears";
+
+import { useFirestore } from "../../hooks/firestore";
 import { useGlobal } from "../../hooks/global";
 
 
@@ -64,10 +65,10 @@ const List: React.FC = () => {
     const { documents: listOfUnits, loading: loadingListOfUnits } = getFirestore('units');
     const { documents: unitsData } = getFirestore('unitsData')
 
-    const [frequencySelected, setFrequencySelected] = useState(['recorrente', 'eventual']);
-
     const [data, setData] = useState<IData[]>([]);
     const [subData, setSubData] = useState<DataType[]>([]);
+    const [totalAmount, setTotalAmount] = useState<number>(0);
+    const [frequencySelected, setFrequencySelected] = useState(['recorrente', 'eventual']);
     
     const urlParams = useMemo(() => {
         return type === 'entry-balance'
@@ -178,10 +179,16 @@ const List: React.FC = () => {
             dateFormatted: formatDate(item.date),
             tagColor: item.frequency === 'recorrente' ? '#4e41f0' : '#e44c4e',
             unit: item.unit
-            };
-        });
+            }
+        })
 
         setData(formattedData)
+
+        const totalAmount = subData
+        .filter(item => frequencySelected.includes(item.frequency))
+        .reduce((acc, item) => acc + Number(item.amount), 0)
+
+        setTotalAmount(totalAmount)
     }, [subData, monthSelected, yearSelected, unitSelected, frequencySelected])
 
 
@@ -261,7 +268,6 @@ const List: React.FC = () => {
             </ContentHeader>
 
             <Filters>
-                
                 <button
                     className={
                         `tag-filter tag-filter-recurrent
@@ -278,6 +284,21 @@ const List: React.FC = () => {
                     onClick={() => handleFrequencyClick('eventual')}
                 >Eventuais</button>
             </Filters>
+
+            <TotalRow>
+                <HeaderTotalRow>
+                    <div>
+                        <h2>Valor total</h2>
+                        <h5>Com base na venda recebida</h5>
+                    </div>
+
+                    <div>
+                        <Clock />
+                        <p>Última atualização á 1 minuto atrás</p>
+                    </div>
+                </HeaderTotalRow>
+                <h2>{formatCurrency(totalAmount)}</h2>
+            </TotalRow>
 
             <Content>
                 {

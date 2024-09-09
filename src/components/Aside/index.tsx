@@ -60,11 +60,13 @@ const Aside: React.FC = () => {
             </HeaderContainer>
 
             <MenuContainer>
-                <MenuItemLink href="/">
-                    <MdDashboard />
-                    Dashboard
-                </MenuItemLink>
-
+                {Admin &&
+                    <MenuItemLink href="/">
+                        <MdDashboard />
+                        Dashboard
+                    </MenuItemLink>
+                }
+                
                 <MenuItemLink href="/list/entry-balance">
                     <MdArrowUpward />
                     Entradas
@@ -90,9 +92,7 @@ const Aside: React.FC = () => {
                     Delivery
                 </MenuItemLink>
 
-                {
-                    Admin
-                    &&
+                {Admin &&
                     <MenuItemLink href="/administration/list-users">
                         <MdAdminPanelSettings  />
                         Administração
