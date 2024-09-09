@@ -7,12 +7,13 @@ import {
     HeaderRow,
     SideLeft,
     SideRight,
+    TitleContainer,
     LegendContainer,
     Legend,
     FooterRow,
     Controllers,
     Descriptions,
-    TotalRow
+    Clock
 } from "./styles";
 
 import Button from "../Button";
@@ -94,9 +95,19 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
     
     return (
         <Container>
+            <TitleContainer>
+                <div>
+                    <h2>{data.title}</h2>
+                    <h5>{data.subTitle}</h5>
+                </div>
+
+                <div>
+                    <Clock />
+                    <p>{data.text}</p>
+                </div>
+            </TitleContainer>
             <HeaderRow>
                 <SideLeft>
-                    <h2>Relação</h2>
                     <LegendContainer>
                         {
                             dataChart.map(indicator => (
@@ -112,11 +123,7 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
                 <SideRight>
                     <ResponsiveContainer>
                         <PieChart>
-                            <Pie 
-                                data={dataChart}
-                                labelLine={false}
-                                dataKey="percent"
-                            >
+                            <Pie data={dataChart} labelLine={false} dataKey="percent">
                                 {
                                     dataChart.map(indicator => (
                                         <Cell
@@ -167,18 +174,16 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
             </FooterRow>
 
             {data.showTotal &&
-                <TotalRow>
-                    <HistoryFinanceCard
-                        title="Total"
-                        subTitle="5%"
-                        amount={
-                            data.isMoney
-                            ? formatCurrency(total)
-                            : String(total)
-                        }
-                        backgroundColor="secondary"
-                    />
-                </TotalRow>
+                <HistoryFinanceCard
+                    title="Total"
+                    subTitle="5%"
+                    amount={
+                        data.isMoney
+                        ? formatCurrency(total)
+                        : String(total)
+                    }
+                    backgroundColor="secondary"
+                />
             }
         </Container>
     )

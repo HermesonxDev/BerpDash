@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { MdOutlineAccessTime } from "react-icons/md";
 
 const animate = keyframes`
     0% {
@@ -30,6 +31,7 @@ export const Container = styled.div `
     border-radius: 7px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
     animation: ${animate} .5s;
 
     
@@ -51,11 +53,6 @@ export const HeaderRow = styled.div `
 
 export const SideLeft = styled.aside `
     padding-left: 5px;
-
-    > h2 {
-        margin-bottom: 20px;
-    }
-
 
     /*
     * --> MEDIA QUERY PC
@@ -81,6 +78,29 @@ export const SideLeft = styled.aside `
     }
 `;
 
+export const TitleContainer = styled.div`
+    margin-bottom: 15px;
+
+    > div {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+
+        > h5 {
+            margin-top: 9px;
+            color: ${props => props.theme.colors.gray};
+        }
+
+        > p {
+            color: ${props => props.theme.colors.gray};
+        }
+    }
+`;
+
+export const Clock = styled(MdOutlineAccessTime)`
+    color: ${props => props.theme.colors.gray};
+`;
+
 export const LegendContainer = styled.ul `
     list-style: none;
     height: 80%;
@@ -88,7 +108,7 @@ export const LegendContainer = styled.ul `
     overflow: scroll;
 
     &::-webkit-scrollbar {
-        width: 5px;
+        width: 0.5px;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -173,8 +193,6 @@ export const Controllers = styled.div `
     display: flex;
     flex-direction: row;
     gap: 10px;
-    height: 6%;
-    margin-bottom: 10px;
 
     > button {
         border: 1px solid ${props => props.theme.colors.white};
@@ -187,10 +205,6 @@ export const Controllers = styled.div `
 `;
 
 export const FooterRow = styled.div `
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    height: 34%;
     overflow: scroll;
 
     &::-webkit-scrollbar {
@@ -216,8 +230,4 @@ export const Descriptions = styled.div `
     display: flex;
     flex-direction: column;
     gap: 5px;
-`;
-
-export const TotalRow = styled.div `
-    margin-bottom: 10px;
 `;

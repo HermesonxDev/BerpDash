@@ -84,13 +84,13 @@ const BiaxialBarChartBox: React.FC<IBiaxialBarChartProps> = ({ data }) => {
         <Container>
             <HeaderRow>
                 <div>
-                    <h2>Venda por horário</h2>
-                    <h5>Com base na venda recebida</h5>
+                    <h2>{data.title}</h2>
+                    <h5>{data.subTitle}</h5>
                 </div>
 
                 <div>
                     <Clock />
-                    <p>Última atualização á 1 minuto atrás</p>
+                    <p>{data.text}</p>
                 </div>
             </HeaderRow>
 
