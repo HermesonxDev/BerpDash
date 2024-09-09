@@ -55,7 +55,7 @@ export const TotalRow = styled.div`
     border-radius: 10px;
 
     > h2 {
-        font-size: 30px;
+        font-size: 25px;
         margin: auto 0;
     }
 `;
@@ -72,12 +72,15 @@ export const HeaderTotalRow = styled.div`
         }
 
         > p {
+            font-size: 14px;
             color: ${props => props.theme.colors.gray};
         }
     }
 `;
 
 export const Clock = styled(MdOutlineAccessTime)`
+    width: 15px;
+    height: 15px;
     color: ${props => props.theme.colors.gray};
 `;
 

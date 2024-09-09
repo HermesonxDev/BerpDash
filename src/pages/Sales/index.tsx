@@ -17,6 +17,7 @@ import PieChartData from "../../mock/PieChartData";
 import PieChartData2 from "../../mock/PieChartData2";
 import BiaxialBarChartData from "../../mock/BiaxialBarChartData";
 import BiaxialBarChartData2 from "../../mock/BiaxialBarChartData2";
+import InformationCard from "../../components/InformationCard";
 
 interface DataType {
     amount: string,
@@ -153,12 +154,12 @@ const Sales: React.FC = () => {
     *      pelo usuário, no determinado mês e ano, para ser usado
     *      na aplicação.
     */
-    const unitData: UnitData | undefined = unitsData.find(unit => {
-        const unitID = unit.id;
-        const year = String(yearSelected);
-        const month = monthSelected > 9 ? String(monthSelected) : "0" + String(monthSelected);
-        return unitID === unitSelected + year + month;
-    })
+    // const unitData: UnitData | undefined = unitsData.find(unit => {
+    //     const unitID = unit.id;
+    //     const year = String(yearSelected);
+    //     const month = monthSelected > 9 ? String(monthSelected) : "0" + String(monthSelected);
+    //     return unitID === unitSelected + year + month;
+    // })
 
     /*
     * --> SETA O MÊS SELECIONADO PELO USUÁRIO
@@ -221,6 +222,8 @@ const Sales: React.FC = () => {
 
                 <BiaxialBarChartBox data={BiaxialBarChartData}/>
                 <BiaxialBarChartBox data={BiaxialBarChartData2}/>
+
+                <InformationCard />
             </Content>
         </Container>
     )

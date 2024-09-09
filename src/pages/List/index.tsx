@@ -70,6 +70,12 @@ const List: React.FC = () => {
     const [totalAmount, setTotalAmount] = useState<number>(0);
     const [frequencySelected, setFrequencySelected] = useState(['recorrente', 'eventual']);
     
+
+    /*
+    * --> VERIFICA QUE TITULO VAI SER USADO NA PÁGINA
+    *      Pega da URL o parâmetro que vai decidir qual será o titulo
+    *      da página e guarda ele em um objeto junto a uma cor.
+    */
     const urlParams = useMemo(() => {
         return type === 'entry-balance'
         ?

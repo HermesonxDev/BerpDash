@@ -10,7 +10,7 @@ import {
 } from 'react-icons/md';
 
 import { RiLockPasswordFill } from "react-icons/ri";
-import { FaDollarSign } from "react-icons/fa6"
+import { FaDollarSign, FaCode } from "react-icons/fa6"
 import { FaCashRegister } from "react-icons/fa"
 
 import { Container, LogoIMG, Title, HeaderContainer, MenuContainer, MenuItemLink, MenuItemButton, ToggleMenu, ThemeToggleFooter } from "./styles";
@@ -60,12 +60,10 @@ const Aside: React.FC = () => {
             </HeaderContainer>
 
             <MenuContainer>
-                {Admin &&
-                    <MenuItemLink href="/">
-                        <MdDashboard />
-                        Dashboard
-                    </MenuItemLink>
-                }
+                <MenuItemLink href="/">
+                    <MdDashboard />
+                    Dashboard
+                </MenuItemLink>
                 
                 <MenuItemLink href="/list/entry-balance">
                     <MdArrowUpward />
@@ -93,10 +91,17 @@ const Aside: React.FC = () => {
                 </MenuItemLink>
 
                 {Admin &&
-                    <MenuItemLink href="/administration/list-users">
-                        <MdAdminPanelSettings  />
-                        Administração
-                    </MenuItemLink>
+                    <>
+                        <MenuItemLink href="/administration/list-users">
+                            <MdAdminPanelSettings />
+                            Administração
+                        </MenuItemLink>
+
+                        <MenuItemLink href="/development">
+                            <FaCode />
+                            Desenvolvimento
+                        </MenuItemLink>
+                    </>
                 }
 
                 <MenuItemButton onClick={HandleRecoveryPassword}>

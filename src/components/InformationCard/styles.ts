@@ -17,9 +17,9 @@ const animate = keyframes`
     }
 `;
 
-export const Container = styled.div `
+export const Container = styled.div`
     width: 49%;
-    min-height: 700px;
+    min-height: 350px;
     margin: 10px 0;
     padding: 15px 10px;
     background-color: ${props => props.theme.colors.tertiary};
@@ -40,7 +40,8 @@ export const Container = styled.div `
 `;
 
 export const HeaderRow = styled.div`
-    height: 10%;
+    margin-bottom: 15px;
+    height: 20%;
 
     > div {
         display: flex;
@@ -63,28 +64,61 @@ export const Clock = styled(MdOutlineAccessTime)`
 `;
 
 export const MainRow = styled.div`
-    height: 80%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-`;
+    gap: 5px;
+    height: 50%;
 
-export const Controllers = styled.div `
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-
-    > button {
-        border: 1px solid ${props => props.theme.colors.white};
+    > h2 {
+        font-size: 35px;
+        display: flex;
+        justify-content: center;
     }
 
-    .tag-deactivate {
-        opacity: 0.7;
-        border: unset;
+    > p {
+        display: flex;
+        justify-content: center;
     }
 `;
 
 export const FooterRow = styled.div`
-    margin-top: 5px;
-    height: 10%;
+    border-top: 1px solid ${props => props.theme.colors.gray};
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    overflow: scroll;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        padding: 15px 20px;
+        margin-top: 10px;
+        border-right: 1px solid ${props => props.theme.colors.gray};
+
+        > p {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-all;
+            hyphens: auto;
+        }
+
+    }
+
+    &::-webkit-scrollbar {
+        width: 0.5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: ${props => props.theme.colors.secondary};
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: ${props => props.theme.colors.tertiary};
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background-color: none;
+    }
 `;
