@@ -24,7 +24,7 @@ export const Container = styled.div `
     width: 49%;
     height: 800px;
     margin: 10px 0;
-    padding: 0 10px;
+    padding: 15px 10px;
     background-color: ${props => props.theme.colors.tertiary};
     color: ${props => props.theme.colors.white};
     border-radius: 7px;
@@ -50,7 +50,7 @@ export const HeaderRow = styled.div `
 `;
 
 export const SideLeft = styled.aside `
-    padding: 20px 0 0 5px;
+    padding-left: 5px;
 
     > h2 {
         margin-bottom: 20px;

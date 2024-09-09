@@ -5,6 +5,7 @@ import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import Loading from "../../components/Loading";
 import PieChartBox from "../../components/PieChartBox";
+import BiaxialBarChartBox from "../../components/BiaxialBarChartbox";
 
 import { useGlobal } from "../../hooks/global";
 import { useFirestore } from "../../hooks/firestore";
@@ -14,7 +15,8 @@ import getYears from "../../utils/getYears";
 
 import PieChartData from "../../mock/PieChartData";
 import PieChartData2 from "../../mock/PieChartData2";
-import BiaxialBarChartBox from "../../components/BiaxialBarChartbox";
+import BiaxialBarChartData from "../../mock/BiaxialBarChartData";
+import BiaxialBarChartData2 from "../../mock/BiaxialBarChartData2";
 
 interface DataType {
     amount: string,
@@ -151,14 +153,12 @@ const Sales: React.FC = () => {
     *      pelo usuário, no determinado mês e ano, para ser usado
     *      na aplicação.
     */
-    // const unitData: UnitData | undefined = unitsData.find(unit => {
-    //     const unitID = unit.id;
-    //     const year = String(yearSelected);
-    //     const month = monthSelected > 9 ? String(monthSelected) : "0" + String(monthSelected);
-    //     return unitID === unitSelected + year + month;
-    // })
-
-    // console.log(unitData)
+    const unitData: UnitData | undefined = unitsData.find(unit => {
+        const unitID = unit.id;
+        const year = String(yearSelected);
+        const month = monthSelected > 9 ? String(monthSelected) : "0" + String(monthSelected);
+        return unitID === unitSelected + year + month;
+    })
 
     /*
     * --> SETA O MÊS SELECIONADO PELO USUÁRIO
@@ -219,7 +219,8 @@ const Sales: React.FC = () => {
                 <PieChartBox data={PieChartData}/>
                 <PieChartBox data={PieChartData2}/>
 
-                <BiaxialBarChartBox />
+                <BiaxialBarChartBox data={BiaxialBarChartData}/>
+                <BiaxialBarChartBox data={BiaxialBarChartData2}/>
             </Content>
         </Container>
     )

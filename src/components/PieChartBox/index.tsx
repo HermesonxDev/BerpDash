@@ -32,7 +32,11 @@ interface DataController {
 interface IPieChartProps {
     data: {
         controllers: DataController[],
-        generatedDate?: string,
+        generatedDate: string,
+        isMoney: boolean,
+        showTotal: Boolean,
+        title: string,
+        subTitle: string,
         [key: string]: any
     }
 }
@@ -42,11 +46,8 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
     const [dataChart, setDataChart] = useState<DataType[]>([])
     const [controllers, setControllers] = useState<DataController[]>([])
     const [total, setTotal] = useState<number>(0)
+    const [periodSelected, setPeriodSelected] = useState<string>('month')
 
-    const [
-        periodSelected,
-        setPeriodSelected
-    ] = useState<string>(data.controllers[0]?.value || '')
 
     const isCurrentMonth = () => {
         if (!data.generatedDate) return false;
@@ -68,23 +69,25 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
 
     useEffect(() => {
         if (data) {
-            setControllers(data.controllers);
+            setControllers(data.controllers)
 
             const updateDataChart = (period: string) => {
-                setDataChart(data[period] || []);
-            };
+                const updatedData = data[period] || [];
+                setDataChart(updatedData);
 
-            let subTotal: number = 0
+                let subTotal: number = 0;
 
-            dataChart.forEach(item => {
-                try {
-                    subTotal += Number(item.amount)
-                } catch {
-                    throw new Error('Invalid amount! Amount must be number.')
-                }
-            })
+                updatedData.forEach((item: DataType) => {
+                    try {
+                        subTotal += Number(item.amount);
+                    } catch {
+                        throw new Error('Invalid amount! Amount must be number.');
+                    }
+                });
 
-            setTotal(subTotal)
+                setTotal(subTotal);
+            }
+
             updateDataChart(periodSelected);
         }
     }, [periodSelected, data])
@@ -163,7 +166,7 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
                 </Descriptions>
             </FooterRow>
 
-            {data.showTotal && 
+            {data.showTotal &&
                 <TotalRow>
                     <HistoryFinanceCard
                         title="Total"
