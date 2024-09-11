@@ -44,6 +44,9 @@ interface IBiaxialBarChartProps {
         title: string,
         subTitle: string,
         text: string,
+        labels: {
+            [key: string]: string
+        },
         [key: string]: any
     }
 }
@@ -54,6 +57,7 @@ const BiaxialBarChartBox: React.FC<IBiaxialBarChartProps> = ({ data }) => {
     const [controllers, setControllers] = useState<DataController[]>([])
     const [total, setTotal] = useState<number>(0)
     const [periodSelected, setPeriodSelected] = useState<string>('month')
+    const [dynamicKeys, setDynamicKeys] = useState<string[]>([]);
 
     useEffect(() => {
         if (data) {
@@ -64,6 +68,11 @@ const BiaxialBarChartBox: React.FC<IBiaxialBarChartProps> = ({ data }) => {
                 setDataChart(updatedData);
 
                 let subTotal: number = 0;
+
+                if (updatedData.length > 0) {
+                    const keys = Object.keys(updatedData[0]).filter(key => key !== 'name' && key !== 'amount');
+                    setDynamicKeys(keys);
+                }
 
                 updatedData.forEach((item: DataType) => {
                     try {
@@ -103,8 +112,16 @@ const BiaxialBarChartBox: React.FC<IBiaxialBarChartProps> = ({ data }) => {
                         <YAxis yAxisId="right" orientation="right" stroke="#ffffff" />
                         <Tooltip />
                         <Legend />
-                        <Bar yAxisId="left" dataKey="sales" fill="#e44c4e" name="Vendas"/>
-                        <Bar yAxisId="right" dataKey="costumers" fill="#f7931b" name="Clientes"/>
+
+                        {dynamicKeys.map((key, index) => (
+                            <Bar 
+                                key={key} 
+                                yAxisId={index % 2 === 0 ? "left" : "right"} 
+                                dataKey={key} 
+                                fill={index % 2 === 0 ? "#e44c4e" : "#f7931b"} 
+                                name={data.labels[key] || key.charAt(0).toUpperCase() + key.slice(1)}
+                            />
+                        ))}
                     </BarChart>
                 </ResponsiveContainer>
 

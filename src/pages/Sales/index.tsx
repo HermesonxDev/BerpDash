@@ -6,6 +6,7 @@ import SelectInput from "../../components/SelectInput";
 import Loading from "../../components/Loading";
 import PieChartBox from "../../components/PieChartBox";
 import BiaxialBarChartBox from "../../components/BiaxialBarChartbox";
+import InformationCard from "../../components/InformationCard";
 
 import { useGlobal } from "../../hooks/global";
 import { useFirestore } from "../../hooks/firestore";
@@ -17,7 +18,8 @@ import PieChartData from "../../mock/PieChartData";
 import PieChartData2 from "../../mock/PieChartData2";
 import BiaxialBarChartData from "../../mock/BiaxialBarChartData";
 import BiaxialBarChartData2 from "../../mock/BiaxialBarChartData2";
-import InformationCard from "../../components/InformationCard";
+import InformationCardData from "../../mock/InformationCardData";
+import InformationCardData2 from "../../mock/InformationCardData2";
 
 interface DataType {
     amount: string,
@@ -217,13 +219,14 @@ const Sales: React.FC = () => {
             </ContentHeader>
 
             <Content>
-                <PieChartBox data={PieChartData}/>
-                <PieChartBox data={PieChartData2}/>
+                <PieChartBox data={PieChartData} />
+                <PieChartBox data={PieChartData2} />
 
-                <BiaxialBarChartBox data={BiaxialBarChartData}/>
-                <BiaxialBarChartBox data={BiaxialBarChartData2}/>
+                <BiaxialBarChartBox data={BiaxialBarChartData} />
+                <BiaxialBarChartBox data={BiaxialBarChartData2} />
 
-                <InformationCard />
+                <InformationCard data={InformationCardData} />
+                <InformationCard data={InformationCardData2} />
             </Content>
         </Container>
     )

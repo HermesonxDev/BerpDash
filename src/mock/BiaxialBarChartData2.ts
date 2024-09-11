@@ -10,6 +10,10 @@ export default {
     "title":"Venda por horário",
     "subTitle":"Com base na venda recebida",
     "text": "Última atualização á 1 minuto atrás",
+    "labels": {
+      "sales": "Vendas",
+      "costumers": "Clientes"
+    },
     month: [
       {name: '9', sales: 4000, costumers: 2200, amount: 2410},
       {name: '10', sales: 7000, costumers: 2398, amount: 22210},

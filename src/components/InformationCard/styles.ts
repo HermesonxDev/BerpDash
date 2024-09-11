@@ -59,7 +59,7 @@ export const HeaderRow = styled.div`
     }
 `;
 
-export const Clock = styled(MdOutlineAccessTime)`
+export const Clocks = styled(MdOutlineAccessTime)`
     color: ${props => props.theme.colors.gray};
 `;
 
@@ -67,7 +67,7 @@ export const MainRow = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5px;
-    height: 50%;
+    height: 40%;
 
     > h2 {
         font-size: 35px;
@@ -82,43 +82,32 @@ export const MainRow = styled.div`
 `;
 
 export const FooterRow = styled.div`
-    border-top: 1px solid ${props => props.theme.colors.gray};
-    height: 30%;
+    height: 40%;
     display: flex;
     justify-content: center;
-    overflow: scroll;
+    gap: 5px;
+    overflow: hidden;
 
     > div {
+        height: 90%;
         display: flex;
         flex-direction: column;
-        padding: 15px 20px;
-        margin-top: 10px;
-        border-right: 1px solid ${props => props.theme.colors.gray};
+        justify-content: space-between;
+        padding: 15px 5px;
+        border: 1px solid ${props => props.theme.colors.gray};
+        border-radius: 5px;
+
+        > h3 {
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+        }
 
         > p {
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            word-break: break-all;
+            display: flex;
+            justify-content: center;
             hyphens: auto;
         }
 
-    }
-
-    &::-webkit-scrollbar {
-        width: 0.5px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: ${props => props.theme.colors.secondary};
-        border-radius: 10px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background-color: ${props => props.theme.colors.tertiary};
-        border-radius: 10px;
-    }
-
-    &::-webkit-scrollbar-corner {
-        background-color: none;
     }
 `;
