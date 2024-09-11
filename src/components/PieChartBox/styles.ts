@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import { MdOutlineAccessTime } from "react-icons/md";
 
 const animate = keyframes`
     0% {
@@ -80,25 +79,6 @@ export const SideLeft = styled.aside `
 
 export const TitleContainer = styled.div`
     margin-bottom: 15px;
-
-    > div {
-        display: flex;
-        flex-direction: row;
-        gap: 5px;
-
-        > h5 {
-            margin-top: 9px;
-            color: ${props => props.theme.colors.gray};
-        }
-
-        > p {
-            color: ${props => props.theme.colors.gray};
-        }
-    }
-`;
-
-export const Clock = styled(MdOutlineAccessTime)`
-    color: ${props => props.theme.colors.gray};
 `;
 
 export const LegendContainer = styled.ul `

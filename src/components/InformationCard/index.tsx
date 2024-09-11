@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Clocks, Container, HeaderRow, MainRow, FooterRow } from "./styles";
+import { Container, HeaderRow, MainRow, FooterRow } from "./styles";
 import formatCurrency from "../../utils/formatCurrency";
+import HeaderChartInfo from "../HeaderChartInfo";
 
 interface DataController {
     label: string,
@@ -12,7 +13,6 @@ interface IInformationCardProps {
         generatedDate: string,
         isMoney: boolean,
         title: string,
-        subTitle: string,
         text: string
     }
 }
@@ -40,15 +40,10 @@ const InformationCard: React.FC<IInformationCardProps> = ({ data }) => {
     return (
         <Container>
             <HeaderRow>
-                <div>
-                    <h2>{data.title}</h2>
-                    <h5>{data.subTitle}</h5>
-                </div>
-
-                <div>
-                    <Clocks />
-                    <p>{data.text}</p>
-                </div>
+                <HeaderChartInfo
+                    title={data.title}
+                    text={data.text}
+                />
             </HeaderRow>
 
             <MainRow>

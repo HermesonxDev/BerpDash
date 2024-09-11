@@ -7,8 +7,7 @@ export default {
     ],
     "generatedDate": "2024-09-04",
     "isMoney": true,
-    "title":"Venda por horário",
-    "subTitle":"Com base na venda recebida",
+    "title":"Acumulado do dia recebidos",
     "text": "Última atualização á 1 minuto atrás"
 };
   

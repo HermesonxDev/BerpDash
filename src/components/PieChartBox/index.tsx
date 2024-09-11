@@ -12,12 +12,12 @@ import {
     Legend,
     FooterRow,
     Controllers,
-    Descriptions,
-    Clock
+    Descriptions
 } from "./styles";
 
 import Button from "../Button";
 import formatCurrency from "../../utils/formatCurrency";
+import HeaderChartInfo from "../HeaderChartInfo";
 
 interface DataType {
     name: string,
@@ -96,15 +96,11 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
     return (
         <Container>
             <TitleContainer>
-                <div>
-                    <h2>{data.title}</h2>
-                    <h5>{data.subTitle}</h5>
-                </div>
-
-                <div>
-                    <Clock />
-                    <p>{data.text}</p>
-                </div>
+                <HeaderChartInfo
+                    title={data.title}
+                    subTitle={data.subTitle}
+                    text={data.text}
+                />
             </TitleContainer>
             <HeaderRow>
                 <SideLeft>
@@ -123,7 +119,12 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
                 <SideRight>
                     <ResponsiveContainer>
                         <PieChart>
-                            <Pie data={dataChart} labelLine={false} dataKey="percent">
+                            <Pie
+                                data={dataChart}
+                                labelLine={false}
+                                dataKey="percent"
+                                stroke="none"
+                            >
                                 {
                                     dataChart.map(indicator => (
                                         <Cell

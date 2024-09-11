@@ -7,7 +7,6 @@ import {
     HeaderRow,
     MainRow,
     FooterRow,
-    Clock,
     Controllers
 } from "./styles";
 
@@ -22,6 +21,7 @@ import {
     ResponsiveContainer
 } from 'recharts';
 import formatCurrency from "../../utils/formatCurrency";
+import HeaderChartInfo from "../HeaderChartInfo";
 
 interface DataController {
     name: string,
@@ -92,15 +92,11 @@ const BiaxialBarChartBox: React.FC<IBiaxialBarChartProps> = ({ data }) => {
     return (
         <Container>
             <HeaderRow>
-                <div>
-                    <h2>{data.title}</h2>
-                    <h5>{data.subTitle}</h5>
-                </div>
-
-                <div>
-                    <Clock />
-                    <p>{data.text}</p>
-                </div>
+                <HeaderChartInfo
+                    title={data.title}
+                    subTitle={data.subTitle}
+                    text={data.text}
+                />
             </HeaderRow>
 
             <MainRow>

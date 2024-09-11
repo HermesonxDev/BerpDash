@@ -16,17 +16,16 @@ const animate = keyframes`
     }
 `;
 
-export const Container = styled.div `
+export const Container = styled.div`
     width: 49%;
-    min-height: 700px;
+    min-height: 100px;
     margin: 10px 0;
-    padding: 15px 10px;
     background-color: ${props => props.theme.colors.tertiary};
     color: ${props => props.theme.colors.white};
     border-radius: 7px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    padding: 15px 10px;
     animation: ${animate} .5s;
     
     /* --> MEDIA QUERY DO MOBILE <-- */
@@ -39,32 +38,34 @@ export const Container = styled.div `
 `;
 
 export const HeaderRow = styled.div`
-    height: 10%;
+    height: 15%;
 `;
 
 export const MainRow = styled.div`
-    height: 80%;
+    height: 65%;
     display: flex;
     flex-direction: column;
     gap: 10px;
-`;
+    margin-top: 20px;
 
-export const Controllers = styled.div `
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-
-    > button {
-        border: 1px solid ${props => props.theme.colors.white};
-    }
-
-    .tag-deactivate {
-        opacity: 0.7;
-        border: unset;
+    > h2 {
+        display: flex;
+        justify-content: center;
     }
 `;
+
 
 export const FooterRow = styled.div`
-    margin-top: 5px;
-    height: 10%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+
+    > h2 {
+        font-size: 30px;
+    }
+
+    > h2, p {
+        display: flex;
+        justify-content: center;
+    }
 `;
