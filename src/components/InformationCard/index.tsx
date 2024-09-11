@@ -19,25 +19,23 @@ interface IInformationCardProps {
 
 const InformationCard: React.FC<IInformationCardProps> = ({ data }) => {
 
-    const [controllers, setControllers] = useState<DataController[]>([])
     const [total, setTotal] = useState<number>(0)
 
     useEffect(() => {
-        if (data) {
+        if (data && data.controllers) {
             let subTotal: number = 0;
 
-            controllers.forEach((item: DataController) => {
+            data.controllers.forEach((item: DataController) => {
                 try {
                     subTotal += Number(item.amount);
                 } catch {
                     throw new Error('Invalid amount! Amount must be number.');
                 }
-            })
+            });
 
-            setControllers(data.controllers)
-            setTotal(subTotal)
+            setTotal(subTotal);
         }
-    }, [data])
+    }, [data]);
 
     return (
         <Container>
@@ -63,7 +61,7 @@ const InformationCard: React.FC<IInformationCardProps> = ({ data }) => {
             </MainRow>
 
             <FooterRow>
-                {controllers.map(controller => (
+                {data.controllers.map(controller => (
                     <div key={controller.label}>
                         <h3>{
                             data.isMoney
@@ -78,4 +76,4 @@ const InformationCard: React.FC<IInformationCardProps> = ({ data }) => {
     )
 }
 
-export default InformationCard
+export default InformationCard;
