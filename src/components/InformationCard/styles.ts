@@ -36,6 +36,14 @@ export const Container = styled.div`
         width: 100%;
         height: auto;
     }
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
+    @media(max-width: 420px) {
+        min-height: 330px;
+    }
 `;
 
 export const HeaderRow = styled.div`
@@ -58,6 +66,16 @@ export const MainRow = styled.div`
     > p {
         display: flex;
         justify-content: center;
+    }
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
+    @media(max-width: 420px) {
+        > h2 {
+            font-size: 26px;
+        }
     }
 `;
 
@@ -88,6 +106,42 @@ export const FooterRow = styled.div`
             justify-content: center;
             hyphens: auto;
         }
+    }
 
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
+    @media(max-width: 420px) {
+        flex-direction: row;
+        justify-content: unset;
+        overflow: scroll;
+
+        > div {
+            height: 70%;
+            padding: 10px 5px;
+
+            > p {
+                font-size: 14px;
+            }
+        }
+
+        &::-webkit-scrollbar {
+            width: 0.5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: ${props => props.theme.colors.secondary};
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: ${props => props.theme.colors.tertiary};
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-corner {
+            background-color: none;
+        }
     }
 `;

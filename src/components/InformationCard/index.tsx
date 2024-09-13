@@ -11,7 +11,6 @@ interface IInformationCardProps {
     data: {
         controllers: DataController[],
         generatedDate: string,
-        isMoney: boolean,
         title: string,
         text: string
     }
@@ -47,22 +46,14 @@ const InformationCard: React.FC<IInformationCardProps> = ({ data }) => {
             </HeaderRow>
 
             <MainRow>
-                <h2>{
-                    data.isMoney
-                    ? formatCurrency(total)
-                    : total
-                }</h2>
+                <h2>{formatCurrency(total)}</h2>
                 <p>Vendas totais</p>
             </MainRow>
 
             <FooterRow>
                 {data.controllers.map(controller => (
                     <div key={controller.label}>
-                        <h3>{
-                            data.isMoney
-                            ? formatCurrency(controller.amount)
-                            : controller.amount
-                        }</h3>
+                        <h3>{formatCurrency(controller.amount)}</h3>
                         <p>{controller.label}</p>
                     </div>
                 ))}

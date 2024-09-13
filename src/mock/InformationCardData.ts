@@ -6,7 +6,6 @@ export default {
       {"label": "Igual periodo ano anterior", "amount": 60000}
     ],
     "generatedDate": "2024-09-04",
-    "isMoney": true,
     "title":"Acumulado do dia recebidos",
     "text": "Última atualização á 1 minuto atrás"
 };
