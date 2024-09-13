@@ -32,6 +32,8 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
     * --> VARIÁVEIS DE AJUSTE DO GRÁFICO
     *       pieCX - Ajusta o posicionamento horizontal do gráfico
     *       pieCY - Ajusta o posicionamento vertical do gráfico
+    *       pieWidth - Ajusta a largura do gráfico
+    *       pieHeight - Ajusta a altura do gráfico
     *       needleCX - Ajusta o posicionamento horizontal da agulha
     *       needleCY - Ajusta o posicionamento vertical da agulha
     *       iR - Ajusta a largura do gráfico
@@ -39,7 +41,9 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
     */
     const [pieCX, setPieCX] = useState<string>('50%') 
     const [pieCY, setPieCY] = useState<string>('100%')
+    const [pieWidth, setPieWidth] = useState<number>(500)
     const [needleCX, setNeedleCX] = useState<number>(240)
+    const pieHeight = 110;
     const needleCY = 100;
     const iR = 70;
     const oR = 100;
@@ -89,13 +93,14 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 420) {
-                setPieCX('35%')
+                setPieCX('50%')
                 setPieCY('100%')
                 setNeedleCX(160)
+                setPieWidth(350)
             }
             
             if (window.innerWidth <= 400) {
-                setPieCX('30%')
+                setPieCX('45%')
                 setPieCY('100%')
                 setNeedleCX(140)
             }
@@ -118,7 +123,7 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
             </HeaderRow>
 
             <MainRow>
-                <PieChart width={500} height={110}>
+                <PieChart width={pieWidth} height={pieHeight}>
                     <Pie
                         dataKey="value"
                         startAngle={180}
