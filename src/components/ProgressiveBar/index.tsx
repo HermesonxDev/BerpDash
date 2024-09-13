@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import formatCurrency from "../../utils/formatCurrency";
 import HeaderChartInfo from "../HeaderChartInfo";
 
@@ -27,15 +28,26 @@ interface IProgressiveBarProps {
 
 const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
 
+    /*
+    * --> VARIÁVEIS DE AJUSTE DO GRÁFICO
+    *       pieCX - Ajusta o posicionamento horizontal do gráfico
+    *       pieCY - Ajusta o posicionamento vertical do gráfico
+    *       needleCX - Ajusta o posicionamento horizontal da agulha
+    *       needleCY - Ajusta o posicionamento vertical da agulha
+    *       iR - Ajusta a largura do gráfico
+    *       OR - Ajusta o tamanho do gráfico
+    */
+    const [pieCX, setPieCX] = useState<string>('50%') 
+    const [pieCY, setPieCY] = useState<string>('100%')
+    const [needleCX, setNeedleCX] = useState<number>(240)
+    const needleCY = 100;
+    const iR = 70;
+    const oR = 100;
+
     const RADIAN = Math.PI / 180;
     
     const goalOfDay = data.goal
     const value = data.currentValue;
-
-    const cx = 240;
-    const cy = 100;
-    const iR = 50;
-    const oR = 100;
 
     const percentage = (value / goalOfDay[0].value) * 100;
 
@@ -74,6 +86,28 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
         ];
     };
 
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 420) {
+                setPieCX('35%')
+                setPieCY('100%')
+                setNeedleCX(160)
+            }
+            
+            if (window.innerWidth <= 400) {
+                setPieCX('30%')
+                setPieCY('100%')
+                setNeedleCX(140)
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        handleResize();
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, [])
+
     return (
         <Container>
             <HeaderRow>
@@ -90,8 +124,8 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
                         startAngle={180}
                         endAngle={0}
                         data={goalOfDay}
-                        cx="50%"
-                        cy="100%"
+                        cx={pieCX}
+                        cy={pieCY}
                         innerRadius={iR}
                         outerRadius={oR}
                         stroke="none"
@@ -100,7 +134,7 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
                             <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                     </Pie>
-                    {needle(value, goalOfDay, cx, cy, iR, oR, '#d0d000')}
+                    {needle(value, goalOfDay, needleCX, needleCY, iR, oR, '#d0d000')}
                 </PieChart>
 
                 <h2>{percentage.toFixed(1)}%</h2>

@@ -68,4 +68,21 @@ export const FooterRow = styled.div`
         display: flex;
         justify-content: center;
     }
+
+    /* --> MEDIA QUERY DO MOBILE <-- */
+    @media(max-width: 1200px) {
+        > h2 {
+            font-size: 24px;
+        }
+    }
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
+    @media(max-width: 420px) {
+        > h2 {
+            font-size: 22px;
+        }
+    }
 `;
