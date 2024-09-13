@@ -113,6 +113,7 @@ export const LegendContainer = styled.ul `
 export const Legend = styled.li<ILegendProps> `
     display: flex;
     align-items: center;
+    margin-bottom: 7px;
 
     > div {
         font-size: 13px;
