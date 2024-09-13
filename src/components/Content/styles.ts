@@ -9,7 +9,7 @@ export const Container = styled.div `
     overflow-y: scroll;
 
     &::-webkit-scrollbar {
-        width: 10px;
+        width: 0.5px;
     }
 
     &::-webkit-scrollbar-thumb {

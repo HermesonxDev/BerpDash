@@ -7,7 +7,6 @@ import {
     HeaderRow,
     SideLeft,
     SideRight,
-    TitleContainer,
     LegendContainer,
     Legend,
     FooterRow,
@@ -95,13 +94,11 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
     
     return (
         <Container>
-            <TitleContainer>
-                <HeaderChartInfo
-                    title={data.title}
-                    subTitle={data.subTitle}
-                    text={data.text}
-                />
-            </TitleContainer>
+            <HeaderChartInfo
+                title={data.title}
+                subTitle={data.subTitle}
+                text={data.text}
+            />
             <HeaderRow>
                 <SideLeft>
                     <LegendContainer>

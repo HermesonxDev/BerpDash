@@ -42,6 +42,15 @@ export const Container = styled.div `
         display: flex;
         width: 100%;
     }
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
+    */
+    @media(max-width: 420px) {
+        height: 600px;
+        gap: 15px;
+    }
 `;
 
 export const HeaderRow = styled.div `
@@ -51,40 +60,26 @@ export const HeaderRow = styled.div `
 `;
 
 export const SideLeft = styled.aside `
-    padding-left: 5px;
 
+`;
+
+export const SideRight = styled.main `
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    
     /*
     * --> MEDIA QUERY PC
     *      Dispositivo usado: Laptop (1280x950)
     */
     @media(max-width: 1345px) {
-        padding: 0 15px;
-
-        > h2 {
-            margin-top: 15px;
-            margin-bottom: 7px;
-        }
+        height: 100%;
     }
-
-
-    /*
-    * --> MEDIA QUERY CELULAR
-    *      Dispositivos usados:
-    *           iPhone 6/7/8 Plus (414x736)
-    */
-    @media(max-width: 420px) {
-        padding: 15px;
-    }
-`;
-
-export const TitleContainer = styled.div`
-    margin-bottom: 15px;
 `;
 
 export const LegendContainer = styled.ul `
     list-style: none;
     height: 80%;
-    padding-right: 15px;
     overflow: scroll;
 
     &::-webkit-scrollbar {
@@ -105,7 +100,6 @@ export const LegendContainer = styled.ul `
         background-color: none;
     }
 
-
     /*
     * --> MEDIA QUERY PC
     *      Dispositivo usado: Laptop (1280x950)
@@ -119,16 +113,15 @@ export const LegendContainer = styled.ul `
 export const Legend = styled.li<ILegendProps> `
     display: flex;
     align-items: center;
-    margin-bottom: 7px;
 
     > div {
         font-size: 13px;
         text-align: center;
         width: 40px;
         height: 40px;
+        line-height: 40px;
         background-color: ${props => props.color};
         border-radius: 5px;
-        line-height: 40px;
     }
 
     > span {
@@ -153,19 +146,17 @@ export const Legend = styled.li<ILegendProps> `
             margin-left: 7px;
         }
     }
-`;
 
-export const SideRight = styled.main `
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    
     /*
-    * --> MEDIA QUERY PC
-    *      Dispositivo usado: Laptop (1280x950)
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivo usado: iPhone X (375x812)
     */
-    @media(max-width: 1345px) {
-        height: 100%;
+    @media(max-width: 420px) {
+        > div {
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+        }
     }
 `;
 
