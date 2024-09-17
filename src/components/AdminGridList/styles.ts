@@ -56,6 +56,8 @@ export const HeaderRow = styled.div`
 
 export const HeaderGridItem = styled.div`
     padding: 10px;
+    display: flex;
+    justify-content: center;
     background-color: ${props => props.theme.colors.tertiary};
     border-radius: 5px;
 
@@ -121,7 +123,9 @@ export const UserRow = styled.div`
 `;
 
 export const GridItem = styled.div`
-    padding: 10px;
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
     background-color: ${props => props.theme.colors.tertiary};
     border-radius: 5px;
 
@@ -136,6 +140,7 @@ export const GridItem = styled.div`
     *      Dispositivo usado: iPad (768x1024)
     */
     @media(max-width: 770px) {
+        display: unset;
         font-size: 17px;
         width: 97px;
         max-width: 100%;
@@ -153,13 +158,15 @@ export const GridItem = styled.div`
     *           iPhone 6/7/8 Plus (414x736)
     */
     @media(max-width: 420px) {
-        padding: 6px;
+        padding: 10px;
         text-align: center;
     }
 `;
 
 export const GridActionItem = styled.div `
-    padding: 10px;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
     background-color: ${props => props.theme.colors.tertiary};
     border-radius: 5px;
 
