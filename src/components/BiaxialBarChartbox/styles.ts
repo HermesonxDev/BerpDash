@@ -29,7 +29,10 @@ export const Container = styled.div `
     gap: 10px;
     animation: ${animate} .5s;
     
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1200px) {
         display: flex;
         flex-direction: column;

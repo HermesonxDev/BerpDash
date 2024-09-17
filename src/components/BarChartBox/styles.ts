@@ -29,7 +29,10 @@ export const Container = styled.div `
     display: flex;
     animation: ${animate} .5s;
     
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1200px) {
         display: flex;
         flex-direction: column;
@@ -72,7 +75,10 @@ export const LegendContainer = styled.ul `
         background-color: none;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1200px) {
         height: auto;
         display: flex;
@@ -99,7 +105,10 @@ export const Legend = styled.li<ILegendProps> `
         margin-left: 5px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1200px) {
         > div {
             font-size: 10px;

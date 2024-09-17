@@ -32,7 +32,10 @@ const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange, loadData,
                 width: "80%"
             },
 
-
+            /*
+            * --> MEDIA QUERY CELULAR
+            *      Dispositivo usado: iPhone X (375x812)
+            */
             '@media (max-width: 420px)': {
                 width: "70%",
             },

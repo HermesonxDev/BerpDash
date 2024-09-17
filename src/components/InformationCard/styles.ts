@@ -29,7 +29,10 @@ export const Container = styled.div`
     gap: 10px;
     animation: ${animate} .5s;
     
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1200px) {
         display: flex;
         flex-direction: column;
@@ -39,7 +42,8 @@ export const Container = styled.div`
 
     /*
     * --> MEDIA QUERY CELULAR
-    *      Dispositivo usado: iPhone X (375x812)
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
     */
     @media(max-width: 420px) {
         min-height: 330px;
@@ -70,7 +74,8 @@ export const MainRow = styled.div`
 
     /*
     * --> MEDIA QUERY CELULAR
-    *      Dispositivo usado: iPhone X (375x812)
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
     */
     @media(max-width: 420px) {
         > h2 {
@@ -110,7 +115,8 @@ export const FooterRow = styled.div`
 
     /*
     * --> MEDIA QUERY CELULAR
-    *      Dispositivo usado: iPhone X (375x812)
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
     */
     @media(max-width: 420px) {
         flex-direction: row;

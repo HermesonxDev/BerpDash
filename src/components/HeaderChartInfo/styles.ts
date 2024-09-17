@@ -34,7 +34,8 @@ export const Container = styled.div`
 
     /*
     * --> MEDIA QUERY CELULAR
-    *      Dispositivo usado: iPhone X (375x812)
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
     */
     @media(max-width: 420px) {
         > div {

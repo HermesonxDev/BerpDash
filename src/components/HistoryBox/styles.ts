@@ -47,7 +47,10 @@ export const ChartHeader = styled.header `
         padding-left: 16px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1200px) {
         flex-direction: column;
     }
@@ -79,7 +82,10 @@ export const Legend = styled.li<ILegendProps> `
         margin-left: 5px;
     }
 
-    /* --> MEDIA QUERY DO MOBILE <-- */
+    /*
+    * --> MEDIA QUERY PC
+    *      Dispositivo usado: Laptop (1280x950)
+    */
     @media(max-width: 1280px) {
         > div {
             width: 30px;
