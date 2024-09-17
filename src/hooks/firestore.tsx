@@ -1,9 +1,29 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { initializeApp, FirebaseApp } from "firebase/app";
-import { getFirestore as getFirestoreDB, collection, getDocs, query, QuerySnapshot, DocumentData, where, getDoc, doc, addDoc, setDoc,
-    initializeFirestore, persistentLocalCache, persistentMultipleTabManager
-  } from "firebase/firestore";
-import { getAuth, Auth, createUserWithEmailAndPassword, updateEmail } from "firebase/auth";
+
+import {
+    getFirestore as getFirestoreDB,
+    collection,
+    getDocs,
+    query,
+    QuerySnapshot,
+    DocumentData,
+    where,
+    getDoc,
+    doc,
+    addDoc,
+    setDoc,
+    initializeFirestore,
+    persistentLocalCache,
+    persistentMultipleTabManager
+} from "firebase/firestore";
+
+import {
+    getAuth,
+    Auth,
+    createUserWithEmailAndPassword
+} from "firebase/auth";
+
 import firebaseConfig from "../config/firebase";
 
 interface IUserProps {
@@ -49,7 +69,6 @@ interface IFirestoreContext {
         event: React.FormEvent<HTMLFormElement>,
         id: string | undefined,
         name: string,
-        email: string,
         role: string[],
         status: boolean | null,
         units: string[],
@@ -263,34 +282,30 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
         event: React.FormEvent<HTMLFormElement>,
         id: string,
         name: string,
-        email: string,
         role: string[],
         status: boolean,
         units: string[],
         navigate: (path: string) => void
-
     ) => {
         event.preventDefault();
-
+    
         try {
             if (id) {
                 const userRef = doc(db, "users", id);
                 await setDoc(userRef, {
                     name,
-                    email,
                     role,
                     status,
                     units
                 }, { merge: true });
             }
-
-            if (auth.currentUser && auth.currentUser.email !== email) {
-                await updateEmail(auth.currentUser, email);
-            }
-
             navigate("/administration/list-users");
-        } catch (error) {
-            console.error("Erro ao atualizar usuário:", error);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.error("Erro ao atualizar usuário:", error.message);
+            } else {
+                console.error("Erro desconhecido ao atualizar usuário:", error);
+            }
         }
     }
 

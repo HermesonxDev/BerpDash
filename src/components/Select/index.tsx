@@ -1,24 +1,20 @@
-import { SelectHTMLAttributes, useState } from "react";
+import { SelectHTMLAttributes } from "react";
 import { Container } from "./styles";
 
 type ISelectProps = SelectHTMLAttributes<HTMLSelectElement>;
 
 const Select: React.FC<ISelectProps> = ({ children, onChange, ...rest }) => {
-    
-    const [isPlaceholder, setIsPlaceholder] = useState(true);
-
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setIsPlaceholder(event.target.value === "");
         if (onChange) {
             onChange(event);
         }
     };
 
     return (
-        <Container {...rest} isPlaceholder={isPlaceholder} onChange={handleChange}>
+        <Container {...rest} onChange={handleChange}>
             {children}
         </Container>
     );
 };
 
-export default Select;
+export default Select

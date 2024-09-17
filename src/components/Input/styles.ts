@@ -6,6 +6,9 @@ export const Container = styled.input `
     padding: 10px;
     border-radius: 5px;
 
+    &:read-only {
+      color: ${props => props.theme.colors.gray};
+    }
     
     /*
     * --> MEDIA QUERY TABLET

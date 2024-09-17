@@ -65,13 +65,13 @@ const AsyncMultiSelect: React.FC<AsyncMultiSelectProps> = ({ onChange, loadData,
         }),
         multiValue: (provided) => ({
             ...provided,
-            backgroundColor: "#bfbfbf",
+            backgroundColor: "#8a8a8a",
             borderRadius: "3px",
             color: "#fff",
         }),
         multiValueLabel: (provided) => ({
             ...provided,
-            color: "#fff",
+            color: "#f8f7f7",
         }),
         multiValueRemove: (provided) => ({
             ...provided,

@@ -20,8 +20,8 @@ interface OptionType {
 
 const AdminGridEdit: React.FC = () => {
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+    const [name, setName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
     const [role, setRole] = useState<string[]>([]);
     const [status, setStatus] = useState<boolean | null>(null);
     const [units, setUnits] = useState<string[]>([]);
@@ -57,11 +57,11 @@ const AdminGridEdit: React.FC = () => {
                 const userData = await SearchUser("id", id);
 
                 if (userData && !Array.isArray(userData)) {
-                    setName(userData.name || "");
-                    setEmail(userData.email || "");
-                    setRole(userData.role || []);
-                    setStatus(userData.status || null);
-                    setUnits(userData.units || []);
+                    setName(userData.name || "")
+                    setEmail(userData.email || "")
+                    setRole(userData.role || [])
+                    setStatus(userData.status || null)
+                    setUnits(userData.units || [])
                 }
             }
         };
@@ -87,7 +87,7 @@ const AdminGridEdit: React.FC = () => {
             }));
         }
     }, [role, units, listOfUnits]);
-    
+
     return (
         <Container>
             <ContentHeader title="Administração" lineColor="#1A73E8">
@@ -100,7 +100,6 @@ const AdminGridEdit: React.FC = () => {
                 event,
                 id,
                 name,
-                email,
                 role,
                 status,
                 units,
@@ -126,7 +125,7 @@ const AdminGridEdit: React.FC = () => {
                         placeholder="Digite um email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        required
+                        readOnly
                     />
                 </FormDiv>
 
@@ -145,7 +144,7 @@ const AdminGridEdit: React.FC = () => {
                 <FormDiv>
                     <Label>Status</Label>
                     <Select
-                        value={status !== null ? status.toString() : ""}
+                        value={status !== null ? status.toString() : "false"}
                         onChange={(e) => setStatus(e.target.value === "true")}
                     >
                         <option value="" disabled>

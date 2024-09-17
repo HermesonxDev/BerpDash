@@ -1,13 +1,15 @@
 import styled from 'styled-components'
 
-export const Container = styled.select<{ isPlaceholder: boolean }> `
+export const Container = styled.select`
     width: 100%;
     margin: 7px 0;
     padding: 10px;
     border-radius: 5px;
-    color: ${({ isPlaceholder }) => (isPlaceholder && "#A9A9A9")};
 
-    
+    > option:disabled {
+      color: #A9A9A9;
+    }
+
     /*
     * --> MEDIA QUERY TABLET
     *      Dispositivo usado: iPad (768x1024)
