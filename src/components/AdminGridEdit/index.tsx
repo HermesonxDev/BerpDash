@@ -22,6 +22,7 @@ const AdminGridEdit: React.FC = () => {
 
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     const [role, setRole] = useState<string[]>([]);
     const [status, setStatus] = useState<boolean | null>(null);
     const [units, setUnits] = useState<string[]>([]);
@@ -59,6 +60,7 @@ const AdminGridEdit: React.FC = () => {
                 if (userData && !Array.isArray(userData)) {
                     setName(userData.name || "")
                     setEmail(userData.email || "")
+                    setPassword(userData.password || "")
                     setRole(userData.role || [])
                     setStatus(userData.status || null)
                     setUnits(userData.units || [])
@@ -122,9 +124,16 @@ const AdminGridEdit: React.FC = () => {
                     <Label>Email</Label>
                     <Input
                         type="email"
-                        placeholder="Digite um email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        readOnly
+                    />
+                </FormDiv>
+
+                <FormDiv>
+                    <Label>Senha</Label>
+                    <Input
+                        type="password"
+                        value={password}
                         readOnly
                     />
                 </FormDiv>
