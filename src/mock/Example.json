@@ -97,35 +97,41 @@
                 "title":"Meta do dia",
                 "text": "Última atualização á 1 minuto atrás"
             },
-            "Lists":[
-                {
-                    "id": "e54ac57e-d19e-45f8-8bc2-2fad3e77cf01",
-                    "description": "Energia elétrica",
-                    "amount": "150.55",
-                    "type": "saída",
-                    "frequency": "recorrente",
-                    "date": "2024-01-10T00:00:00-03:00",
-                    "unit": "02"
-                },
-                {
-                    "id": "e54ac57e-d19e-45f8-8bc2-2fad3e77cf02",
-                    "description": "Energia elétrica",
-                    "amount": "150.55",
-                    "type": "saída",
-                    "frequency": "recorrente",
-                    "date": "2024-01-10T00:00:00-03:00",
-                    "unit": "01"
-                },
-                {
-                    "id": "e54ac57e-d19e-45f8-8bc2-2fad3e77cf03",
-                    "description": "Energia elétrica",
-                    "amount": "150.55",
-                    "type": "saída",
-                    "frequency": "recorrente",
-                    "date": "2020-01-10T00:00:00-03:00",
-                    "unit": "01"
-                }
-            ]
+            "Lists":{
+                "generatedDate": "2024-08-04",
+                "title":"Valor total",
+                "subTitle":"Com base na venda recebida",
+                "text": "Última atualização á 1 minuto atrás",
+                "data": [
+                    {
+                        "id": "e54ac57e-d19e-45f8-8bc2-2fad3e77cf01",
+                        "description": "Energia elétrica",
+                        "amount": "150.55",
+                        "type": "saída",
+                        "frequency": "recorrente",
+                        "date": "2024-01-10T00:00:00-03:00",
+                        "unit": "02"
+                    },
+                    {
+                        "id": "e54ac57e-d19e-45f8-8bc2-2fad3e77cf02",
+                        "description": "Energia elétrica",
+                        "amount": "150.55",
+                        "type": "saída",
+                        "frequency": "recorrente",
+                        "date": "2024-01-10T00:00:00-03:00",
+                        "unit": "01"
+                    },
+                    {
+                        "id": "e54ac57e-d19e-45f8-8bc2-2fad3e77cf03",
+                        "description": "Energia elétrica",
+                        "amount": "150.55",
+                        "type": "saída",
+                        "frequency": "recorrente",
+                        "date": "2020-01-10T00:00:00-03:00",
+                        "unit": "01"
+                    }
+                ]
+            }
         }
     }
 }
