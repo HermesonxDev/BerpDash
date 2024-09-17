@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { MdOutlineAccessTime } from "react-icons/md";
 
 export const Container = styled.div `
 `;
@@ -58,30 +57,22 @@ export const TotalRow = styled.div`
         font-size: 25px;
         margin: auto 0;
     }
-`;
 
-export const HeaderTotalRow = styled.div`
-    > div {
-        display: flex;
-        flex-direction: row;
-        gap: 5px;
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
+    @media(max-width: 420px) {
+        flex-direction: column;
 
-        > h5 {
-            margin-top: 9px;
-            color: ${props => props.theme.colors.gray};
-        }
-
-        > p {
-            font-size: 14px;
-            color: ${props => props.theme.colors.gray};
+        > h2 {
+            font-size: 23px;
+            display: flex;
+            justify-content: center;
+            margin-top: 5px;
         }
     }
-`;
-
-export const Clock = styled(MdOutlineAccessTime)`
-    width: 15px;
-    height: 15px;
-    color: ${props => props.theme.colors.gray};
 `;
 
 export const Content = styled.div `

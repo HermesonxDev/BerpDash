@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import { Container, Content, Filters, TotalRow, HeaderTotalRow, Clock } from "./styles";
+import { Container, Content, Filters, TotalRow } from "./styles";
 import { useParams } from "react-router-dom";
 
 import ContentHeader from "../../components/ContentHeader";
@@ -14,6 +14,7 @@ import getYears from "../../utils/getYears";
 
 import { useFirestore } from "../../hooks/firestore";
 import { useGlobal } from "../../hooks/global";
+import HeaderChartInfo from "../../components/HeaderChartInfo";
 
 
 /* TIPANDO A FORMA COMO OS DADOS DEVEM SER FORNECIDOS AO COMPONENTE */
@@ -292,17 +293,11 @@ const List: React.FC = () => {
             </Filters>
 
             <TotalRow>
-                <HeaderTotalRow>
-                    <div>
-                        <h2>Valor total</h2>
-                        <h5>Com base na venda recebida</h5>
-                    </div>
-
-                    <div>
-                        <Clock />
-                        <p>Última atualização á 1 minuto atrás</p>
-                    </div>
-                </HeaderTotalRow>
+                <HeaderChartInfo
+                    title="Valor total"
+                    subTitle="Com base na venda recebida"
+                    text="Última atualização á 1 minuto atrás"
+                />
                 <h2>{formatCurrency(totalAmount)}</h2>
             </TotalRow>
 
