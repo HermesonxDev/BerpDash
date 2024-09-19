@@ -60,6 +60,7 @@ interface IFirestoreContext {
         name: string,
         email: string,
         password: string,
+        telephone: string,
         role: string[],
         status: boolean | null,
         units: string[],
@@ -69,6 +70,7 @@ interface IFirestoreContext {
         event: React.FormEvent<HTMLFormElement>,
         id: string | undefined,
         name: string,
+        telephone: string,
         role: string[],
         status: boolean | null,
         units: string[],
@@ -241,6 +243,7 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
         name: string,
         email: string,
         password: string,
+        telephone: string,
         role: string[],
         status: boolean,
         units: string[],
@@ -258,6 +261,7 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
                 name,
                 email,
                 password,
+                telephone,
                 role,
                 status,
                 units,
@@ -282,6 +286,7 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
         event: React.FormEvent<HTMLFormElement>,
         id: string,
         name: string,
+        telephone: string,
         role: string[],
         status: boolean,
         units: string[],
@@ -294,6 +299,7 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
                 const userRef = doc(db, "users", id);
                 await setDoc(userRef, {
                     name,
+                    telephone,
                     role,
                     status,
                     units

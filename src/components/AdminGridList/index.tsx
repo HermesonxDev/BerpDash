@@ -81,6 +81,7 @@ const AdminGridList: React.FC = () => {
                 <HeaderRow>
                     <HeaderGridItem>Nome</HeaderGridItem>
                     <HeaderGridItem>Email</HeaderGridItem>
+                    <HeaderGridItem>Telefone</HeaderGridItem>
                     <HeaderGridItem>Função</HeaderGridItem>
                     <HeaderGridItem>Qtd. Unid</HeaderGridItem>
                     <HeaderGridItem>Status</HeaderGridItem>
@@ -92,6 +93,7 @@ const AdminGridList: React.FC = () => {
                         <UserRow key={user.id}>
                             <GridItem>{user.name}</GridItem>
                             <GridItem>{user.email}</GridItem>
+                            <GridItem>{user.telephone}</GridItem>
                             <GridItem>
                                 {user.role.map((r: string, index: number) => (
                                     <span key={index}>

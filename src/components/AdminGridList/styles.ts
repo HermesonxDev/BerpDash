@@ -11,7 +11,7 @@ export const Container = styled.div `
 
 export const GridContainer = styled.div`
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
     gap: 5px;
     padding: 20px 0;
     

@@ -23,6 +23,7 @@ const AdminGridEdit: React.FC = () => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [telephone, setTelephone] = useState<string>("");
     const [role, setRole] = useState<string[]>([]);
     const [status, setStatus] = useState<boolean | null>(null);
     const [units, setUnits] = useState<string[]>([]);
@@ -61,6 +62,7 @@ const AdminGridEdit: React.FC = () => {
                     setName(userData.name || "")
                     setEmail(userData.email || "")
                     setPassword(userData.password || "")
+                    setTelephone(userData.telephone || "")
                     setRole(userData.role || [])
                     setStatus(userData.status || null)
                     setUnits(userData.units || [])
@@ -102,6 +104,7 @@ const AdminGridEdit: React.FC = () => {
                 event,
                 id,
                 name,
+                telephone,
                 role,
                 status,
                 units,
@@ -135,6 +138,17 @@ const AdminGridEdit: React.FC = () => {
                         type="password"
                         value={password}
                         readOnly
+                    />
+                </FormDiv>
+
+                <FormDiv>
+                    <Label>Telefone</Label>
+                    <Input
+                        type="text"
+                        placeholder="Digite um telefone"
+                        value={telephone}
+                        onChange={(e) => setTelephone(e.target.value)}
+                        required
                     />
                 </FormDiv>
 

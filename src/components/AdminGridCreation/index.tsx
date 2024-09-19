@@ -20,9 +20,10 @@ interface OptionType {
 
 const AdminGridCreation: React.FC = () => {
     
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [name, setName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [telephone, setTelephone] = useState<string>("");
     const [role, setRole] = useState<string[]>([]);
     const [status, setStatus] = useState<boolean | null>(null);
     const [units, setUnits] = useState<string[]>([]);
@@ -59,6 +60,7 @@ const AdminGridCreation: React.FC = () => {
                     name,
                     email,
                     password,
+                    telephone,
                     role,
                     status,
                     units,
@@ -95,6 +97,17 @@ const AdminGridCreation: React.FC = () => {
                         placeholder="Digite uma senha"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </FormDiv>
+
+                <FormDiv>
+                    <Label>Telefone</Label>
+                    <Input
+                        type="text"
+                        placeholder="Digite um telefone"
+                        value={telephone}
+                        onChange={(e) => setTelephone(e.target.value)}
                         required
                     />
                 </FormDiv>
