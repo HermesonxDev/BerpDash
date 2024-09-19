@@ -3,16 +3,11 @@ import { Container, Content } from "./styles";
 
 import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
-import WalletBox from "../../components/WalletBox";
-import MessageBox from "../../components/MessageBox";
 import HistoryBox from "../../components/HistoryBox";
 
 import listOfMonths from "../../utils/months";
 import getYears from "../../utils/getYears";
 
-import happyIMG from '../../assets/happy.svg';
-import sadIMG from '../../assets/sad.svg';
-import grinningIMG from '../../assets/grinning.svg';
 import BarChartBox from "../../components/BarChartBox";
 import Loading from "../../components/Loading";
 import { useFirestore } from "../../hooks/firestore";
@@ -356,45 +351,6 @@ const Development: React.FC = () => {
 
 
     /*
-    * --> GUARDA UMA MENSAGEM A SER MOSTRADA
-    *      Verifica constantemente e de acordo com o balanço total
-    *      dos gastos e despesas da aplicação, qual mensagem será
-    *      mostrada ao usuário.
-    */
-    const message = useMemo(() => {
-        if (totalBalance < 0) {
-            return {
-                title: "Que triste!",
-                description: "Neste mês, você gastou mais do que deveria.",
-                footerText: "Verifique seus gastos e tente organizar melhor suas finanças.",
-                icon: sadIMG
-            }
-        } else if (totalGains === 0 && totalExpenses === 0) {
-            return {
-                title: "Oops!",
-                description: "Neste mês, não há registros de entradas ou saídas.",
-                footerText: "Parece que você não fez nenhum registro no mês selecionado.",
-                icon: grinningIMG
-            }
-        } else if (totalBalance === 0) {
-            return {
-                title: "Ufaa!",
-                description: "Neste mês, você gastou exatamente o que ganhou.",
-                footerText: "Tenha cuidado. No próximo mês tente poupar o seu dinheiro.",
-                icon: grinningIMG
-            }
-        } else {
-            return {
-                title: "Muito bem!",
-                description: "Sua carteira está positiva!",
-                footerText: "Continue assim. Considere investir o seu saldo.",
-                icon: happyIMG
-            }
-        }
-    }, [totalGains, totalExpenses, totalBalance])
-
-
-    /*
     * --> SETA O MÊS SELECIONADO PELO USUÁRIO
     *      Recebe o valor do mês selecionado e converte para o tipo Number
     *      para ser usado nos filtros de gráficos.
@@ -451,37 +407,6 @@ const Development: React.FC = () => {
             </ContentHeader>
 
             <Content>
-                <WalletBox 
-                    title="saldo"
-                    amount={totalBalance}
-                    footerLabel="Atualizado com base nas entradas e saídas"
-                    color="#4e41f0"
-                    icon="dollar"
-                />
-
-                <WalletBox 
-                    title="entradas"
-                    amount={totalGains}
-                    footerLabel="Atualizado com base nas entradas e saídas"
-                    color="#f7931b"
-                    icon="arrowUp"
-                />
-
-                <WalletBox 
-                    title="saídas"
-                    amount={totalExpenses}
-                    footerLabel="Atualizado com base nas entradas e saídas"
-                    color="#e44c4e"
-                    icon="arrowDown"
-                />
-
-                <MessageBox
-                    title={message.title}
-                    description={message.description}
-                    footerText={message.footerText}
-                    icon={message.icon}
-                />
-
                 <HistoryBox
                     data={historyData}
                     lineColorAmountEntry="#f7931b"

@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import { Container, Content, Filters, TotalRow } from "./styles";
+import { Container, Filters, TotalRow, SubHeader, Content } from "./styles";
 import { useParams } from "react-router-dom";
 
 import ContentHeader from "../../components/ContentHeader";
@@ -251,7 +251,8 @@ const List: React.FC = () => {
 
     return (
         <Container>
-
+            <SubHeader>
+                
             <ContentHeader title={urlParams.title} lineColor={urlParams.lineColor}>
 
                 <SelectInput
@@ -274,32 +275,34 @@ const List: React.FC = () => {
 
             </ContentHeader>
 
-            <Filters>
-                <button
-                    className={
-                        `tag-filter tag-filter-recurrent
-                        ${frequencySelected.includes('recorrente') && 'tag-actived'}`
-                    }
-                    onClick={() => handleFrequencyClick('recorrente')}
-                >Recorrentes</button>
+            
+                <Filters>
+                    <button
+                        className={
+                            `tag-filter tag-filter-recurrent
+                            ${frequencySelected.includes('recorrente') && 'tag-actived'}`
+                        }
+                        onClick={() => handleFrequencyClick('recorrente')}
+                    >Recorrentes</button>
 
-                <button
-                    className={
-                        `tag-filter tag-filter-eventual
-                        ${frequencySelected.includes('eventual') && 'tag-actived'}`
-                    }
-                    onClick={() => handleFrequencyClick('eventual')}
-                >Eventuais</button>
-            </Filters>
+                    <button
+                        className={
+                            `tag-filter tag-filter-eventual
+                            ${frequencySelected.includes('eventual') && 'tag-actived'}`
+                        }
+                        onClick={() => handleFrequencyClick('eventual')}
+                    >Eventuais</button>
+                </Filters>
 
-            <TotalRow>
-                <HeaderChartInfo
-                    title="Valor total"
-                    subTitle="Com base na venda recebida"
-                    text="Última atualização á 1 minuto atrás"
-                />
-                <h2>{formatCurrency(totalAmount)}</h2>
-            </TotalRow>
+                <TotalRow>
+                    <HeaderChartInfo
+                        title="Valor total"
+                        subTitle="Com base na venda recebida"
+                        text="Última atualização á 1 minuto atrás"
+                    />
+                    <h2>{formatCurrency(totalAmount)}</h2>
+                </TotalRow>
+            </SubHeader>
 
             <Content>
                 {

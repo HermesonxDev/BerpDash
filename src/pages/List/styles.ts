@@ -75,6 +75,28 @@ export const TotalRow = styled.div`
     }
 `;
 
+export const SubHeader = styled.div`
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
+    @media(max-width: 420px) {
+        background-color: ${props => props.theme.colors.primary};
+        padding-bottom: 1px;
+        position: sticky;
+        top: 0;
+
+        /*
+        * --> Z-INDEX 998
+        *      Faz com que o SubHeader acompanhe o scroll do usuário pela página
+        *      inteira, mantendo ele acima dos outros componentes do Content e abaixo
+        *      dos componentes de Modal e Aside.
+        */
+        z-index: 998;
+    }
+`;
+
 export const Content = styled.div `
     display: flex;
     flex-direction: column;
