@@ -17,7 +17,7 @@ const animate = keyframes`
 `;
 
 export const Container = styled.div`
-    width: 49%;
+    width: 100%;
     min-height: 700px;
     margin: 10px 0;
     background-color: ${props => props.theme.colors.tertiary};
@@ -44,7 +44,7 @@ export const Container = styled.div`
 export const HeaderRow = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
 `;
 
 export const TotalRow = styled.div`
@@ -81,7 +81,6 @@ export const Filters = styled.div `
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 10px;
     overflow: scroll;
 
     .tag-filter {

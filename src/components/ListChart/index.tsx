@@ -128,14 +128,6 @@ const ListChart: React.FC<IListChartProps> = ({ data }) => {
                     text={data.text}    
                 />
 
-                <TotalRow>
-                    <HeaderChartInfo
-                        title="Valor total"
-                        
-                    />
-                    <h2>{formatCurrency(totalAmount)}</h2>
-                </TotalRow>
-
                 <Filters>
                     {filteredControllers.map(controller => (
                         <button
@@ -147,6 +139,11 @@ const ListChart: React.FC<IListChartProps> = ({ data }) => {
                         >{controller.name}</button>
                     ))}
                 </Filters>
+
+                <TotalRow>
+                    <HeaderChartInfo title="Valor total" />
+                    <h2>{formatCurrency(totalAmount)}</h2>
+                </TotalRow>
             </HeaderRow>
 
             <MainRow>
