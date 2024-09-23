@@ -6,6 +6,7 @@ export default {
     "generatedDate": "2024-09-04",
     "isMoney": false,
     "title":"Meta do dia",
-    "text": "Última atualização á 1 minuto atrás"
+    "text": "Última atualização á 1 minuto atrás",
+    "type": "progressiveBarChart"
 };
   

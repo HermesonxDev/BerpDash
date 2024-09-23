@@ -85,6 +85,7 @@ export const LegendContainer = styled.ul `
 
     &::-webkit-scrollbar {
         width: 0.5px;
+        height: 0.5px;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -183,6 +184,7 @@ export const FooterRow = styled.div `
 
     &::-webkit-scrollbar {
         width: 0.5px;
+        height: 0.5px;
     }
 
     &::-webkit-scrollbar-thumb {

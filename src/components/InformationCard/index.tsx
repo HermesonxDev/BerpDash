@@ -12,7 +12,8 @@ interface IInformationCardProps {
         controllers: DataController[],
         generatedDate: string,
         title: string,
-        text: string
+        text: string,
+        type: string
     }
 }
 

@@ -44,6 +44,7 @@ interface IBiaxialBarChartProps {
         title: string,
         subTitle: string,
         text: string,
+        type: string,
         labels: {
             [key: string]: string
         },

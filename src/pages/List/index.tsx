@@ -274,7 +274,6 @@ const List: React.FC = () => {
                 />
 
             </ContentHeader>
-
             
                 <Filters>
                     <button

@@ -3,20 +3,22 @@ import { Clock, Container } from "./styles";
 interface IHeaderChartInfoProps {
     title: string,
     subTitle?: string,
-    text: string
+    text?: string
 }
 
 const HeaderChartInfo: React.FC<IHeaderChartInfoProps> = ({ title, subTitle, text }) => (
     <Container>
         <div>
             <h2>{title}</h2>
-            <h5>{subTitle}</h5>
+            {subTitle && <h5>{subTitle}</h5>}
         </div>
 
-        <div>
-            <Clock />
-            <p>{text}</p>
-        </div>
+        {text &&
+            <div>
+                <Clock />
+                <p>{text}</p>
+            </div>
+        }
     </Container>
 )
 

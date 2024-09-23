@@ -8,6 +8,7 @@ import PieChartBox from "../../components/PieChartBox";
 import BiaxialBarChartBox from "../../components/BiaxialBarChartbox";
 import InformationCard from "../../components/InformationCard";
 import ProgressiveBar from "../../components/ProgressiveBar";
+import ListChart from "../../components/ListChart";
 
 import { useGlobal } from "../../hooks/global";
 import { useFirestore } from "../../hooks/firestore";
@@ -23,6 +24,7 @@ import InformationCardData from "../../mock/InformationCardData";
 import InformationCardData2 from "../../mock/InformationCardData2";
 import ProgressiveBarData from "../../mock/ProgressiveBarData";
 import ProgressiveBarData2 from "../../mock/ProgressiveBarData2";
+import ListChartData from "../../mock/ListChartData";
 
 interface DataType {
     amount: string,
@@ -231,8 +233,10 @@ const Sales: React.FC = () => {
                 <InformationCard data={InformationCardData} />
                 <InformationCard data={InformationCardData2} />
 
-                <ProgressiveBar data={ProgressiveBarData}/>
-                <ProgressiveBar data={ProgressiveBarData2}/>
+                <ProgressiveBar data={ProgressiveBarData} />
+                <ProgressiveBar data={ProgressiveBarData2} />
+
+                <ListChart data={ListChartData}/>
             </Content>
         </Container>
     )

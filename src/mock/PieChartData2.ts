@@ -10,6 +10,7 @@ export default {
     "title":"Venda por horário",
     "subTitle":"Com base na venda recebida",
     "text": "Última atualização á 1 minuto atrás",
+    "type": "lists",
     day: [
       { "name": "Mesa", "amount": 146803.25, "percent": 25, "color": "#1A73E8"},
       { "name": "Balcão", "amount": 146803.25, "percent": 25, "color": "#e44c4e"},

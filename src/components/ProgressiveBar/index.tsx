@@ -22,7 +22,8 @@ interface IProgressiveBarProps {
         generatedDate: string,
         isMoney: boolean,
         title: string,
-        text: string
+        text: string,
+        type: string
     }
 }
 

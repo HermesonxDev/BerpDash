@@ -37,6 +37,8 @@ interface IPieChartProps {
         showTotal: Boolean,
         title: string,
         subTitle: string,
+        text: string,
+        type: string,
         [key: string]: any
     }
 }

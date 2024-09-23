@@ -10,6 +10,7 @@ export default {
     "title":"Venda por horário",
     "subTitle":"Com base na venda recebida",
     "text": "Última atualização á 1 minuto atrás",
+    "type": "biaxialBarChart",
     "labels": {
       "sales": "Vendas",
       "costumers": "Clientes"

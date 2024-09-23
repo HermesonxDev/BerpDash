@@ -6,6 +6,7 @@ export default {
     ],
     "generatedDate": "2024-09-04",
     "title":"Acumulado do dia recebidos",
-    "text": "Última atualização á 1 minuto atrás"
+    "text": "Última atualização á 1 minuto atrás",
+    "type": "informationCard"
 };
   

@@ -58,7 +58,8 @@ export const LegendContainer = styled.ul `
     overflow: scroll;
 
     &::-webkit-scrollbar {
-        width: 10px;
+        width: 0.5px;
+        height: 0.5px;
     }
 
     &::-webkit-scrollbar-thumb {

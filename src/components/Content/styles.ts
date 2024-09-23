@@ -10,6 +10,7 @@ export const Container = styled.div `
 
     &::-webkit-scrollbar {
         width: 0.5px;
+        height: 0.5px;
     }
 
     &::-webkit-scrollbar-thumb {
