@@ -1,20 +1,12 @@
 import { useEffect, useState } from "react";
 import { Container, HeaderRow, MainRow, FooterRow } from "./styles";
-import formatCurrency from "../../utils/formatCurrency";
+
 import HeaderChartInfo from "../HeaderChartInfo";
 
-interface DataController {
-    label: string,
-    amount: number
-}
+import formatCurrency from "../../utils/formatCurrency";
+import { InfoCardControllers, InformationCardDataType } from "../../utils/interfaces";
 interface IInformationCardProps {
-    data: {
-        controllers: DataController[],
-        generatedDate: string,
-        title: string,
-        text: string,
-        type: string
-    }
+    data: InformationCardDataType
 }
 
 const InformationCard: React.FC<IInformationCardProps> = ({ data }) => {
@@ -25,7 +17,7 @@ const InformationCard: React.FC<IInformationCardProps> = ({ data }) => {
         if (data && data.controllers) {
             let subTotal: number = 0;
 
-            data.controllers.forEach((item: DataController) => {
+            data.controllers.forEach((item: InfoCardControllers) => {
                 try {
                     subTotal += Number(item.amount);
                 } catch {

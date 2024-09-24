@@ -3,6 +3,13 @@ export interface Controllers {
     value: string | number
 }
 
+
+export interface InfoCardControllers {
+    label: string,
+    amount: number
+}
+
+
 export interface GoalDataType {
     color: string,
     value: string | number
@@ -38,7 +45,7 @@ export interface ListDataType {
 
 
 export interface InformationCardDataType {
-    controllers: Controllers[],
+    controllers: InfoCardControllers[],
     generatedDate: string,
     title: string
     text: string,
@@ -84,91 +91,112 @@ export interface PieDataType {
 }
 
 
+export interface AuditDataType {
+    cancelamentos_lists: ListDataType,
+    deliveryemrota_lists: ListDataType,
+    deliveryproducao_lists: ListDataType,
+    despesas_lists: ListDataType,
+    cardacumuladomes_informationCard: InformationCardDataType,
+    meta_progressiveBarChart: ProgressiveBarDataType,
+    vendaporhorario_biaxialBarChart: BiaxialBarDataType,
+    vendaporhorariopizza_pieChart: PieDataType
+}
+
+
+export interface PosDataType {
+    cancelamentos_lists: ListDataType,
+    deliveryemrota_lists: ListDataType,
+    deliveryproducao_lists: ListDataType,
+    despesas_lists: ListDataType,
+    cardacumuladomes_informationCard: InformationCardDataType,
+    meta_progressiveBarChart: ProgressiveBarDataType,
+    vendaporhorario_biaxialBarChart: BiaxialBarDataType,
+    vendaporhorariopizza_pieChart: PieDataType
+}
+
+
+export interface DeliveryDataType {
+    cancelamentos_lists: ListDataType,
+    deliveryemrota_lists: ListDataType,
+    deliveryproducao_lists: ListDataType,
+    despesas_lists: ListDataType,
+    cardacumuladomes_informationCard: InformationCardDataType,
+    meta_progressiveBarChart: ProgressiveBarDataType,
+    vendaporhorario_biaxialBarChart: BiaxialBarDataType,
+    vendaporhorariopizza_pieChart: PieDataType
+}
+
+
+export interface PerformanceDataType {
+    cancelamentos_lists: ListDataType,
+    deliveryemrota_lists: ListDataType,
+    deliveryproducao_lists: ListDataType,
+    despesas_lists: ListDataType,
+    cardacumuladomes_informationCard: InformationCardDataType,
+    meta_progressiveBarChart: ProgressiveBarDataType,
+    vendaporhorario_biaxialBarChart: BiaxialBarDataType,
+    vendaporhorariopizza_pieChart: PieDataType
+}
+
+
+export interface StockDataType {
+    cancelamentos_lists: ListDataType,
+    deliveryemrota_lists: ListDataType,
+    deliveryproducao_lists: ListDataType,
+    despesas_lists: ListDataType,
+    cardacumuladomes_informationCard: InformationCardDataType,
+    meta_progressiveBarChart: ProgressiveBarDataType,
+    vendaporhorario_biaxialBarChart: BiaxialBarDataType,
+    vendaporhorariopizza_pieChart: PieDataType
+}
+
+
+export interface FinancialDataType {
+    cancelamentos_lists: ListDataType,
+    deliveryemrota_lists: ListDataType,
+    deliveryproducao_lists: ListDataType,
+    despesas_lists: ListDataType,
+    cardacumuladomes_informationCard: InformationCardDataType,
+    meta_progressiveBarChart: ProgressiveBarDataType,
+    vendaporhorario_biaxialBarChart: BiaxialBarDataType,
+    vendaporhorariopizza_pieChart: PieDataType
+}
+
+
+export interface SalesDataType {
+    cancelamentos_lists: ListDataType,
+    deliveryemrota_lists: ListDataType,
+    deliveryproducao_lists: ListDataType,
+    despesas_lists: ListDataType,
+    cardacumuladomes_informationCard: InformationCardDataType,
+    meta_progressiveBarChart: ProgressiveBarDataType,
+    vendaporhorario_biaxialBarChart: BiaxialBarDataType,
+    vendaporhorariopizza_pieChart: PieDataType
+}
+
+
 export interface UnitDataType {
     data: {
         auditoria: {
-            dataCharts: {
-                cancelamentos_lists: ListDataType,
-                deliveryemrota_lists: ListDataType,
-                deliveryproducao_lists: ListDataType,
-                despesas_lists: ListDataType,
-                cardacumuladomes_informationCard: InformationCardDataType,
-                meta_progressiveBarChart: ProgressiveBarDataType,
-                vendaporhorario_biaxialBarChart: BiaxialBarDataType,
-                vendaporhorariopizza_pieChart: PieDataType
-            }
+            dataCharts: AuditDataType
         },
         caixa: {
-            dataCharts: {
-                cancelamentos_lists: ListDataType,
-                deliveryemrota_lists: ListDataType,
-                deliveryproducao_lists: ListDataType,
-                despesas_lists: ListDataType,
-                cardacumuladomes_informationCard: InformationCardDataType,
-                meta_progressiveBarChart: ProgressiveBarDataType,
-                vendaporhorario_biaxialBarChart: BiaxialBarDataType,
-                vendaporhorariopizza_pieChart: PieDataType
-            }
+            dataCharts: PosDataType
         },
         delivery: {
-            dataCharts: {
-                cancelamentos_lists: ListDataType,
-                deliveryemrota_lists: ListDataType,
-                deliveryproducao_lists: ListDataType,
-                despesas_lists: ListDataType,
-                cardacumuladomes_informationCard: InformationCardDataType,
-                meta_progressiveBarChart: ProgressiveBarDataType,
-                vendaporhorario_biaxialBarChart: BiaxialBarDataType,
-                vendaporhorariopizza_pieChart: PieDataType
-            }
+            dataCharts: DeliveryDataType
         },
         desempenho: {
-            dataCharts: {
-                cancelamentos_lists: ListDataType,
-                deliveryemrota_lists: ListDataType,
-                deliveryproducao_lists: ListDataType,
-                despesas_lists: ListDataType,
-                cardacumuladomes_informationCard: InformationCardDataType,
-                meta_progressiveBarChart: ProgressiveBarDataType,
-                vendaporhorario_biaxialBarChart: BiaxialBarDataType,
-                vendaporhorariopizza_pieChart: PieDataType
-            }
+            dataCharts: PerformanceDataType
         },
         estoque: {
-            dataCharts: {
-                cancelamentos_lists: ListDataType,
-                deliveryemrota_lists: ListDataType,
-                deliveryproducao_lists: ListDataType,
-                despesas_lists: ListDataType,
-                cardacumuladomes_informationCard: InformationCardDataType,
-                meta_progressiveBarChart: ProgressiveBarDataType,
-                vendaporhorario_biaxialBarChart: BiaxialBarDataType,
-                vendaporhorariopizza_pieChart: PieDataType
-            }
+            dataCharts: StockDataType
         },
         financeiro: {
-            dataCharts: {
-                cancelamentos_lists: ListDataType,
-                deliveryemrota_lists: ListDataType,
-                deliveryproducao_lists: ListDataType,
-                despesas_lists: ListDataType,
-                cardacumuladomes_informationCard: InformationCardDataType,
-                meta_progressiveBarChart: ProgressiveBarDataType,
-                vendaporhorario_biaxialBarChart: BiaxialBarDataType,
-                vendaporhorariopizza_pieChart: PieDataType
-            }
+            dataCharts: FinancialDataType
         },
         vendas: {
-            dataCharts: {
-                cancelamentos_lists: ListDataType,
-                deliveryemrota_lists: ListDataType,
-                deliveryproducao_lists: ListDataType,
-                despesas_lists: ListDataType,
-                cardacumuladomes_informationCard: InformationCardDataType,
-                meta_progressiveBarChart: ProgressiveBarDataType,
-                vendaporhorario_biaxialBarChart: BiaxialBarDataType,
-                vendaporhorariopizza_pieChart: PieDataType
-            }
+            dataCharts: SalesDataType
         }
     }
 }
