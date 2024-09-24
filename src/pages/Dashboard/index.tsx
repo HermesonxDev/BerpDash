@@ -123,15 +123,15 @@ const Dashboard: React.FC = () => {
     *      de dados sobre aquela unidade sera carregado do firebase
     *      aqui, e será separado os ganhos e despesas da unidade.
     */
-    useEffect(() => {
-        if (unitData) {
-            const expensesArray = Object.values(unitData.expenses);
-            const gainsArray = Object.values(unitData.gains);
+    // useEffect(() => {
+    //     if (unitData) {
+    //         const expensesArray = Object.values(unitData.expenses);
+    //         const gainsArray = Object.values(unitData.gains);
 
-            setExpenses(expensesArray);
-            setGains(gainsArray);
-        }
-    }, [unitData])
+    //         setExpenses(expensesArray);
+    //         setGains(gainsArray);
+    //     }
+    // }, [unitData])
 
 
     /*
@@ -139,21 +139,21 @@ const Dashboard: React.FC = () => {
     *       Soma e devolve todos os valores das saídas do mês
     *       selecionado pelo usuário.
     */
-    useEffect(() => {
+    // useEffect(() => {
         
-        let total: number = 0
+    //     let total: number = 0
         
-        expenses.forEach(item => {
-            try {
-                    total += Number(item.amount)
-                } catch {
-                    throw new Error('Invalid amount! Amount must be number.')
-                }
-            }
-        )
+    //     expenses.forEach(item => {
+    //         try {
+    //                 total += Number(item.amount)
+    //             } catch {
+    //                 throw new Error('Invalid amount! Amount must be number.')
+    //             }
+    //         }
+    //     )
 
-        setTotalExpenses(total)
-    }, [monthSelected, yearSelected, unitSelected, expenses]);
+    //     setTotalExpenses(total)
+    // }, [monthSelected, yearSelected, unitSelected, expenses]);
 
 
     /*
@@ -161,20 +161,20 @@ const Dashboard: React.FC = () => {
     *       Soma e devolve todos os valores das entradas do mês
     *       selecionado pelo usuário.
     */
-    useEffect(() => {
-        let total: number = 0;
+    // useEffect(() => {
+    //     let total: number = 0;
     
-        gains.forEach(item => {
-          try {
-              total += Number(item.amount);
-            } catch {
-              throw new Error('Invalid amount! Amount must be number.');
-            }
-          }
-        );
+    //     gains.forEach(item => {
+    //       try {
+    //           total += Number(item.amount);
+    //         } catch {
+    //           throw new Error('Invalid amount! Amount must be number.');
+    //         }
+    //       }
+    //     );
     
-        setTotalGains(total);
-    }, [monthSelected, yearSelected, unitSelected, gains]);
+    //     setTotalGains(total);
+    // }, [monthSelected, yearSelected, unitSelected, gains]);
 
 
     /*
@@ -183,9 +183,9 @@ const Dashboard: React.FC = () => {
     *       mostrar o valor do saldo adquirido no mês selecionado
     *       pelo usuário.
     */
-    useEffect(() => {
-        setTotalBalance(totalGains - totalExpenses)
-    }, [totalGains, totalExpenses]);
+    // useEffect(() => {
+    //     setTotalBalance(totalGains - totalExpenses)
+    // }, [totalGains, totalExpenses]);
 
 
     /*
@@ -245,7 +245,7 @@ const Dashboard: React.FC = () => {
             </ContentHeader>
 
             <Content>
-                <WalletBox 
+                {/* <WalletBox 
                     title="saldo"
                     amount={totalBalance}
                     footerLabel="Atualizado com base nas entradas e saídas"
@@ -267,7 +267,7 @@ const Dashboard: React.FC = () => {
                     footerLabel="Atualizado com base nas entradas e saídas"
                     color="#e44c4e"
                     icon="arrowDown"
-                />
+                /> */}
             </Content>
         </Container>
     )

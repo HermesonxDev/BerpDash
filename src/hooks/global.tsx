@@ -1,32 +1,94 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect, useMemo } from "react";
 
+import { useFirestore } from "./firestore";
+
+import listOfMonths from "../utils/months";
+import getYears from "../utils/getYears";
+import { UnitDataType } from "../utils/interfaces";
+
+interface IListProps {
+    value: string | number,
+    label: string | number
+}
 interface IGlobalContext {
+    units: IListProps[],
+    months: IListProps[],
+    years: IListProps[],
     unitSelected: string,
     monthSelected: number,
     yearSelected: number,
+    unitData: UnitDataType[],
     setUnitSelected: React.Dispatch<React.SetStateAction<string>>,
     setMonthSelected: React.Dispatch<React.SetStateAction<number>>,
-    setYearSelected: React.Dispatch<React.SetStateAction<number>>
+    setYearSelected: React.Dispatch<React.SetStateAction<number>>,
+    loadingUnits: boolean,
 }
 
 const GlobalContext = createContext<IGlobalContext>({} as IGlobalContext)
 
 const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 
+    const {
+        user,
+        getFirestore,
+        getFirestoreWithID
+    } = useFirestore()
+    
+    const { documents: listOfUnits } = getFirestore('units');
+
+    const [units, setUnits] = useState<IListProps[]>(() => {
+        const onUnit = localStorage.getItem('@dc5bf16b1811-Dashboard:units')
+        return onUnit ? JSON.parse(onUnit) : []
+    });
+
     const [unitSelected, setUnitSelectedState] = useState<string>(() => {
-        const onUnit = localStorage.getItem('@dc5bf16b1811-Dashboard:unitSelected')
-        return onUnit ? JSON.parse(onUnit) : ''
+        const onUnitSelected = localStorage.getItem('@dc5bf16b1811-Dashboard:unitSelected')
+        return onUnitSelected ? JSON.parse(onUnitSelected) : ''
     })
 
     const [monthSelected, setMonthSelectedState] = useState<number>(() => {
-        const onMonth = localStorage.getItem('@dc5bf16b1811-Dashboard:monthSelected')
-        return onMonth ? JSON.parse(onMonth) : new Date().getMonth() + 1
+        const onMonthSelected = localStorage.getItem('@dc5bf16b1811-Dashboard:monthSelected')
+        return onMonthSelected ? JSON.parse(onMonthSelected) : new Date().getMonth() + 1
     })
 
     const [yearSelected, setYearSelectedState] = useState<number>(() => {
-        const onYear = localStorage.getItem('@dc5bf16b1811-Dashboard:yearSelected')
-        return onYear ? JSON.parse(onYear) : new Date().getFullYear()
+        const onYearSelected = localStorage.getItem('@dc5bf16b1811-Dashboard:yearSelected')
+        return onYearSelected ? JSON.parse(onYearSelected) : new Date().getFullYear()
     })
+
+    const [unitData, setUnitData] = useState<UnitDataType[]>(() => {
+        const onUnitData = localStorage.getItem('@dc5bf16b1811-Dashboard:unitData')
+        return onUnitData ? JSON.parse(onUnitData) : []
+    })
+
+    const [loadingUnits, setLoadingUnits] = useState<boolean>(true);
+
+    /*
+    * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE MESES
+    *      Mapeia a lista de meses fornecida pelos utilitários e
+    *      devolve o nome de cada mês e seu valor.
+    */
+    const months = useMemo(() => {
+        return listOfMonths.map((month, index) => ({
+            value: index + 1,
+            label: month,
+        }));
+    }, []);
+
+
+    /*
+    * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE ANOS
+    *      Mantém atualizado, o ano atual e os 4 anos anteriores a ele,
+    *      fazendo com que se mantenham sempre 5 opções de anos para o
+    *      usuário selecionar.
+    */
+    const years = useMemo(() => {
+        const listOfYears = getYears();
+        return listOfYears.map(year => ({
+            value: year,
+            label: year,
+        }));
+    }, []);
 
 
     /*
@@ -100,14 +162,77 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
         }
     }
 
+
+    /*
+    * --> MANTÉM AS INFORMAÇÕES DAS UNIDADES DO USUÁRIO ATUALIZADAS
+    *      Verifica e guarda os dados das unidades do usuário no localstorage
+    *      do navegador, e atualiza sempre que o usuário receber uma nova unidade.
+    */
+    useEffect(() => {
+
+        if (units) {
+            const filteredUnits = listOfUnits
+            .filter(unit => user.units.includes(unit.id))
+            .map(unit => ({value: unit.cnpj, label: unit.name}))
+
+            localStorage.setItem(
+                '@dc5bf16b1811-Dashboard:units',
+                JSON.stringify(filteredUnits)
+            )
+
+            setLoadingUnits(false);
+        }
+
+    }, [listOfUnits, user.units]);
+
+
+    /*
+    * --> GUARDA OS DADOS DA UNIDADE SELECIONADA PELO USUÁRIO
+    *      Carrega todas as despesas e ganhos da unidade selecionada,
+    *      pelo usuário, no determinado mês e ano, para ser usado
+    *      na aplicação.
+    */
+    useEffect(() => {
+        const fetchData = async () => {
+            
+            const searchLabel =
+                unitSelected
+                + String(yearSelected)
+                + (
+                    monthSelected > 9
+                    ? String(monthSelected)
+                    : "0" + String(monthSelected)
+                );
+
+            try {
+                const data = await getFirestoreWithID('unitsData', searchLabel);
+                localStorage.setItem(
+                    '@dc5bf16b1811-Dashboard:unitData',
+                    JSON.stringify(data)
+                )
+                setUnitData(data)
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        };
+
+        fetchData();
+
+    }, [unitSelected, monthSelected, yearSelected]);
+
     return (
         <GlobalContext.Provider value={{
+            units,
+            months,
+            years,
             unitSelected,
             monthSelected,
             yearSelected,
+            unitData,
             setUnitSelected,
             setMonthSelected,
-            setYearSelected
+            setYearSelected,
+            loadingUnits
         }}>
             { children }
         </GlobalContext.Provider>

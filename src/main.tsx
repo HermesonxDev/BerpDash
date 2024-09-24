@@ -9,13 +9,13 @@ import { GlobalProvider } from './hooks/global.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider>
-      <GlobalProvider>
-        <FirestoreProvider>
+      <FirestoreProvider>
+        <GlobalProvider>
           <AuthProvider>
             <App />
           </AuthProvider>
-        </FirestoreProvider>
-      </GlobalProvider>
+        </GlobalProvider>
+      </FirestoreProvider>
     </ThemeProvider>
   </React.StrictMode>,
 )

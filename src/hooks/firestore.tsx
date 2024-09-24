@@ -50,11 +50,19 @@ interface IFirestoreContext {
     ) => Promise<DocumentData | DocumentData[] | null>,
     getFirestore: (
         collectionName: string
-    ) => { documents: any[]; loading: boolean; error: Error | null },
+    ) => {
+        documents: any[],
+        loading: boolean,
+        error: Error | null
+    },
     getFirestoreWithSearch: (
         collectionName: string,
         inputValue: string
     ) => Promise<any[]>,
+    getFirestoreWithID: (
+        collectionName: string,
+        searchLabel: string
+    ) => Promise<any | null>,
     createUserFirebase(
         event: React.FormEvent<HTMLFormElement>,
         name: string,
@@ -232,6 +240,27 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
         }
     }
 
+    /*
+    * --> BUSCA UM DOCUMENTO NO BANCO PELO ID
+    *      Recebe o nome da coleção e o ID do documento e busca o documento correspondente
+    */
+    const getFirestoreWithID = async (collectionName: string, documentId: string) => {
+        try {
+            const docRef = doc(db, collectionName, documentId); // Busca pelo ID do documento
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                return { id: docSnap.id, ...docSnap.data() }; // Retorna o documento com ID e seus dados
+            } else {
+                console.log("Nenhum documento encontrado!");
+                return null; // Caso o documento não exista
+            }
+        } catch (error) {
+            console.error("Erro ao buscar documento no Firestore:", error);
+            return null;
+        }
+    };
+
 
     /*
     * --> CRIA UM USUÁRIO NO BANCO
@@ -385,6 +414,7 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
             SearchUser,
             getFirestore,
             getFirestoreWithSearch,
+            getFirestoreWithID,
             createUserFirebase,
             editUserFirebase,
             deactiveUserFirebase,
