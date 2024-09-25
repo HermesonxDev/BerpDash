@@ -176,27 +176,26 @@ export interface SalesDataType {
 
 
 export interface UnitDataType {
-    data: {
-        auditoria: {
-            dataCharts: AuditDataType
-        },
-        caixa: {
-            dataCharts: PosDataType
-        },
-        delivery: {
-            dataCharts: DeliveryDataType
-        },
-        desempenho: {
-            dataCharts: PerformanceDataType
-        },
-        estoque: {
-            dataCharts: StockDataType
-        },
-        financeiro: {
-            dataCharts: FinancialDataType
-        },
-        vendas: {
-            dataCharts: SalesDataType
-        }
+    id: string,
+    auditoria: {
+        dataCharts: AuditDataType
+    },
+    caixa: {
+        dataCharts: PosDataType
+    },
+    delivery: {
+        dataCharts: DeliveryDataType
+    },
+    desempenho: {
+        dataCharts: PerformanceDataType
+    },
+    estoque: {
+        dataCharts: StockDataType
+    },
+    financeiro: {
+        dataCharts: FinancialDataType
+    },
+    vendas: {
+        dataCharts: SalesDataType
     }
 }

@@ -4,11 +4,11 @@ import { Container, Content } from "./styles";
 import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import Loading from "../../components/Loading";
+import InformationCard from "../../components/InformationCard";
 
 import { useGlobal } from "../../hooks/global";
 
 import { PosDataType } from "../../utils/interfaces";
-import InformationCard from "../../components/InformationCard";
 
 const PointOfSale: React.FC = () => {
 
@@ -26,9 +26,7 @@ const PointOfSale: React.FC = () => {
         setYearSelected
     } = useGlobal()
 
-    const [posData, setPosData] = useState<PosDataType[]>([]);
-
-    console.log(unitData)
+    const [posData, setPosData] = useState<PosDataType | null>(null);
 
     /*
     * --> SEPARA OS DADOS QUE SERAM USADO NA APLICAÇÃO
@@ -37,11 +35,13 @@ const PointOfSale: React.FC = () => {
     *      aqui, e será separado os ganhos e despesas da unidade.
     */
     useEffect(() => {
-        if (unitData) {
-            const posArray = Object.values(unitData.caixa);
-            setPosData(posArray);
+        if (unitData && unitData.length > 0) {
+            setPosData(unitData[0].caixa.dataCharts);
         }
-    }, [unitData])
+    }, [unitData]);
+
+    console.log(unitData[0].caixa.dataCharts)
+    console.log(posData)
 
     /*
     * --> SETA O MÊS SELECIONADO PELO USUÁRIO
@@ -100,7 +100,7 @@ const PointOfSale: React.FC = () => {
             </ContentHeader>
 
             <Content>
-                <InformationCard data={posData.dataCharts.cardacumuladomes_informationCard}/>
+                {/* <InformationCard data={posData.dataCharts.cardacumuladomes_informationCard}/> */}
             </Content>
         </Container>
     )
