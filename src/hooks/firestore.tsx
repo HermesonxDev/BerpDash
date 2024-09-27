@@ -26,6 +26,8 @@ import {
 
 import firebaseConfig from "../config/firebase";
 
+let firestoreInstance: ReturnType<typeof getFirestoreDB> | null = null;
+
 interface IUserProps {
     created_at: string;
     email: string;
@@ -101,9 +103,13 @@ const FirestoreContext = createContext<IFirestoreContext>({} as IFirestoreContex
 const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
 
     const app = initializeApp(firebaseConfig);
-    const db = initializeFirestore(app, {
+    
+    const db = firestoreInstance || initializeFirestore(app, {
         localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
     });
+
+    firestoreInstance = db;
+
    const auth = getAuth(app);
 
     const [user, setUserState] = useState<IUserProps>(() => {

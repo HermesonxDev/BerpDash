@@ -259,7 +259,8 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
 
             try {
                 const data = await getFirestoreWithID('unitsData', searchLabel);
-
+                console.log(data); 
+               
                 localStorage.setItem(
                     '@dc5bf16b1811-Dashboard:unitData',
                     JSON.stringify(data)
@@ -308,6 +309,7 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
                 setPerformanceData(data.desempenho.dataCharts)
                 setPosData(data.caixa.dataCharts)
                 setDeliveryData(data.delivery.dataCharts)
+          
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
             }
