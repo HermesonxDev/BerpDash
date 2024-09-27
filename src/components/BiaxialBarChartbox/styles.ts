@@ -18,7 +18,7 @@ const animate = keyframes`
 
 export const Container = styled.div `
     width: 49%;
-    min-height: 700px;
+    min-height: 800px;
     margin: 10px 0;
     padding: 15px 10px;
     background-color: ${props => props.theme.colors.tertiary};
