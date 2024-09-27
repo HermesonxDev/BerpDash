@@ -1,4 +1,16 @@
 import {
+    Container,
+    LogoIMG,
+    Title,
+    HeaderContainer,
+    MenuContainer,
+    MenuItemLink,
+    MenuItemButton,
+    ToggleMenu,
+    ThemeToggleFooter
+} from "./styles";
+
+import {
     MdDashboard,
     MdArrowDownward,
     MdArrowUpward,
@@ -9,11 +21,11 @@ import {
     MdDeliveryDining
 } from 'react-icons/md';
 
-import { RiLockPasswordFill } from "react-icons/ri";
+import { RiLockPasswordFill } from "react-icons/ri"
 import { FaDollarSign, FaCode } from "react-icons/fa6"
-import { FaCashRegister } from "react-icons/fa"
+import { FaCashRegister, FaBoxes } from "react-icons/fa"
+import { AiOutlineAudit } from "react-icons/ai"
 
-import { Container, LogoIMG, Title, HeaderContainer, MenuContainer, MenuItemLink, MenuItemButton, ToggleMenu, ThemeToggleFooter } from "./styles";
 import Toggle from "../Toggle";
 import logo from '../../assets/logo.svg';
 import { useAuth } from '../../hooks/auth';
@@ -65,14 +77,19 @@ const Aside: React.FC = () => {
                     Dashboard
                 </MenuItemLink>
                 
-                <MenuItemLink href="/list/entry-balance">
+                <MenuItemLink href="/discounts">
                     <MdArrowUpward />
-                    Entradas
+                    Descontos
                 </MenuItemLink>
 
-                <MenuItemLink href="/list/exit-balance">
+                <MenuItemLink href="/expenses">
                     <MdArrowDownward />
-                    Saidas
+                    Despesas
+                </MenuItemLink>
+
+                <MenuItemLink href="/storage">
+                    <FaBoxes />
+                    Estoque
                 </MenuItemLink>
 
                 <MenuItemLink href="/sales">
@@ -88,6 +105,11 @@ const Aside: React.FC = () => {
                 <MenuItemLink href="/delivery">
                     <MdDeliveryDining />
                     Delivery
+                </MenuItemLink>
+
+                <MenuItemLink href="/audit">
+                    <AiOutlineAudit />
+                    Auditoria
                 </MenuItemLink>
 
                 {Admin &&

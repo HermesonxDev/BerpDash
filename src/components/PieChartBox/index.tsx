@@ -62,16 +62,24 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
         return currentMonth === generatedMonth;
     }
 
+
     const filteredControllers = controllers.filter(controller => {
+
         if (controller.value === "day" && !isCurrentMonth()) {
             return false;
         }
+
+        if (!data[controller.value]) {
+            return false;
+        }
+
         return true;
     })
 
+    
     useEffect(() => {
         if (data) {
-            setControllers(data.controllers)
+            setControllers(data.controllers);
 
             const updateDataChart = (period: string) => {
                 const updatedData = data[period] || [];
@@ -189,4 +197,4 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
     )
 }
 
-export default PieChartBox
+export default PieChartBox;

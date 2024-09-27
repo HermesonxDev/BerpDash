@@ -168,6 +168,7 @@ export const Controllers = styled.div `
     display: flex;
     flex-direction: row;
     gap: 10px;
+    overflow: scroll;
 
     > button {
         border: 1px solid ${props => props.theme.colors.white};
@@ -176,6 +177,25 @@ export const Controllers = styled.div `
     .tag-deactivate {
         opacity: 0.7;
         border: unset;
+    }
+
+    &::-webkit-scrollbar {
+        width: 0.5px;
+        height: 0.5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: ${props => props.theme.colors.secondary};
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: ${props => props.theme.colors.tertiary};
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background-color: none;
     }
 `;
 

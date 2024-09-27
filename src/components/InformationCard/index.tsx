@@ -5,6 +5,7 @@ import HeaderChartInfo from "../HeaderChartInfo";
 
 import formatCurrency from "../../utils/formatCurrency";
 import { InfoCardControllers, InformationCardDataType } from "../../utils/interfaces";
+
 interface IInformationCardProps {
     data: InformationCardDataType
 }

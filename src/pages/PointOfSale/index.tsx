@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { Container, Content } from "./styles";
 
 import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import Loading from "../../components/Loading";
 import InformationCard from "../../components/InformationCard";
+import BiaxialBarChartBox from "../../components/BiaxialBarChartbox";
+import PieChartBox from "../../components/PieChartBox";
 
 import { useGlobal } from "../../hooks/global";
-
-import { PosDataType } from "../../utils/interfaces";
 
 const PointOfSale: React.FC = () => {
 
@@ -16,7 +16,7 @@ const PointOfSale: React.FC = () => {
         units,
         months,
         years,
-        unitData,
+        posData,
         unitSelected,
         monthSelected,
         yearSelected,
@@ -25,23 +25,6 @@ const PointOfSale: React.FC = () => {
         setMonthSelected,
         setYearSelected
     } = useGlobal()
-
-    const [posData, setPosData] = useState<PosDataType | null>(null);
-
-    /*
-    * --> SEPARA OS DADOS QUE SERAM USADO NA APLICAÇÃO
-    *      Sempre que o usuário selecionar a unidade, mês e ano, um array
-    *      de dados sobre aquela unidade sera carregado do firebase
-    *      aqui, e será separado os ganhos e despesas da unidade.
-    */
-    useEffect(() => {
-        if (unitData && unitData.length > 0) {
-            setPosData(unitData[0].caixa.dataCharts);
-        }
-    }, [unitData]);
-
-    console.log(unitData[0].caixa.dataCharts)
-    console.log(posData)
 
     /*
     * --> SETA O MÊS SELECIONADO PELO USUÁRIO
@@ -99,9 +82,13 @@ const PointOfSale: React.FC = () => {
                 />
             </ContentHeader>
 
-            <Content>
-                {/* <InformationCard data={posData.dataCharts.cardacumuladomes_informationCard}/> */}
-            </Content>
+            {posData &&
+                <Content>
+                    <BiaxialBarChartBox data={posData.vendaporhorario_biaxialBarChart} />
+                    <PieChartBox data={posData.vendaporhorariopizza_pieChart} />
+                    <InformationCard data={posData.cardacumuladomes_informationCard}/>
+                </Content>
+            }
         </Container>
     )
 }

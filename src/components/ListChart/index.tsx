@@ -17,7 +17,7 @@ interface DataType {
     amount_field: string,
     sub_amount_field: string,
     date: string,
-    frequency: string,
+    type: string,
 }
 
 interface DataTypeFormatted {
@@ -47,17 +47,17 @@ const ListChart: React.FC<IListChartProps> = ({ data }) => {
 
     const [listData, setListData] = useState<DataTypeFormatted[]>([]);
     const [totalAmount, setTotalAmount] = useState<number>(0);
-    const [controllers, setControllers] = useState<DataController[]>([])
+    const [controllers, setControllers] = useState<DataController[]>([]);
     const [frequencySelected, setFrequencySelected] = useState(['month']);
 
     const isCurrentMonth = () => {
         if (!data.generatedDate) return false;
-        
+
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth();
         const generatedDate = new Date(data.generatedDate);
         const generatedMonth = generatedDate.getMonth();
-        
+
         return currentMonth === generatedMonth;
     }
 
@@ -65,43 +65,45 @@ const ListChart: React.FC<IListChartProps> = ({ data }) => {
         if (controller.value === "day" && !isCurrentMonth()) {
             return false;
         }
-        return true;
-    })
+
+        const periodExists = data.data.some(item => item.type === controller.value);
+        return periodExists;
+    });
 
     /*
     * --> FORMATA E FILTRA OS DADOS A SEREM MOSTRADOS
-    *      Formata a data e o valores númericos para o padrão do Brasil,
-    *      e também, verifica quais filtros estão ativos para mostrar,
-    *      somente os dados com as frequencias selecionadas.
+    *      Formata a data e os valores numéricos para o padrão do Brasil,
+    *      e também verifica quais filtros estão ativos para mostrar
+    *      somente os dados com os tipos selecionados.
     */
     useEffect(() => {
         if (data) {
-            setControllers(data.controllers)
-        
-            const formattedData = data.data
-            .filter(item => frequencySelected.includes(item.frequency))
-            .map(item => {
-                return {
-                    id: item.id,
-                    title: item.title,
-                    sub_title: item.sub_title,
-                    amount_field_formatted: formatCurrency(Number(item.amount_field)),
-                    sub_amount_field_formatted: formatCurrency(Number(item.sub_amount_field)),
-                    frequency: item.frequency,
-                    date_formatted: formatDate(item.date),
-                    tagColor: item.frequency === 'recorrente' ? '#4e41f0' : '#e44c4e',
-                }
-            })
+            setControllers(data.controllers);
 
-            setListData(formattedData)
+            const formattedData = data.data
+                .filter(item => frequencySelected.includes(item.type))
+                .map(item => {
+                    return {
+                        id: item.id,
+                        title: item.title,
+                        sub_title: item.sub_title,
+                        amount_field_formatted: formatCurrency(Number(item.amount_field)),
+                        sub_amount_field_formatted: formatCurrency(Number(item.sub_amount_field)),
+                        frequency: item.type,
+                        date_formatted: formatDate(item.date),
+                        tagColor: item.type === 'recorrente' ? '#4e41f0' : '#e44c4e',
+                    }
+                });
+
+            setListData(formattedData);
 
             const totalAmount = data.data
-            .filter(item => frequencySelected.includes(item.frequency))
-            .reduce((acc, item) => acc + Number(item.amount_field), 0)
+                .filter(item => frequencySelected.includes(item.type)) // Filtra pelos tipos selecionados
+                .reduce((acc, item) => acc + Number(item.amount_field), 0);
 
-            setTotalAmount(totalAmount)
+            setTotalAmount(totalAmount);
         }
-    }, [data, frequencySelected])
+    }, [data, frequencySelected]);
 
     /*
     * --> FILTROS DE CARD
@@ -111,11 +113,11 @@ const ListChart: React.FC<IListChartProps> = ({ data }) => {
     const handleFrequencyClick = (frequency: string) => {
         const alreadySelected = frequencySelected.findIndex(item => item === frequency);
 
-        if(alreadySelected >= 0) {
+        if (alreadySelected >= 0) {
             const filtered = frequencySelected.filter(item => item !== frequency);
             setFrequencySelected(filtered);
         } else {
-            setFrequencySelected((prev) => [ ...prev, frequency]);
+            setFrequencySelected((prev) => [...prev, frequency]);
         }
     }
 
@@ -125,18 +127,21 @@ const ListChart: React.FC<IListChartProps> = ({ data }) => {
                 <HeaderChartInfo
                     title={data.title}
                     subTitle={data.subTitle}
-                    text={data.text}    
+                    text={data.text}
                 />
 
                 <Filters>
                     {filteredControllers.map(controller => (
                         <button
+                            key={controller.value}
                             className={
                                 `tag-filter tag-filter-recurrent
                                 ${frequencySelected.includes(controller.value) && 'tag-actived'}`
                             }
                             onClick={() => handleFrequencyClick(controller.value)}
-                        >{controller.name}</button>
+                        >
+                            {controller.name}
+                        </button>
                     ))}
                 </Filters>
 
@@ -174,4 +179,4 @@ const ListChart: React.FC<IListChartProps> = ({ data }) => {
     )
 }
 
-export default ListChart
+export default ListChart;

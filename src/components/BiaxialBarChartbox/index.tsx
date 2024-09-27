@@ -60,9 +60,33 @@ const BiaxialBarChartBox: React.FC<IBiaxialBarChartProps> = ({ data }) => {
     const [periodSelected, setPeriodSelected] = useState<string>('month')
     const [dynamicKeys, setDynamicKeys] = useState<string[]>([]);
 
+    const isCurrentMonth = () => {
+        if (!data.generatedDate) return false;
+
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const generatedDate = new Date(data.generatedDate);
+        const generatedMonth = generatedDate.getMonth();
+
+        return currentMonth === generatedMonth;
+    }
+
+    const filteredControllers = controllers.filter(controller => {
+
+        if (controller.value === "day" && !isCurrentMonth()) {
+            return false;
+        }
+
+        if (!data[controller.value]) {
+            return false;
+        }
+
+        return true;
+    });
+
     useEffect(() => {
         if (data) {
-            setControllers(data.controllers)
+            setControllers(data.controllers);
 
             const updateDataChart = (period: string) => {
                 const updatedData = data[period] || [];
@@ -102,7 +126,7 @@ const BiaxialBarChartBox: React.FC<IBiaxialBarChartProps> = ({ data }) => {
 
             <MainRow>
                 <ResponsiveContainer>
-                    <BarChart data={dataChart} >
+                    <BarChart data={dataChart}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" stroke="#ffffff"/>
                         <YAxis yAxisId="left" orientation="left" stroke="#ffffff" />
@@ -121,21 +145,21 @@ const BiaxialBarChartBox: React.FC<IBiaxialBarChartProps> = ({ data }) => {
                         ))}
                     </BarChart>
                 </ResponsiveContainer>
-
-                <Controllers>
-                    {controllers.map(controller => (
-                        <Button
-                            key={controller.name}
-                            className={
-                                periodSelected !== controller.value ? 'tag-deactivate' : ''
-                            }
-                            onClick={() => setPeriodSelected(controller.value)}
-                        >
-                            {controller.name}
-                        </Button>
-                    ))}
-                </Controllers>
             </MainRow>
+
+            <Controllers>
+                {filteredControllers.map(controller => (
+                    <Button
+                        key={controller.name}
+                        className={
+                            periodSelected !== controller.value ? 'tag-deactivate' : ''
+                        }
+                        onClick={() => setPeriodSelected(controller.value)}
+                    >
+                        {controller.name}
+                    </Button>
+                ))}
+            </Controllers>
 
             <FooterRow>
                 {data.showTotal &&

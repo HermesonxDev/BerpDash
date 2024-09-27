@@ -1,24 +1,18 @@
 import { Container, Content } from "./styles";
-import { useCallback } from "react";
 
 import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import Loading from "../../components/Loading";
-import PieChartBox from "../../components/PieChartBox";
-import InformationCard from "../../components/InformationCard";
-import ProgressiveBar from "../../components/ProgressiveBar";
-import ListChart from "../../components/ListChart";
 
 import { useGlobal } from "../../hooks/global";
-import BiaxialBarChartBox from "../../components/BiaxialBarChartbox";
 
-const Delivery: React.FC = () => {
+/* COMPONENTE DA PÁGINA */
+const Expenses: React.FC = () => {
 
     const {
         units,
         months,
         years,
-        deliveryData,
         unitSelected,
         monthSelected,
         yearSelected,
@@ -33,14 +27,14 @@ const Delivery: React.FC = () => {
     *      Recebe o valor do mês selecionado e converte para o tipo Number
     *      para ser usado nos filtros de gráficos.
     */
-    const handleMonthSelected = useCallback((month: string) => {
+    const handleMonthSelected = (month: string) => {
         try {
             const parseMonth = Number(month);
             setMonthSelected(parseMonth);
-        } catch (error) {
+        } catch {
             throw new Error('Invalid month value. Is accept 0 - 24.')
         }
-    }, [])
+    }
 
 
     /*
@@ -48,22 +42,24 @@ const Delivery: React.FC = () => {
     *      Recebe o valor do ano selecionado e converte para o tipo Number
     *      para ser usado nos filtros de gráficos.
     */
-    const handleYearSelected = useCallback((year: string) => {
+    const handleYearSelected = (year: string) => {
         try {
             const parseYear = Number(year);
             setYearSelected(parseYear);
-        } catch (error) {
+        } catch {
             throw new Error('Invalid year value. Is accept integer numbers.')
         }
-    }, [])
+    }
+
 
     if (loadingUnits) {
         return <Loading />
     }
 
     return (
-        <Container>
-            <ContentHeader title="Delivery" lineColor="#f7931b">
+        <Container> 
+            <ContentHeader title="Despesas" lineColor="#e44c4e">
+
                 <SelectInput
                     options={units}
                     selectedValue={(e) => setUnitSelected(e.target.value)}
@@ -81,24 +77,14 @@ const Delivery: React.FC = () => {
                     selectedValue={(e) => handleYearSelected(e.target.value)}
                     defaultValue={yearSelected}
                 />
+
             </ContentHeader>
 
-            {deliveryData && 
-                <Content>
-                    <PieChartBox data={deliveryData.vendaporhorariopizza_pieChart} />
-                    <BiaxialBarChartBox data={deliveryData.vendaporhorario_biaxialBarChart} />
-                    <ListChart data={deliveryData.cancelamentos_lists} />
-                    <ListChart data={deliveryData.despesas_lists} />
-                    <ListChart data={deliveryData.deliveryproducao_lists} />
-                    <ListChart data={deliveryData.deliveryemrota_lists} />
-                    <ListChart data={deliveryData.deliveryemrota_lists} />
-                    <PieChartBox data={deliveryData.vendaporhorariopizza_pieChart} />
-                    <PieChartBox data={deliveryData.vendaporhorariopizza_pieChart} />
-                    <BiaxialBarChartBox data={deliveryData.vendaporhorario_biaxialBarChart} />
-                </Content>
-            }
+            <Content>
+                0
+            </Content>
         </Container>
     )
 }
 
-export default Delivery
+export default Expenses;
