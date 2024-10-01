@@ -139,7 +139,7 @@ export interface PerformanceDataType {
 }
 
 
-export interface StockDataType {
+export interface StorageDataType {
     cancelamentos_lists: ListDataType,
     deliveryemrota_lists: ListDataType,
     deliveryproducao_lists: ListDataType,
@@ -190,7 +190,7 @@ export interface UnitDataType {
         dataCharts: PerformanceDataType
     },
     estoque: {
-        dataCharts: StockDataType
+        dataCharts: StorageDataType
     },
     financeiro: {
         dataCharts: FinancialDataType

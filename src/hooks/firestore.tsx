@@ -258,7 +258,6 @@ const FirestoreProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) 
             if (docSnap.exists()) {
                 return { id: docSnap.id, ...docSnap.data() }; // Retorna o documento com ID e seus dados
             } else {
-                console.log("Nenhum documento encontrado!");
                 return null; // Caso o documento não exista
             }
         } catch (error) {

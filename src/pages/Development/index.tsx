@@ -18,11 +18,12 @@ const Development: React.FC = () => {
         unitSelected,
         monthSelected,
         yearSelected,
-        loadingUnits,
+        loading,
         setUnitSelected,
         setMonthSelected,
         setYearSelected
     } = useGlobal()
+
 
     /*
     * --> SETA O MÊS SELECIONADO PELO USUÁRIO
@@ -53,7 +54,7 @@ const Development: React.FC = () => {
         }
     }, [])
 
-    if (loadingUnits) {
+    if (loading) {
         return <Loading />
     }
 

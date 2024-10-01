@@ -12,7 +12,7 @@ import {
     PerformanceDataType,
     PosDataType,
     SalesDataType,
-    StockDataType,
+    StorageDataType,
     UnitDataType
 } from "../utils/interfaces";
 
@@ -28,7 +28,7 @@ interface IGlobalContext {
     monthSelected: number,
     yearSelected: number,
     unitData: UnitDataType[],
-    stockData: StockDataType[],
+    storageData: StorageDataType[],
     salesData: SalesDataType[],
     auditData: AuditDataType[],
     financialData: FinancialDataType[],
@@ -38,7 +38,7 @@ interface IGlobalContext {
     setUnitSelected: React.Dispatch<React.SetStateAction<string>>,
     setMonthSelected: React.Dispatch<React.SetStateAction<number>>,
     setYearSelected: React.Dispatch<React.SetStateAction<number>>,
-    loadingUnits: boolean,
+    loading: boolean,
 }
 
 const GlobalContext = createContext<IGlobalContext>({} as IGlobalContext)
@@ -73,47 +73,15 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
         return onYearSelected ? JSON.parse(onYearSelected) : new Date().getFullYear()
     })
 
-    const [unitData, setUnitData] = useState<UnitDataType[]>(() => {
-        const onUnitData = localStorage.getItem('@dc5bf16b1811-Dashboard:unitData')
-        return onUnitData ? JSON.parse(onUnitData) : [{"message": "Sem registros"}]
-    })
-
-    const [stockData, setStockData] = useState<StockDataType[]>(() => {
-        const onStockData = localStorage.getItem('@dc5bf16b1811-Dashboard:stockData')
-        return onStockData ? JSON.parse(onStockData) : [{"message": "Sem registros"}]
-    })
-
-    const [salesData, setSalesData] = useState<SalesDataType[]>(() => {
-        const onSalesData = localStorage.getItem('@dc5bf16b1811-Dashboard:salesData')
-        return onSalesData ? JSON.parse(onSalesData) : [{"message": "Sem registros"}]
-    })
-
-    const [auditData, setAuditData] = useState<AuditDataType[]>(() => {
-        const onAuditData = localStorage.getItem('@dc5bf16b1811-Dashboard:auditData')
-        return onAuditData ? JSON.parse(onAuditData) : [{"message": "Sem registros"}]
-    })
-
-    const [financialData, setFinancialData] = useState<FinancialDataType[]>(() => {
-        const onFinancialData = localStorage.getItem('@dc5bf16b1811-Dashboard:financialData')
-        return onFinancialData ? JSON.parse(onFinancialData) : [{"message": "Sem registros"}]
-    })
-
-    const [performanceData, setPerformanceData] = useState<PerformanceDataType[]>(() => {
-        const onPerformanceData = localStorage.getItem('@dc5bf16b1811-Dashboard:performanceData')
-        return onPerformanceData ? JSON.parse(onPerformanceData) : [{"message": "Sem registros"}]
-    })
-
-    const [posData, setPosData] = useState<PosDataType[]>(() => {
-        const onPosData = localStorage.getItem('@dc5bf16b1811-Dashboard:posData')
-        return onPosData ? JSON.parse(onPosData) : [{"message": "Sem registros"}]
-    })
-
-    const [deliveryData, setDeliveryData] = useState<DeliveryDataType[]>(() => {
-        const onDeliveryData = localStorage.getItem('@dc5bf16b1811-Dashboard:deliveryData')
-        return onDeliveryData ? JSON.parse(onDeliveryData) : [{"message": "Sem registros"}]
-    })
-
-    const [loadingUnits, setLoadingUnits] = useState<boolean>(true);
+    const [unitData, setUnitData] = useState<UnitDataType[]>([])
+    const [storageData, setStorageData] = useState<StorageDataType[]>([])
+    const [salesData, setSalesData] = useState<SalesDataType[]>([])
+    const [auditData, setAuditData] = useState<AuditDataType[]>([])
+    const [financialData, setFinancialData] = useState<FinancialDataType[]>([])
+    const [performanceData, setPerformanceData] = useState<PerformanceDataType[]>([])
+    const [posData, setPosData] = useState<PosDataType[]>([])
+    const [deliveryData, setDeliveryData] = useState<DeliveryDataType[]>([])
+    const [loading, setLoading] = useState<boolean>(true);
 
     /*
     * --> GUARDA OS DADOS A SEREM MOSTRADOS NO INPUT DE MESES
@@ -233,7 +201,6 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
             )
 
             setUnits(filteredUnits)
-            setLoadingUnits(false);
         }
 
     }, [listOfUnits, user.units]);
@@ -247,7 +214,8 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
     */
     useEffect(() => {
         const fetchData = async () => {
-            
+            setLoading(true)
+
             const searchLabel =
                 unitSelected
                 + String(yearSelected)
@@ -259,57 +227,30 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
 
             try {
                 const data = await getFirestoreWithID('unitsData', searchLabel);
-                console.log(data); 
-               
-                localStorage.setItem(
-                    '@dc5bf16b1811-Dashboard:unitData',
-                    JSON.stringify(data)
-                )
 
-                localStorage.setItem(
-                    '@dc5bf16b1811-Dashboard:stockData',
-                    JSON.stringify(data.estoque.dataCharts)
-                )
+                if(data) {
+                    setUnitData(data);
+                    setStorageData(data.estoque.dataCharts);
+                    setSalesData(data.vendas.dataCharts);
+                    setAuditData(data.auditoria.dataCharts);
+                    setFinancialData(data.financeiro.dataCharts);
+                    setPerformanceData(data.desempenho.dataCharts);
+                    setPosData(data.caixa.dataCharts);
+                    setDeliveryData(data.delivery.dataCharts);
 
-                localStorage.setItem(
-                    '@dc5bf16b1811-Dashboard:salesData',
-                    JSON.stringify(data.vendas.dataCharts)
-                )
+                    setLoading(false)
+                } else {
+                    setUnitData([]);
+                    setStorageData([]);
+                    setSalesData([]);
+                    setAuditData([]);
+                    setFinancialData([]);
+                    setPerformanceData([]);
+                    setPosData([]);
+                    setDeliveryData([]);
 
-                localStorage.setItem(
-                    '@dc5bf16b1811-Dashboard:auditData',
-                    JSON.stringify(data.auditoria.dataCharts)
-                )
-
-                localStorage.setItem(
-                    '@dc5bf16b1811-Dashboard:financialData',
-                    JSON.stringify(data.financeiro.dataCharts)
-                )
-
-                localStorage.setItem(
-                    '@dc5bf16b1811-Dashboard:performanceData',
-                    JSON.stringify(data.desempenho.dataCharts)
-                )
-
-                localStorage.setItem(
-                    '@dc5bf16b1811-Dashboard:posData',
-                    JSON.stringify(data.caixa.dataCharts)
-                )
-
-                localStorage.setItem(
-                    '@dc5bf16b1811-Dashboard:deliveryData',
-                    JSON.stringify(data.delivery.dataCharts)
-                )
-
-                setUnitData(data)
-                setStockData(data.estoque.dataCharts)
-                setSalesData(data.vendas.dataCharts)
-                setAuditData(data.auditoria.dataCharts)
-                setFinancialData(data.financeiro.dataCharts)
-                setPerformanceData(data.desempenho.dataCharts)
-                setPosData(data.caixa.dataCharts)
-                setDeliveryData(data.delivery.dataCharts)
-          
+                    setLoading(false)
+                }
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
             }
@@ -328,7 +269,7 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
             monthSelected,
             yearSelected,
             unitData,
-            stockData,
+            storageData,
             salesData,
             auditData,
             financialData,
@@ -338,7 +279,7 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
             setUnitSelected,
             setMonthSelected,
             setYearSelected,
-            loadingUnits
+            loading
         }}>
             { children }
         </GlobalContext.Provider>

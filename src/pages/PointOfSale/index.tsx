@@ -20,7 +20,7 @@ const PointOfSale: React.FC = () => {
         unitSelected,
         monthSelected,
         yearSelected,
-        loadingUnits,
+        loading,
         setUnitSelected,
         setMonthSelected,
         setYearSelected
@@ -56,7 +56,7 @@ const PointOfSale: React.FC = () => {
     }, [])
 
 
-    if (loadingUnits) {
+    if (loading) {
         return <Loading />
     }
 
@@ -82,13 +82,21 @@ const PointOfSale: React.FC = () => {
                 />
             </ContentHeader>
 
-            {posData &&
-                <Content>
-                    <BiaxialBarChartBox data={posData.vendaporhorario_biaxialBarChart} />
-                    <PieChartBox data={posData.vendaporhorariopizza_pieChart} />
-                    <InformationCard data={posData.cardacumuladomes_informationCard}/>
-                </Content>
-            }
+            <Content>
+                {posData
+                    && !Array.isArray(posData)
+                    && Object.keys(posData).length > 0
+                    ? (
+                        <>
+                            <BiaxialBarChartBox data={posData.vendaporhorario_biaxialBarChart} />
+                            <PieChartBox data={posData.vendaporhorariopizza_pieChart} />
+                            <InformationCard data={posData.cardacumuladomes_informationCard}/>
+                        </>
+                    ) : (
+                        <h3>NENHUM REGISTRO ENCONTRADO NESSA DATA</h3>
+                    )
+                }
+            </Content>
         </Container>
     )
 }

@@ -15,11 +15,11 @@ const Storage: React.FC = () => {
         units,
         months,
         years,
-        stockData,
+        storageData,
         unitSelected,
         monthSelected,
         yearSelected,
-        loadingUnits,
+        loading,
         setUnitSelected,
         setMonthSelected,
         setYearSelected
@@ -55,7 +55,7 @@ const Storage: React.FC = () => {
     }
 
 
-    if (loadingUnits) {
+    if (loading) {
         return <Loading />
     }
 
@@ -83,13 +83,21 @@ const Storage: React.FC = () => {
 
             </ContentHeader>
 
-            {stockData &&
-                <Content>
-                    <InformationCard data={stockData.cardacumuladomes_informationCard} />
-                    <ListChart data={stockData.deliveryproducao_lists} />
-                    <ListChart data={stockData.deliveryemrota_lists} />
-                </Content>
-            }
+            <Content>
+                {storageData
+                    && !Array.isArray(storageData)
+                    && Object.keys(storageData).length > 0
+                    ? (
+                        <>
+                            <InformationCard data={storageData.cardacumuladomes_informationCard} />
+                            <ListChart data={storageData.deliveryproducao_lists} />
+                            <ListChart data={storageData.deliveryemrota_lists} />
+                        </>
+                    ) : (
+                        <h3>NENHUM REGISTRO ENCONTRADO NESSA DATA</h3>
+                    )
+                }
+            </Content>
         </Container>
     )
 }

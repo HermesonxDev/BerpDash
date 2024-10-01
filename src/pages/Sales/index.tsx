@@ -21,7 +21,7 @@ const Sales: React.FC = () => {
         unitSelected,
         monthSelected,
         yearSelected,
-        loadingUnits,
+        loading,
         setUnitSelected,
         setMonthSelected,
         setYearSelected
@@ -56,7 +56,7 @@ const Sales: React.FC = () => {
         }
     }, [])
 
-    if (loadingUnits) {
+    if (loading) {
         return <Loading />
     }
 
@@ -82,20 +82,28 @@ const Sales: React.FC = () => {
                 />
             </ContentHeader>
 
-            {salesData &&
-                <Content>
-                    <ProgressiveBar data={salesData.meta_progressiveBarChart} />
-                    <ProgressiveBar data={salesData.meta_progressiveBarChart} />
-                    <InformationCard data={salesData.cardacumuladomes_informationCard} />
-                    <InformationCard data={salesData.cardacumuladomes_informationCard} />
-                    <ListChart data={salesData.deliveryproducao_lists} />
-                    <ListChart data={salesData.deliveryemrota_lists} />
-                    <PieChartBox data={salesData.vendaporhorariopizza_pieChart} />
-                    <PieChartBox data={salesData.vendaporhorariopizza_pieChart} />
-                    <PieChartBox data={salesData.vendaporhorariopizza_pieChart} />
-                    <PieChartBox data={salesData.vendaporhorariopizza_pieChart} />
-                </Content>
-            }
+            <Content>
+                {salesData
+                    && !Array.isArray(salesData)
+                    && Object.keys(salesData).length > 0
+                    ? (
+                        <>
+                            <ProgressiveBar data={salesData.meta_progressiveBarChart} />
+                            <ProgressiveBar data={salesData.meta_progressiveBarChart} />
+                            <InformationCard data={salesData.cardacumuladomes_informationCard} />
+                            <InformationCard data={salesData.cardacumuladomes_informationCard} />
+                            <ListChart data={salesData.deliveryproducao_lists} />
+                            <ListChart data={salesData.deliveryemrota_lists} />
+                            <PieChartBox data={salesData.vendaporhorariopizza_pieChart} />
+                            <PieChartBox data={salesData.vendaporhorariopizza_pieChart} />
+                            <PieChartBox data={salesData.vendaporhorariopizza_pieChart} />
+                            <PieChartBox data={salesData.vendaporhorariopizza_pieChart} />
+                        </>
+                    ) : (
+                        <h3>NENHUM REGISTRO ENCONTRADO NESSA DATA</h3>
+                    )
+                }
+            </Content>
         </Container>
     )
 }

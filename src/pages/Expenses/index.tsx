@@ -16,7 +16,7 @@ const Expenses: React.FC = () => {
         unitSelected,
         monthSelected,
         yearSelected,
-        loadingUnits,
+        loading,
         setUnitSelected,
         setMonthSelected,
         setYearSelected
@@ -52,7 +52,7 @@ const Expenses: React.FC = () => {
     }
 
 
-    if (loadingUnits) {
+    if (loading) {
         return <Loading />
     }
 

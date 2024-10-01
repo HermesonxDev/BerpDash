@@ -5,8 +5,6 @@ import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import Loading from "../../components/Loading";
 import PieChartBox from "../../components/PieChartBox";
-import InformationCard from "../../components/InformationCard";
-import ProgressiveBar from "../../components/ProgressiveBar";
 import ListChart from "../../components/ListChart";
 
 import { useGlobal } from "../../hooks/global";
@@ -22,7 +20,7 @@ const Delivery: React.FC = () => {
         unitSelected,
         monthSelected,
         yearSelected,
-        loadingUnits,
+        loading,
         setUnitSelected,
         setMonthSelected,
         setYearSelected
@@ -57,7 +55,7 @@ const Delivery: React.FC = () => {
         }
     }, [])
 
-    if (loadingUnits) {
+    if (loading) {
         return <Loading />
     }
 
@@ -83,20 +81,28 @@ const Delivery: React.FC = () => {
                 />
             </ContentHeader>
 
-            {deliveryData && 
-                <Content>
-                    <PieChartBox data={deliveryData.vendaporhorariopizza_pieChart} />
-                    <BiaxialBarChartBox data={deliveryData.vendaporhorario_biaxialBarChart} />
-                    <ListChart data={deliveryData.cancelamentos_lists} />
-                    <ListChart data={deliveryData.despesas_lists} />
-                    <ListChart data={deliveryData.deliveryproducao_lists} />
-                    <ListChart data={deliveryData.deliveryemrota_lists} />
-                    <ListChart data={deliveryData.deliveryemrota_lists} />
-                    <PieChartBox data={deliveryData.vendaporhorariopizza_pieChart} />
-                    <PieChartBox data={deliveryData.vendaporhorariopizza_pieChart} />
-                    <BiaxialBarChartBox data={deliveryData.vendaporhorario_biaxialBarChart} />
-                </Content>
-            }
+            <Content>
+                {deliveryData
+                    && !Array.isArray(deliveryData)
+                    && Object.keys(deliveryData).length > 0
+                    ? (
+                        <>
+                            <PieChartBox data={deliveryData.vendaporhorariopizza_pieChart} />
+                            <BiaxialBarChartBox data={deliveryData.vendaporhorario_biaxialBarChart} />
+                            <ListChart data={deliveryData.cancelamentos_lists} />
+                            <ListChart data={deliveryData.despesas_lists} />
+                            <ListChart data={deliveryData.deliveryproducao_lists} />
+                            <ListChart data={deliveryData.deliveryemrota_lists} />
+                            <ListChart data={deliveryData.deliveryemrota_lists} />
+                            <PieChartBox data={deliveryData.vendaporhorariopizza_pieChart} />
+                            <PieChartBox data={deliveryData.vendaporhorariopizza_pieChart} />
+                            <BiaxialBarChartBox data={deliveryData.vendaporhorario_biaxialBarChart} />
+                        </>
+                    ) : (
+                        <h3>NENHUM REGISTRO ENCONTRADO NESSA DATA</h3>
+                    )
+                }
+            </Content>
         </Container>
     )
 }

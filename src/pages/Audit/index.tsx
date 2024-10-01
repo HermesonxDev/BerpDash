@@ -20,7 +20,7 @@ const Audit: React.FC = () => {
         unitSelected,
         monthSelected,
         yearSelected,
-        loadingUnits,
+        loading,
         setUnitSelected,
         setMonthSelected,
         setYearSelected
@@ -56,7 +56,7 @@ const Audit: React.FC = () => {
     }
 
 
-    if (loadingUnits) {
+    if (loading) {
         return <Loading />
     }
 
@@ -84,17 +84,25 @@ const Audit: React.FC = () => {
 
             </ContentHeader>
 
-            {auditData &&
-                <Content>
-                    <InformationCard data={auditData.cardacumuladomes_informationCard} />
-                    <InformationCard data={auditData.cardacumuladomes_informationCard} />
-                    <InformationCard data={auditData.cardacumuladomes_informationCard} />
-                    <InformationCard data={auditData.cardacumuladomes_informationCard} />
-                    <ListChart data={auditData.deliveryproducao_lists} />
-                    <ListChart data={auditData.deliveryemrota_lists} />
-                    <BiaxialBarChartBox data={auditData.vendaporhorario_biaxialBarChart} />
-                </Content>
-            }
+            <Content>
+                {auditData
+                    && !Array.isArray(auditData)
+                    && Object.keys(auditData).length > 0
+                    ? (
+                        <>
+                            <InformationCard data={auditData.cardacumuladomes_informationCard} />
+                            <InformationCard data={auditData.cardacumuladomes_informationCard} />
+                            <InformationCard data={auditData.cardacumuladomes_informationCard} />
+                            <InformationCard data={auditData.cardacumuladomes_informationCard} />
+                            <ListChart data={auditData.deliveryproducao_lists} />
+                            <ListChart data={auditData.deliveryemrota_lists} />
+                            <BiaxialBarChartBox data={auditData.vendaporhorario_biaxialBarChart} />
+                        </>
+                    ) : (
+                        <h3>NENHUM REGISTRO ENCONTRADO NESSA DATA</h3>
+                    )
+                }
+            </Content>
         </Container>
     )
 }
