@@ -40,10 +40,10 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
     *       iR - Ajusta a largura do gráfico
     *       OR - Ajusta o tamanho do gráfico
     */
-    const [pieCX, setPieCX] = useState<string>('50%') 
+    const [pieCX, setPieCX] = useState<string>('60%') 
     const [pieCY, setPieCY] = useState<string>('100%')
     const [pieWidth, setPieWidth] = useState<number>(500)
-    const [needleCX, setNeedleCX] = useState<number>(240)
+    const [needleCX, setNeedleCX] = useState<number>(290)
     const pieHeight = 110;
     const needleCY = 100;
     const iR = 70;
@@ -93,6 +93,11 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
 
     useEffect(() => {
         const handleResize = () => {
+            if (window.innerWidth <= 768) {
+                setPieCX('70%')
+                setNeedleCX(240)
+            }
+
             if (window.innerWidth <= 420) {
                 setPieCX('50%')
                 setPieCY('100%')
