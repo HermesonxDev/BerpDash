@@ -96,8 +96,9 @@ export const FooterRow = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        background-color: ${props => props.theme.colors.secondary};
         padding: 15px 5px;
-        border: 1px solid ${props => props.theme.colors.gray};
+        //border: 1px solid ${props => props.theme.colors.gray};
         border-radius: 5px;
 
         > h3 {
@@ -124,7 +125,7 @@ export const FooterRow = styled.div`
         overflow: scroll;
 
         > div {
-            height: 70%;
+            height: 80%;
             padding: 10px 5px;
 
             > p {

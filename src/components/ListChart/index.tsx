@@ -95,12 +95,11 @@ const ListChart: React.FC<IListChartProps> = ({ data }) => {
                     }
                 });
 
-            setListData(formattedData);
-
             const totalAmount = data.data
-                .filter(item => frequencySelected.includes(item.type)) // Filtra pelos tipos selecionados
+                .filter(item => frequencySelected.includes(item.type))
                 .reduce((acc, item) => acc + Number(item.amount_field), 0);
 
+            setListData(formattedData);
             setTotalAmount(totalAmount);
         }
     }, [data, frequencySelected]);
@@ -162,10 +161,10 @@ const ListChart: React.FC<IListChartProps> = ({ data }) => {
                         listData.map(item => (
                             <HistoryFinanceCard
                                 key={item.id}
-                                tagColor={item.tagColor}
                                 title={item.title}
                                 subTitle={item.date_formatted}
                                 amount={item.amount_field_formatted}
+                                tagColor={item.tagColor}
                                 backgroundColor="secondary"
                             />
                         ))

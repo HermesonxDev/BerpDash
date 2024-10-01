@@ -6,7 +6,23 @@ export default {
     ],
     "generatedDate": "2024-09-04",
     "isMoney": true,
-    "showTotal": true,
+    "information": {
+      month: {
+        title: "Média de vendas",
+        subTitle: "por cliente",
+        amount: 500,
+      },
+      year: {
+        title: "Média de vendas",
+        subTitle: "por cliente",
+        amount: 700,
+      },
+      previousYear: {
+        title: "Média de vendas",
+        subTitle: "por cliente",
+        amount: 800,
+      }
+    },
     "title":"Venda por horário",
     "subTitle":"Com base na venda recebida",
     "text": "Última atualização á 1 minuto atrás",

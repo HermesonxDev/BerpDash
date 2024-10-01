@@ -13,7 +13,6 @@ import {
 import {
     MdDashboard,
     MdArrowDownward,
-    MdArrowUpward,
     MdExitToApp,
     MdClose,
     MdMenu,
@@ -21,10 +20,11 @@ import {
     MdDeliveryDining
 } from 'react-icons/md';
 
-import { RiLockPasswordFill } from "react-icons/ri"
+import { RiLockPasswordFill, RiDiscountPercentFill } from "react-icons/ri"
 import { FaDollarSign, FaCode } from "react-icons/fa6"
 import { FaCashRegister, FaBoxes } from "react-icons/fa"
 import { AiOutlineAudit } from "react-icons/ai"
+
 
 import Toggle from "../Toggle";
 import logo from '../../assets/logo.svg';
@@ -68,43 +68,44 @@ const Aside: React.FC = () => {
                     { toggleMenuIsOpened ? <MdClose /> : <MdMenu /> }
                 </ToggleMenu>
                 <LogoIMG src={logo} alt="Logo Dashboard" />
-                <Title>Dashboard</Title>
+                <Title>Berp Dashboard</Title>
             </HeaderContainer>
 
             <MenuContainer>
-                <MenuItemLink href="/">
+
+                {/* <MenuItemLink href="/">
                     <MdDashboard />
                     Dashboard
+                </MenuItemLink> */}
+
+                <MenuItemLink href="/point-of-sale">
+                    <FaCashRegister />
+                    Caixa
                 </MenuItemLink>
                 
-                <MenuItemLink href="/discounts">
-                    <MdArrowUpward />
-                    Descontos
-                </MenuItemLink>
-
                 <MenuItemLink href="/expenses">
                     <MdArrowDownward />
                     Despesas
-                </MenuItemLink>
-
-                <MenuItemLink href="/storage">
-                    <FaBoxes />
-                    Estoque
                 </MenuItemLink>
 
                 <MenuItemLink href="/sales">
                     <FaDollarSign />
                     Vendas
                 </MenuItemLink>
-                
-                <MenuItemLink href="/point-of-sale">
-                    <FaCashRegister />
-                    Caixa
+
+                <MenuItemLink href="/discounts">
+                    <RiDiscountPercentFill />
+                    Descontos
                 </MenuItemLink>
 
                 <MenuItemLink href="/delivery">
                     <MdDeliveryDining />
                     Delivery
+                </MenuItemLink>
+
+                <MenuItemLink href="/storage">
+                    <FaBoxes />
+                    Estoque
                 </MenuItemLink>
 
                 <MenuItemLink href="/audit">
