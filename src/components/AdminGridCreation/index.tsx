@@ -113,7 +113,7 @@ const AdminGridCreation: React.FC = () => {
                 </FormDiv>
 
                 <FormDiv>
-                    <Label>Papel</Label>
+                    <Label>Cargo</Label>
                     
                     <AsyncMultiSelect
                         loadData={loadRoleOptions}

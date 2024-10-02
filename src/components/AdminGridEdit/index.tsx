@@ -153,7 +153,7 @@ const AdminGridEdit: React.FC = () => {
                 </FormDiv>
 
                 <FormDiv>
-                    <Label>Papel</Label>
+                    <Label>Cargo</Label>
                     <AsyncMultiSelect
                         loadData={loadRoleOptions}
                         onChange={(selectedOptions) => {

@@ -82,7 +82,7 @@ const AdminGridList: React.FC = () => {
                     <HeaderGridItem>Nome</HeaderGridItem>
                     <HeaderGridItem>Email</HeaderGridItem>
                     <HeaderGridItem>Telefone</HeaderGridItem>
-                    <HeaderGridItem>Função</HeaderGridItem>
+                    <HeaderGridItem>Cargo</HeaderGridItem>
                     <HeaderGridItem>Qtd. Unid</HeaderGridItem>
                     <HeaderGridItem>Status</HeaderGridItem>
                     <HeaderGridItem>Ações</HeaderGridItem>
