@@ -153,6 +153,8 @@ const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
         localStorage.removeItem('@dc5bf16b1811-Dashboard:isLogged')
         localStorage.removeItem('@dc5bf16b1811-Dashboard:isAdmin')
         localStorage.removeItem('@dc5bf16b1811-Dashboard:user')
+        localStorage.removeItem('@dc5bf16b1811-Dashboard:units')
+        localStorage.removeItem('@dc5bf16b1811-Dashboard:unitIds')
         localStorage.removeItem('@dc5bf16b1811-Dashboard:unitSelected')
         localStorage.removeItem('@dc5bf16b1811-Dashboard:monthSelected')
         localStorage.removeItem('@dc5bf16b1811-Dashboard:yearSelected')
