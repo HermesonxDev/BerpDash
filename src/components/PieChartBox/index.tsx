@@ -34,7 +34,7 @@ interface IPieChartProps {
         controllers: DataController[],
         generatedDate: string,
         isMoney: boolean,
-        showTotal: Boolean,
+        showTotal: boolean,
         title: string,
         subTitle: string,
         text: string,

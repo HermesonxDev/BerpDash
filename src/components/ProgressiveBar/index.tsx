@@ -93,6 +93,12 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
 
     useEffect(() => {
         const handleResize = () => {
+
+            if (window.innerWidth <= 1280) {
+                setPieCX('50%')
+                setNeedleCX(235)
+            }
+
             if (window.innerWidth <= 768) {
                 setPieCX('70%')
                 setNeedleCX(240)

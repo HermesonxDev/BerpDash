@@ -197,6 +197,15 @@ export const Controllers = styled.div `
     &::-webkit-scrollbar-corner {
         background-color: none;
     }
+
+    /*
+    * --> MEDIA QUERY CELULAR
+    *      Dispositivos usados:
+    *           iPhone 6/7/8 Plus (414x736)
+    */
+    @media(max-width: 420px) {
+        height: 12%;
+    }
 `;
 
 export const FooterRow = styled.div `
