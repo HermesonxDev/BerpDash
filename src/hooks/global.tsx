@@ -27,14 +27,14 @@ interface IGlobalContext {
     unitSelected: string,
     monthSelected: number,
     yearSelected: number,
-    unitData: UnitDataType[],
-    storageData: StorageDataType[],
-    salesData: SalesDataType[],
-    auditData: AuditDataType[],
-    financialData: FinancialDataType[],
-    performanceData: PerformanceDataType[],
-    posData: PosDataType[],
-    deliveryData: DeliveryDataType[],
+    unitData: UnitDataType | null,
+    storageData: StorageDataType | null,
+    salesData: SalesDataType | null,
+    auditData: AuditDataType | null,
+    financialData: FinancialDataType | null,
+    performanceData: PerformanceDataType | null,
+    posData: PosDataType | null,
+    deliveryData: DeliveryDataType | null,
     setUnitSelected: React.Dispatch<React.SetStateAction<string>>,
     setMonthSelected: React.Dispatch<React.SetStateAction<number>>,
     setYearSelected: React.Dispatch<React.SetStateAction<number>>,
@@ -73,14 +73,14 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
         return onYearSelected ? JSON.parse(onYearSelected) : new Date().getFullYear()
     })
 
-    const [unitData, setUnitData] = useState<UnitDataType[]>([])
-    const [storageData, setStorageData] = useState<StorageDataType[]>([])
-    const [salesData, setSalesData] = useState<SalesDataType[]>([])
-    const [auditData, setAuditData] = useState<AuditDataType[]>([])
-    const [financialData, setFinancialData] = useState<FinancialDataType[]>([])
-    const [performanceData, setPerformanceData] = useState<PerformanceDataType[]>([])
-    const [posData, setPosData] = useState<PosDataType[]>([])
-    const [deliveryData, setDeliveryData] = useState<DeliveryDataType[]>([])
+    const [unitData, setUnitData] = useState<UnitDataType | null>(null)
+    const [storageData, setStorageData] = useState<StorageDataType | null>(null)
+    const [salesData, setSalesData] = useState<SalesDataType | null>(null)
+    const [auditData, setAuditData] = useState<AuditDataType | null>(null)
+    const [financialData, setFinancialData] = useState<FinancialDataType | null>(null)
+    const [performanceData, setPerformanceData] = useState<PerformanceDataType | null>(null)
+    const [posData, setPosData] = useState<PosDataType | null>(null)
+    const [deliveryData, setDeliveryData] = useState<DeliveryDataType | null>(null)
     const [loading, setLoading] = useState<boolean>(true);
 
     /*
@@ -240,14 +240,14 @@ const GlobalProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => 
 
                     setLoading(false)
                 } else {
-                    setUnitData([]);
-                    setStorageData([]);
-                    setSalesData([]);
-                    setAuditData([]);
-                    setFinancialData([]);
-                    setPerformanceData([]);
-                    setPosData([]);
-                    setDeliveryData([]);
+                    setUnitData(null);
+                    setStorageData(null);
+                    setSalesData(null);
+                    setAuditData(null);
+                    setFinancialData(null);
+                    setPerformanceData(null);
+                    setPosData(null);
+                    setDeliveryData(null);
 
                     setLoading(false)
                 }

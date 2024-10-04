@@ -28,6 +28,11 @@ interface DataController {
     value: string
 }
 
+export interface LabelsType {
+    data1: string,
+    data2: string
+}
+
 interface DataType {
     name: string,
     sales: number,
@@ -45,9 +50,7 @@ interface IBiaxialBarChartProps {
         subTitle: string,
         text: string,
         type: string,
-        labels: {
-            [key: string]: string
-        },
+        labels: LabelsType[],
         [key: string]: any
     }
 }
@@ -136,12 +139,14 @@ const BiaxialBarChartBox: React.FC<IBiaxialBarChartProps> = ({ data }) => {
 
                         {dynamicKeys.map((key, index) => (
                             <Bar 
-                                key={key} 
-                                yAxisId={index % 2 === 0 ? "left" : "right"} 
-                                dataKey={key} 
-                                fill={index % 2 === 0 ? "#e44c4e" : "#f7931b"} 
-                                name={data.labels[key] || key.charAt(0).toUpperCase() + key.slice(1)}
-                            />
+                            key={key} 
+                            yAxisId={index % 2 === 0 ? "left" : "right"} 
+                            dataKey={key} 
+                            fill={index % 2 === 0 ? "#e44c4e" : "#f7931b"} 
+                            name={(data.labels as any)[key] || key.charAt(0).toUpperCase() + key.slice(1)}
+
+                        />
+                        
                         ))}
                     </BarChart>
                 </ResponsiveContainer>

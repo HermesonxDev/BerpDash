@@ -1,14 +1,12 @@
 export interface Controllers {
     name: string,
-    value: string | number
+    value: string
 }
-
 
 export interface InfoCardControllers {
     label: string,
     amount: number
 }
-
 
 export interface GoalDataType {
     color: string,
