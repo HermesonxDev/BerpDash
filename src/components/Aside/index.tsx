@@ -11,7 +11,6 @@ import {
 } from "./styles";
 
 import {
-    MdDashboard,
     MdArrowDownward,
     MdExitToApp,
     MdClose,
