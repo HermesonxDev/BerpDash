@@ -11,13 +11,13 @@ import {
 import { PieChart, Pie, Cell} from 'recharts';
 
 interface GoalTypeData {
-    value: number,
-    color: string
+    color: string,
+    value: number
 }
 
 interface IProgressiveBarProps {
     data: {
-        goal: GoalTypeData[],
+        goal: GoalTypeData,
         currentValue: number,
         generatedDate: string,
         isMoney: boolean,
@@ -51,10 +51,10 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
 
     const RADIAN = Math.PI / 180;
     
-    const goalOfDay = data.goal
+    const goalOfDay = [data.goal]
     const value = data.currentValue;
 
-    const percentage = (value / goalOfDay[0].value) * 100;
+    const percentage = (value / data.goal.value) * 100;
 
     const needle = (
         value: number, 
@@ -136,21 +136,21 @@ const ProgressiveBar: React.FC<IProgressiveBarProps> = ({ data }) => {
 
             <MainRow>
                 <PieChart width={pieWidth} height={pieHeight}>
-                    <Pie
-                        dataKey="value"
-                        startAngle={180}
-                        endAngle={0}
-                        data={goalOfDay}
-                        cx={pieCX}
-                        cy={pieCY}
-                        innerRadius={iR}
-                        outerRadius={oR}
-                        stroke="none"
-                    >
-                        {goalOfDay.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                    </Pie>
+                <Pie
+                    dataKey="value"
+                    startAngle={180}
+                    endAngle={0}
+                    data={goalOfDay}
+                    cx={pieCX}
+                    cy={pieCY}
+                    innerRadius={iR}
+                    outerRadius={oR}
+                    stroke="none"
+                >
+                    {goalOfDay.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                </Pie>
                     {needle(value, goalOfDay, needleCX, needleCY, iR, oR, '#d0d000')}
                 </PieChart>
 

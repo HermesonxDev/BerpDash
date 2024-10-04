@@ -10,7 +10,7 @@ export interface InfoCardControllers {
 
 export interface GoalDataType {
     color: string,
-    value: string | number
+    value: number
 }
 
 
@@ -52,9 +52,9 @@ export interface InformationCardDataType {
 
 
 export interface ProgressiveBarDataType {
-    currentValue: string | number,
+    currentValue: number,
     generatedDate: string,
-    goal: GoalDataType[],
+    goal: GoalDataType,
     title: string
     text: string,
     isMoney: boolean,
